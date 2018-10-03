@@ -249,6 +249,7 @@ Twinkle.batchdelete.callback.evaluate = function twinklebatchdeleteCallbackEvalu
 		wikipedia_page.setCallbackParameters(params);
 		if( delete_page ) {
 			wikipedia_page.setEditSummary(reason + Twinkle.getPref('deletionSummaryAd'));
+			wikipedia_page.setTags(Twinkle.getPref('revisionTags'));
 			wikipedia_page.suppressProtectWarning();
 			wikipedia_page.deletePage(Twinkle.batchdelete.callbacks.doExtras, pageDeleter.workerFailure);
 		} else {
@@ -398,6 +399,7 @@ Twinkle.batchdelete.callbacks = {
 			return;
 		}
 		pageobj.setEditSummary('取消到页面“' + params.page + '”的链接' + Twinkle.getPref('deletionSummaryAd'));
+		pageobj.setTags(Twinkle.getPref('revisionTags'));
 		pageobj.setPageText(text);
 		pageobj.setCreateOption('nocreate');
 		pageobj.setMaxConflictRetries(10);
@@ -449,6 +451,7 @@ Twinkle.batchdelete.callbacks = {
 			return;
 		}
 		pageobj.setEditSummary('移除对文件' + image + "的使用（" + params.reason + "）" + Twinkle.getPref('deletionSummaryAd'));
+		pageobj.setTags(Twinkle.getPref('revisionTags'));
 		pageobj.setPageText(text);
 		pageobj.setCreateOption('nocreate');
 		pageobj.setMaxConflictRetries(10);

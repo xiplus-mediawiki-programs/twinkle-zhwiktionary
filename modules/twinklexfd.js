@@ -293,6 +293,7 @@ Twinkle.xfd.callbacks = {
 					var notifytext = "\n{{subst:AFDNote|" + Morebits.pageNameNorm + "}}--~~~~";
 					usertalkpage.setAppendText(notifytext);
 					usertalkpage.setEditSummary("通知：页面[[" + Morebits.pageNameNorm + "]]存废讨论提名" + Twinkle.getPref('summaryAd'));
+					usertalkpage.setTags(Twinkle.getPref('revisionTags'));
 					usertalkpage.setCreateOption('recreate');
 					switch (Twinkle.getPref('xfdWatchUser')) {
 						case 'yes':
@@ -366,6 +367,7 @@ Twinkle.xfd.callbacks = {
 
 			pageobj.setPageText(tag + text);
 			pageobj.setEditSummary(wgULS("页面存废讨论：[[", "頁面存廢討論：[[") + params.logpage + "#" + Morebits.pageNameNorm + "]]" + Twinkle.getPref('summaryAd'));
+			pageobj.setTags(Twinkle.getPref('revisionTags'));
 			switch (Twinkle.getPref('xfdWatchPage')) {
 				case 'yes':
 					pageobj.setWatchlist(true);
@@ -448,8 +450,9 @@ Twinkle.xfd.callbacks = {
 					pageobj.setAppendText("\n{{subst:DRItem|Type=" + type + "|DRarticles=" + Morebits.pageNameNorm + "|Reason=" + Morebits.string.formatReasonText(params.reason) + (params.fwdcsdreason.trim() !== "" ? "<br>\n轉交理由："+params.fwdcsdreason : "") + "|To=" + to + "}}--~~~~");
 					break;
 			}
-			
+
 			pageobj.setEditSummary(wgULS("添加[[", "加入[[") + Morebits.pageNameNorm + "]]" + Twinkle.getPref('summaryAd'));
+			pageobj.setTags(Twinkle.getPref('revisionTags'));
 			switch (Twinkle.getPref('xfdWatchDiscussion')) {
 				case 'yes':
 					pageobj.setWatchlist(true);
@@ -532,6 +535,7 @@ Twinkle.xfd.callbacks = {
 					var notifytext = "\n{{subst:idw|File:" + mw.config.get('wgTitle') + "}}--~~~~";
 					usertalkpage.setAppendText(notifytext);
 					usertalkpage.setEditSummary("通知：文件[[" + Morebits.pageNameNorm + "]]存废讨论提名" + Twinkle.getPref('summaryAd'));
+					usertalkpage.setTags(Twinkle.getPref('revisionTags'));
 					usertalkpage.setCreateOption('recreate');
 					switch (Twinkle.getPref('xfdWatchUser')) {
 						case 'yes':
@@ -555,6 +559,7 @@ Twinkle.xfd.callbacks = {
 
 			pageobj.setPageText("{{ifd|" + Morebits.string.formatReasonText(params.reason) + "|date={{subst:#time:c}}}}\n" + text);
 			pageobj.setEditSummary(wgULS("文件存废讨论：[[", "檔案存廢討論：[[") + params.logpage + "#" + Morebits.pageNameNorm + "]]" + Twinkle.getPref('summaryAd'));
+			pageobj.setTags(Twinkle.getPref('revisionTags'));
 			switch (Twinkle.getPref('xfdWatchPage')) {
 				case 'yes':
 					pageobj.setWatchlist(true);
@@ -575,6 +580,7 @@ Twinkle.xfd.callbacks = {
 
 			pageobj.setAppendText("\n{{subst:IfdItem|Filename=" + mw.config.get('wgTitle') + "|Uploader=" + params.uploader + "|Reason=" + Morebits.string.formatReasonText(params.reason) + "}}--~~~~");
 			pageobj.setEditSummary(wgULS("添加[[", "加入[[") + Morebits.pageNameNorm + "]]" + Twinkle.getPref('summaryAd'));
+			pageobj.setTags(Twinkle.getPref('revisionTags'));
 			switch (Twinkle.getPref('xfdWatchDiscussion')) {
 				case 'yes':
 					pageobj.setWatchlist(true);
