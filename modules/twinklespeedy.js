@@ -733,7 +733,6 @@ Twinkle.speedy.callbacks = {
 	},
 
 	parseWikitext: function(title, wikitext, callback) {
-		console.log(wikitext);
 		var query = {
 			action: 'parse',
 			prop: 'text',

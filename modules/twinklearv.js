@@ -357,7 +357,7 @@ Twinkle.arv.callback.changeCategory = function (e) {
 							$entry.append('<span>"' + rev.parsedcomment + '" at <a href="' + mw.config.get('wgScript') + '?diff=' + rev.revid + '">' + moment(rev.timestamp).calendar() + '</a></span>').appendTo($diffs);
 						}
 					}).fail(function(data) {
-						console.log('API failed :(', data);
+						console.log('API failed :(', data); // eslint-disable-line no-console
 					});
 					var $warnings = $(root).find('[name=warnings]');
 					$warnings.find('.entry').remove();
@@ -394,7 +394,7 @@ Twinkle.arv.callback.changeCategory = function (e) {
 							$entry.append('<span>"' + rev.parsedcomment + '" at <a href="' + mw.config.get('wgScript') + '?diff=' + rev.revid + '">' + moment(rev.timestamp).calendar() + '</a></span>').appendTo($warnings);
 						}
 					}).fail(function(data) {
-						console.log('API failed :(', data);
+						console.log('API failed :(', data); // eslint-disable-line no-console
 					});
 
 					var $resolves = $(root).find('[name=resolves]');
@@ -452,7 +452,7 @@ Twinkle.arv.callback.changeCategory = function (e) {
 						$free_entry.append($free_label).append($free_input).appendTo($resolves);
 
 					}).fail(function(data) {
-						console.log('API failed :(', data);
+						console.log('API failed :(', data); // eslint-disable-line no-console
 					});
 				}
 			});
@@ -726,7 +726,7 @@ Twinkle.arv.callback.evaluate = function(e) {
 					var page = data.query.pages[pageid];
 					an3_next(page);
 				}).fail(function(data) {
-					console.log('API failed :(', data);
+					console.log('API failed :(', data); // eslint-disable-line no-console
 				});
 			} else {
 				an3_next();
@@ -926,7 +926,7 @@ Twinkle.arv.processAN3 = function(params) {
 		talkPage.append();
 		Morebits.wiki.removeCheckpoint();  // all page updates have been started
 	}).fail(function(data) {
-		console.log('API failed :(', data);
+		console.log('API failed :(', data); // eslint-disable-line no-console
 	});
 };
 })(jQuery);

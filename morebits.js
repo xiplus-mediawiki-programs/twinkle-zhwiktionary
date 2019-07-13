@@ -3734,7 +3734,7 @@ Morebits.status.prototype = {
 				}
 				// also log error messages in the browser console
 				if (console && console.error) {
-					console.error(this.textRaw + ': ' + status);
+					console.error(this.textRaw + ': ' + status); // eslint-disable-line no-console
 				}
 			}
 		}
