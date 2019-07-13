@@ -3733,9 +3733,7 @@ Morebits.status.prototype = {
 					Morebits.status.errorEvent();
 				}
 				// also log error messages in the browser console
-				if (console && console.error) {
-					console.error(this.textRaw + ': ' + status); // eslint-disable-line no-console
-				}
+				console.error(this.textRaw + ': ' + status); // eslint-disable-line no-console
 			}
 		}
 		this.render();
