@@ -12,7 +12,7 @@
  * ----------
  *
  * 这是经过亂改的Twinkle，是让維護者自己方便使用维基百科的
- * 好帮手。请参见[[WP:TW]]以获取更多信息。
+ * 好帮手。请参见[[Wiktionary:TW]]以获取更多信息。
  *
  * 维护者：~~~
  */
@@ -477,9 +477,9 @@ Twinkle.load = function () {
 	// User/user talk-related
 	// Twinkle.arv();
 	// Twinkle.warn();
-	// if ( Morebits.userIsInGroup('sysop') ) {
-	// Twinkle.block();
-	// }
+	if (Morebits.userIsInGroup('sysop')) {
+		Twinkle.block();
+	}
 	// Twinkle.shared();
 	// Twinkle.talkback();
 	// Deletion

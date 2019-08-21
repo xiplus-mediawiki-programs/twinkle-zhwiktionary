@@ -1,5 +1,4 @@
 // <nowiki>
-// vim: set noet sts=0 sw=8:
 
 
 (function($) {
@@ -60,7 +59,8 @@ Twinkle.block.callback = function twinkleblockCallback() {
 				label: wgULS('添加封禁模板到用户对话页', '加入封禁模板到用戶對話頁'),
 				value: 'template',
 				tooltip: wgULS('如果执行封禁的管理员忘记发出封禁模板，或你封禁了用户而没有给其发出模板，则你可以用此来发出合适的模板。', '如果執行封禁的管理員忘記發出封禁模板，或你封禁了用戶而沒有給其發出模板，則你可以用此來發出合適的模板。'),
-				checked: true
+				checked: false,
+				hidden: true
 			},
 			{
 				label: wgULS('标记用户页', '標記用戶頁'),
@@ -539,31 +539,12 @@ Twinkle.block.callback.change_action = function twinkleblockCallbackChangeAction
  *   To disable, set 'hardblock' and 'disabletalk', respectively
  */
 Twinkle.block.blockPresetsInfo = {
-	'anonblock': {
-		expiry: '72 hours',
-		forAnonOnly: true,
-		nocreate: true,
-		nonstandard: true,
-		reason: '{{anonblock}}',
-		sig: '~~~~'
-	},
 	'blocked proxy': {
 		expiry: '2 years',
 		nocreate: true,
+		hardblock: true,
 		nonstandard: true,
 		reason: '{{blocked proxy}}',
-		sig: '~~~~'
-	},
-	'checkuserblock': {
-		expiry: 'infinity',
-		nonstandard: true,
-		reason: '{{checkuserblock}}',
-		sig: '~~~~'
-	},
-	'checkuserblock-account': {
-		expiry: 'infinity',
-		nonstandard: true,
-		reason: '{{checkuserblock-account}}',
 		sig: '~~~~'
 	},
 	// Placeholder for when we add support for rangeblocks
@@ -576,24 +557,19 @@ Twinkle.block.blockPresetsInfo = {
 		sig: null
 	}, */
 	'schoolblock': {
+		forAnonOnly: true,
 		nocreate: true,
 		nonstandard: true,
 		reason: '{{schoolblock}}',
 		sig: '~~~~'
 	},
 	// uw-prefixed
-	'uw-3block': {
-		autoblock: true,
-		expiry: '24 hours',
-		nocreate: true
-	},
 	'uw-ablock': {
 		autoblock: true,
 		expiry: '24 hours',
+		forAnonOnly: true,
 		nocreate: true,
 		reasonParam: true
-	},
-	'uw-bblock': {
 	},
 	'uw-block1': {
 		autoblock: true,
@@ -616,37 +592,10 @@ Twinkle.block.blockPresetsInfo = {
 		autoblock: true,
 		nocreate: true
 	},
-	'uw-sblock': {
-		autoblock: true,
-		nocreate: true
-	},
-	'uw-ublock': {
-		expiry: 'infinity'
-	},
-	'uw-ublock|误导': {
-		expiry: 'infinity',
-		reason: wgULS('{{uw-ublock|误导}}', '{{uw-ublock|誤導}}')
-	},
-	'uw-ublock|宣传': {
-		expiry: 'infinity',
-		reason: wgULS('{{uw-ublock|宣传}}', '{{uw-ublock|宣傳}}')
-	},
-	'uw-ublock|攻击|或侮辱性': {
-		expiry: 'infinity',
-		reason: wgULS('{{uw-ublock|攻击|或侮辱性}}', '{{uw-ublock|攻擊|或侮辱性}}')
-	},
-	'uw-ublock|混淆': {
-		expiry: 'infinity',
-		reason: '{{uw-ublock|混淆}}'
-	},
 	'uw-vblock': {
 		autoblock: true,
 		expiry: '24 hours',
 		nocreate: true
-	},
-	'Bot block message': {
-		expiry: 'infinity',
-		sig: '~~~~'
 	}
 };
 
@@ -686,6 +635,9 @@ Twinkle.block.transformBlockPresets = function twinkleblockTransformBlockPresets
 					Twinkle.block.blockPresetsInfo[newPreset].reasonParam = true;
 					Twinkle.block.blockPresetsInfo[blockPreset.value] = Twinkle.block.blockPresetsInfo[newPreset];
 				}
+				if (blockGroup.custom && Twinkle.block.blockPresetsInfo[blockPreset.value].expiry === undefined) {
+					Twinkle.block.blockPresetsInfo[blockPreset.value].expiry = '24 hours';
+				}
 				blockPreset.value = newPreset;
 			});
 		});
@@ -710,25 +662,20 @@ Twinkle.block.blockGroups = [
 	{
 		label: '一般的封禁理由',
 		list: [
-			{ label: wgULS('[[WP:VAN|破坏]]', '[[WP:VAN|破壞]]'), value: 'uw-vblock' },
-			{ label: wgULS('[[WP:VAN#LANG|繁简破坏]]', '[[WP:VAN#LANG|繁簡破壞]]'), value: 'uw-block1' },
-			{ label: wgULS('跨维基项目破坏', '跨維基項目破壞'), value: 'uw-block1', forRegisteredOnly: true },
-			{ label: wgULS('[[WP:VOA|纯粹破坏]]', '[[WP:VOA|純粹破壞]]'), value: 'uw-block3' },
-			{ label: wgULS('不断加入[[Wikipedia:垃圾内容|垃圾链接]]', '不斷加入[[Wikipedia:垃圾內容|垃圾連結]]'), value: 'uw-sblock' },
-			{ label: wgULS('[[WP:SOAP|散发广告/宣传]]', '[[WP:SOAP|散發廣告/宣傳]]'), value: 'uw-block1' },
-			{ label: wgULS('仅[[WP:SOAP|散发广告/宣传]]', '僅[[WP:SOAP|散發廣告/宣傳]]'), value: 'uw-block3', forRegisteredOnly: true },
-			{ label: wgULS('违反[[WP:3RR|回退不过三原则]]', '違反[[WP:3RR|回退不過三原則]]'), value: 'uw-3block' },
-			{ label: wgULS('无礼的行为、[[WP:NPA|攻击别人]]', '無禮的行為、[[WP:NPA|攻擊別人]]'), value: 'uw-block1' },
-			{ label: wgULS('[[WP:骚扰|骚扰用户]]', '[[WP:騷擾|騷擾用戶]]'), value: 'uw-block1' },
-			{ label: wgULS('[[WP:扰乱|扰乱]]', '[[WP:擾亂|擾亂]]'), value: 'uw-block1' },
-			{ label: wgULS('[[WP:GAME|游戏维基规则]]', '[[WP:GAME|遊戲維基規則]]'), value: 'uw-block1' },
-			{ label: wgULS('确认为[[WP:SOCK|傀儡]]或[[WP:MEAT|真人傀儡]]', '確認為[[WP:SOCK|傀儡]]或[[WP:MEAT|真人傀儡]]'), value: 'uw-block3' },
-			{ label: wgULS('滥用[[WP:SOCK|傀儡]]', '濫用[[WP:SOCK|傀儡]]'), value: 'uw-block1', forRegisteredOnly: true },
+			{ label: wgULS('破坏', '破壞'), value: 'uw-vblock' },
+			{ label: wgULS('繁简破坏', '繁簡破壞'), value: 'uw-block1' },
+			{ label: wgULS('跨维基项目破坏', '跨維基項目破壞'), value: 'uw-block3', forRegisteredOnly: true },
+			{ label: wgULS('纯粹破坏', '純粹破壞'), value: 'uw-block3' },
+			{ label: wgULS('散发广告/宣传', '散發廣告/宣傳'), value: 'uw-block1' },
+			{ label: wgULS('仅散发广告/宣传', '僅散發廣告/宣傳'), value: 'uw-block3', forRegisteredOnly: true },
+			{ label: wgULS('无礼的行为、攻击别人', '無禮的行為、攻擊別人'), value: 'uw-block1' },
+			{ label: wgULS('骚扰用户', '騷擾用戶'), value: 'uw-block1' },
+			{ label: wgULS('扰乱', '擾亂'), value: 'uw-block1' },
+			{ label: wgULS('确认为傀儡或真人傀儡', '確認為傀儡'), value: 'uw-block3' },
 			{ label: wgULS('屡次增加不实资料', '屢次增加不實資料'), value: 'uw-block1' },
 			{ label: wgULS('在条目中增加无意义文字', '在條目中增加無意義文字'), value: 'uw-block1' },
 			{ label: wgULS('无故删除条目内容', '無故刪除條目內容'), value: 'uw-dblock' },
-			{ label: wgULS('多次加入[[WP:COPYVIO|侵犯版权]]的内容', '多次加入[[WP:COPYVIO|侵犯版權]]的內容'), value: 'uw-block1' },
-			{ label: wgULS('机器人发生故障并必须紧急停止', '機器人發生故障並必須緊急停止'), value: 'Bot block message', forRegisteredOnly: true }
+			{ label: wgULS('多次加入侵犯版权的内容', '多次加入侵犯版權的內容'), value: 'uw-block1' },
 			// { label: wgULS('剥夺编辑对话页权限', '剝奪編輯對話頁權限'), value: '' }
 		]
 	},
@@ -739,22 +686,13 @@ Twinkle.block.blockGroups = [
 	{
 		label: wgULS('用户名封禁', '用戶名封禁'),
 		list: [
-			{ label: '', value: 'uw-ublock|误导', forRegisteredOnly: true },
-			{ label: '', value: 'uw-ublock|宣传', forRegisteredOnly: true },
-			{ label: '', value: 'uw-ublock|攻击|或侮辱性', forRegisteredOnly: true },
-			{ label: '', value: 'uw-ublock|混淆', forRegisteredOnly: true }
+			{ label: wgULS('用户名不当', '用戶名不當'), value: 'uw-block3', forRegisteredOnly: true }
 		]
 	},
 	{
 		label: '其他模板',
 		list: [
-			{ label: '', value: 'uw-ublock', forRegisteredOnly: true },
-			// { label: '', value: 'range block' },
-			{ label: '', value: 'anonblock', forAnonOnly: true },
-			{ label: '', value: 'schoolblock', forAnonOnly: true },
-			{ label: '', value: 'blocked proxy', forAnonOnly: true },
-			{ label: '', value: 'checkuserblock', forAnonOnly: true },
-			{ label: '', value: 'checkuserblock-account', forRegisteredOnly: true }
+			{ label: '', value: 'blocked proxy', forAnonOnly: true }
 		]
 	}
 ];
@@ -800,10 +738,9 @@ Twinkle.block.callback.change_preset = function twinkleblockCallbackChangePreset
 		return;
 	}
 
-	e.target.form.template.value = Twinkle.block.blockPresetsInfo[key].templateName || key;
-	e.target.form.template.value = key;
+	// e.target.form.template.value = Twinkle.block.blockPresetsInfo[key].templateName || key;
 	Twinkle.block.callback.update_form(e, Twinkle.block.blockPresetsInfo[key]);
-	Twinkle.block.callback.change_template(e);
+	// Twinkle.block.callback.change_template(e);
 };
 
 Twinkle.block.callback.change_expiry = function twinkleblockCallbackChangeExpiry(e) {
@@ -1041,7 +978,7 @@ Twinkle.block.callback.evaluate = function twinkleblockCallbackEvaluate(e) {
 
 		Morebits.simpleWindow.setButtonsEnabled(false);
 		Morebits.status.init(e.target);
-		var unblockStatusElement = new Morebits.status(wgULS('执行解除封禁', '執行解除封禁'));
+		var unblockStatusElement = new Morebits.status(wgULS('执行解除封禁', '執行解除封禁')); // eslint-disable-line no-redeclare
 		unblockoptions.action = 'unblock';
 		unblockoptions.user = Morebits.wiki.flow.relevantUserName();
 
@@ -1139,6 +1076,32 @@ Twinkle.block.callback.issue_template = function twinkleblockCallbackIssueTempla
 
 };
 
+Twinkle.block.formatBlockTime = function twinkleblockFormatBlockTime(time) {
+	var m;
+	if ((m = time.match(/^\s*(\d+)\s*seconds?\s*$/)) !== null) {
+		return m[1] + '秒';
+	}
+	if ((m = time.match(/^\s*(\d+)\s*min(ute)?s?\s*$/)) !== null) {
+		return m[1] + '分';
+	}
+	if ((m = time.match(/^\s*(\d+)\s*hours?\s*$/)) !== null) {
+		return m[1] + '小時';
+	}
+	if ((m = time.match(/^\s*(\d+)\s*days?\s*$/)) !== null) {
+		return m[1] + '天';
+	}
+	if ((m = time.match(/^\s*(\d+)\s*weeks?\s*$/)) !== null) {
+		return m[1] + '週';
+	}
+	if ((m = time.match(/^\s*(\d+)\s*months?\s*$/)) !== null) {
+		return m[1] + '月';
+	}
+	if ((m = time.match(/^\s*(\d+)\s*years?\s*$/)) !== null) {
+		return m[1] + '年';
+	}
+	return time;
+};
+
 Twinkle.block.callback.getBlockNoticeWikitext = function(params, nosign) {
 	var text = '{{', settings = Twinkle.block.blockPresetsInfo[params.template];
 
@@ -1152,7 +1115,7 @@ Twinkle.block.callback.getBlockNoticeWikitext = function(params, nosign) {
 			if (params.indefinite) {
 				text += '|indef=yes';
 			} else if (!params.blank_duration) {
-				text += '|time=' + params.expiry;
+				text += '|time=' + Twinkle.block.formatBlockTime(params.expiry);
 			}
 		}
 
@@ -1248,5 +1211,6 @@ Twinkle.block.callback.main_flow = function twinkleblockcallbackMain(flowobj) {
 };
 
 })(jQuery);
+
 
 // </nowiki>
