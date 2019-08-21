@@ -502,6 +502,8 @@ Twinkle.block.callback.change_action = function twinkleblockCallbackChangeAction
 		} else {
 			Twinkle.block.callback.change_template(e);
 		}
+	} else if ($form.find('[name=actiontype][value=block]').is(':checked')) {
+		Twinkle.block.callback.change_preset(e);
 	}
 	if ($form.find('[name=actiontype][value=tag]').is(':checked')) {
 		Twinkle.block.callback.change_tag(e);
