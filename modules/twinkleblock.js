@@ -675,8 +675,7 @@ Twinkle.block.blockGroups = [
 			{ label: wgULS('屡次增加不实资料', '屢次增加不實資料'), value: 'uw-block1' },
 			{ label: wgULS('在条目中增加无意义文字', '在條目中增加無意義文字'), value: 'uw-block1' },
 			{ label: wgULS('无故删除条目内容', '無故刪除條目內容'), value: 'uw-dblock' },
-			{ label: wgULS('多次加入侵犯版权的内容', '多次加入侵犯版權的內容'), value: 'uw-block1' },
-			// { label: wgULS('剥夺编辑对话页权限', '剝奪編輯對話頁權限'), value: '' }
+			{ label: wgULS('多次加入侵犯版权的内容', '多次加入侵犯版權的內容'), value: 'uw-block1' }
 		]
 	},
 	{
