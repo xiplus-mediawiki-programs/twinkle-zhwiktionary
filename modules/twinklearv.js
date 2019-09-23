@@ -2,7 +2,7 @@
 // vim: set noet sts=0 sw=8:
 
 
-(function($) {
+(function($) { // eslint-disable-line no-unused-vars
 
 
 /*
