@@ -488,7 +488,7 @@ Twinkle.load = function () {
 	// Twinkle.image();
 	// Maintenance
 	// Twinkle.protect();
-	// Twinkle.tag();
+	Twinkle.tag();
 	// Misc. ones last
 	Twinkle.diff();
 	// Twinkle.unlink();

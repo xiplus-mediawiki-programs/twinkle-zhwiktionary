@@ -299,17 +299,17 @@ Twinkle.tag.updateSortOrder = function(e) {
 					{
 						name: 'histmergeOriginalPage',
 						type: 'input',
-						label: wgULS('来源页面名称（必填）', '來源頁面名稱（必填）')
+						label: wgULS('来源页面名称（必填）：', '來源頁面名稱（必填）：')
 					},
 					{
 						name: 'histmergeReason',
 						type: 'input',
-						label: wgULS('合并理由', '合併理由')
+						label: wgULS('合并理由：', '合併理由：')
 					},
 					{
 						name: 'histmergeSysopDetails',
 						type: 'input',
-						label: wgULS('附加讯息', '附加訊息')
+						label: wgULS('附加讯息：', '附加訊息：')
 					}
 				];
 				break;
@@ -1047,7 +1047,6 @@ Twinkle.tag.callback.evaluate = function friendlytagCallbackEvaluate(e) {
 			params.tagsToRemove = form.getUnchecked('alreadyPresentArticleTags') || [];
 			params.tagsToRemain = form.getChecked('alreadyPresentArticleTags') || [];
 
-			params.group = form.group.checked;
 			params.tagReason = form.tagReason.value;
 
 			if (params.tags.indexOf('History merge') !== -1 && params.histmergeOriginalPage.trim() === '') {
