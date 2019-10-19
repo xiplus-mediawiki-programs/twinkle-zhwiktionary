@@ -1,5 +1,4 @@
 // <nowiki>
-// vim: set noet sts=0 sw=8:
 /**
  * morebits.js
  * ===========
@@ -32,6 +31,29 @@
 
 (function (window, document, $, undefined) { // Wrap entire file with anonymous function
 
+// MediaWiki:Gadget-site-lib.js
+window.wgUXS = function (wg, hans, hant, cn, tw, hk, sg, zh, mo, my) {
+	var ret = {
+		'zh': zh || hans || hant || cn || tw || hk || sg || mo || my,
+		'zh-hans': hans || cn || sg || my,
+		'zh-hant': hant || tw || hk || mo,
+		'zh-cn': cn || hans || sg || my,
+		'zh-sg': sg || hans || cn || my,
+		'zh-tw': tw || hant || hk || mo,
+		'zh-hk': hk || hant || mo || tw,
+		'zh-mo': mo || hant || hk || tw
+	};
+	return ret[wg] || zh || hans || hant || cn || tw || hk || sg || mo || my; // 保證每一語言有值
+};
+
+window.wgULS = function (hans, hant, cn, tw, hk, sg, zh, mo, my) {
+	return wgUXS(mw.config.get('wgUserLanguage'), hans, hant, cn, tw, hk, sg, zh, mo, my); // eslint-disable-line no-undef
+};
+
+window.wgUVS = function (hans, hant, cn, tw, hk, sg, zh, mo, my) {
+	return wgUXS(mw.config.get('wgUserVariant'), hans, hant, cn, tw, hk, sg, zh, mo, my); // eslint-disable-line no-undef
+};
+
 var Morebits = {};
 window.Morebits = Morebits;  // allow global access
 
@@ -43,21 +65,17 @@ window.Morebits = Morebits;  // allow global access
  */
 
 Morebits.userIsInGroup = function (group) {
-	return $.inArray(group, mw.config.get('wgUserGroups')) !== -1;
+	return mw.config.get('wgUserGroups').indexOf(group) !== -1;
 };
-
 
 
 /**
- * **************** Morebits.isIPAddress() ****************
- * Helper function: Returns true if given string contains a valid IPv4 or
- * IPv6 address
+ * **************** Morebits.isIPRange() ****************
  */
 
-Morebits.isIPAddress = function (address) {
-	return mw.util.isIPv4Address(address) || mw.util.isIPv6Address(address);
+Morebits.isIPRange = function (address) {
+	return mw.util.isIPAddress(address, true) && !mw.util.isIPAddress(address);
 };
-
 
 
 /**
@@ -72,7 +90,7 @@ Morebits.sanitizeIPv6 = function (address) {
 	if (address === '') {
 		return null;
 	}
-	if (mw.util.isIPv4Address(address) || !mw.util.isIPv6Address(address)) {
+	if (!mw.util.isIPv6Address(address)) {
 		return address; // nothing else to do for IPv4 addresses or invalid ones
 	}
 	// Remove any whitespaces, convert to upper case
@@ -432,6 +450,9 @@ Morebits.quickForm.element.prototype.compute = function QuickFormElementCompute(
 			if (data.value) {
 				subnode.setAttribute('value', data.value);
 			}
+			if (data.placeholder) {
+				subnode.setAttribute('placeholder', data.placeholder);
+			}
 			subnode.setAttribute('name', data.name);
 			subnode.setAttribute('id', id);
 			subnode.setAttribute('type', 'text');
@@ -637,6 +658,9 @@ Morebits.quickForm.element.prototype.compute = function QuickFormElementCompute(
 			}
 			if (data.value) {
 				subnode.value = data.value;
+			}
+			if (data.placeholder) {
+				subnode.placeholder = data.placeholder;
 			}
 			break;
 		default:
@@ -872,6 +896,53 @@ HTMLFormElement.prototype.getChecked = function(name, type) {
 	return return_array;
 };
 
+/**
+ * getUnchecked:
+ *   Does the same as getChecked above, but with unchecked elements.
+ */
+
+HTMLFormElement.prototype.getUnchecked = function(name, type) {
+	var elements = this.elements[name];
+	if (!elements) {
+		// if the element doesn't exists, return null.
+		return null;
+	}
+	var return_array = [];
+	var i;
+	if (elements instanceof HTMLSelectElement) {
+		var options = elements.options;
+		for (i = 0; i < options.length; ++i) {
+			if (!options[i].selected) {
+				if (options[i].values) {
+					return_array.push(options[i].values);
+				} else {
+					return_array.push(options[i].value);
+				}
+
+			}
+		}
+	} else if (elements instanceof HTMLInputElement) {
+		if (type && elements.type !== type) {
+			return [];
+		} else if (!elements.checked) {
+			return [ elements.value ];
+		}
+	} else {
+		for (i = 0; i < elements.length; ++i) {
+			if (!elements[i].checked) {
+				if (type && elements[i].type !== type) {
+					continue;
+				}
+				if (elements[i].values) {
+					return_array.push(elements[i].values);
+				} else {
+					return_array.push(elements[i].value);
+				}
+			}
+		}
+	}
+	return return_array;
+};
 
 
 /**
@@ -1001,8 +1072,8 @@ if (!String.prototype.trim) {
 	};
 }
 
-// Helper functions to change case of a string
 Morebits.string = {
+	// Helper functions to change case of a string
 	toUpperCaseFirstChar: function(str) {
 		str = str.toString();
 		return str.substr(0, 1).toUpperCase() + str.substr(1);
@@ -1141,6 +1212,15 @@ Morebits.array = {
  */
 Morebits.pageNameNorm = mw.config.get('wgPageName').replace(/_/g, ' ');
 
+
+/**
+ * *************** Morebits.pageNameRegex *****************
+ * For a page name 'Foo bar', returns the string '[Ff]oo bar'
+ * @param {string} pageName - page name without namespace
+ */
+Morebits.pageNameRegex = function(pageName) {
+	return '[' + pageName[0].toUpperCase() + pageName[0].toLowerCase() + ']' + pageName.slice(1);
+};
 
 
 /**
@@ -1747,6 +1827,7 @@ Morebits.wiki.page = function(pageName, currentAction) {
 		tags: '',
 		callbackParameters: null,
 		statusElement: new Morebits.status(currentAction),
+
 		// - edit
 		pageText: null,
 		editMode: 'all',  // save() replaces entire contents of the page by default
@@ -1761,20 +1842,25 @@ Morebits.wiki.page = function(pageName, currentAction) {
 		followRedirect: false,
 		watchlistOption: 'nochange',
 		creator: null,
+
 		// - revert
 		revertOldID: null,
+
 		// - move
 		moveDestination: null,
 		moveTalkPage: false,
 		moveSubpages: false,
 		moveSuppressRedirect: false,
+
 		// - protect
 		protectEdit: null,
 		protectMove: null,
 		protectCreate: null,
 		protectCascade: false,
+
 		// - stabilize (FlaggedRevs)
 		flaggedRevs: null,
+
 		// internal status
 		pageLoaded: false,
 		editToken: null,
@@ -1786,6 +1872,7 @@ Morebits.wiki.page = function(pageName, currentAction) {
 		suppressProtectWarning: false,
 		conflictRetries: 0,
 		retries: 0,
+
 		// callbacks
 		onLoadSuccess: null,
 		onLoadFailure: null,
@@ -1800,6 +1887,7 @@ Morebits.wiki.page = function(pageName, currentAction) {
 		onProtectFailure: null,
 		onStabilizeSuccess: null,
 		onStabilizeFailure: null,
+
 		// internal objects
 		loadQuery: null,
 		loadApi: null,
@@ -2474,7 +2562,7 @@ Morebits.wiki.page = function(pageName, currentAction) {
 
 			// only notify user for redirects, not normalization
 			if ($(xml).find('redirects').length > 0) {
-				Morebits.status.info('Info', wgULS('从 ', '從 ') + ctx.pageName + ' 重定向到 ' + resolvedName);
+				Morebits.status.info(wgULS('信息', '資訊'), wgULS('从 ', '從 ') + ctx.pageName + ' 重定向到 ' + resolvedName);
 			}
 			ctx.pageName = resolvedName;  // always update in case of normalization
 		} else {
@@ -2536,8 +2624,7 @@ Morebits.wiki.page = function(pageName, currentAction) {
 				titles: ctx.pageName  // redirects are already resolved
 			};
 
-			var purgeApi = new Morebits.wiki.api(wgULS('检测到编辑冲突，更新服务器缓存', '檢測到編輯衝突，更新伺服器快取'),
-				purgeQuery, null, ctx.statusElement);
+			var purgeApi = new Morebits.wiki.api(wgULS('检测到编辑冲突，更新服务器缓存', '檢測到編輯衝突，更新伺服器快取'), purgeQuery, null, ctx.statusElement);
 			purgeApi.post({ async: false });  // just wait for it, result is for debugging
 
 			--Morebits.wiki.numberOfActionsLeft;  // allow for normal completion if retry succeeds
@@ -3241,7 +3328,7 @@ Morebits.wiki.flow.check = function(title, callbackOnFlow, callbackOnNonFlow, on
 	checkApi.post();
 }; // end Morebits.wiki.flow
 
-Morebits.wiki.flow.relevantUserName = function () {
+Morebits.wiki.flow.relevantUserName = function (allowBlock) {
 	// 处理Flow页面的问题
 	var name = mw.config.get('wgRelevantUserName');
 	if (name) {
@@ -3249,10 +3336,15 @@ Morebits.wiki.flow.relevantUserName = function () {
 	} else if (mw.config.get('wgPageContentModel') === 'flow-board') {
 		var title = $('a', '#contentSub').attr('title');
 		if (title && title.indexOf('User talk:') === 0) {
-			return title.substr(10);
+			return title.replace(/^User talk:([^/]+).*$/, '$1');
 		}
 		return null;
 
+	} else if (mw.config.get('wgCanonicalSpecialPageName') === 'Contributions') {
+		if ($('#contentSub').find('a[title^="Special:日志/block"]').length && allowBlock) {
+			var link = $('#contentSub').find('a[title^="Special:日志/block"]')[0].href;
+			return mw.util.getParamValue('page', link).replace('User:', '');
+		}
 	}
 	return null;
 
@@ -3720,10 +3812,12 @@ Morebits.status.prototype = {
 			if (type === 'error') {
 				// hack to force the page not to reload when an error is output - see also Morebits.status() above
 				Morebits.wiki.numberOfActionsLeft = 1000;
+
 				// call error callback
 				if (Morebits.status.errorEvent) {
 					Morebits.status.errorEvent();
 				}
+
 				// also log error messages in the browser console
 				console.error(this.textRaw + ': ' + status); // eslint-disable-line no-console
 			}
@@ -3733,7 +3827,7 @@ Morebits.status.prototype = {
 	generate: function() {
 		this.node = document.createElement('div');
 		this.node.appendChild(document.createElement('span')).appendChild(this.text);
-		this.node.appendChild(document.createElement('span')).appendChild(document.createTextNode(': '));
+		this.node.appendChild(document.createElement('span')).appendChild(document.createTextNode('：'));
 		this.target = this.node.appendChild(document.createElement('span'));
 		this.target.appendChild(document.createTextNode('')); // dummy node
 	},
@@ -3814,25 +3908,28 @@ Morebits.checkboxShiftClickSupport = function (jQuerySelector, jQueryContext) {
 	var lastCheckbox = null;
 
 	function clickHandler(event) {
-		var cb = this;
+		var thisCb = this;
 		if (event.shiftKey && lastCheckbox !== null) {
 			var cbs = $(jQuerySelector, jQueryContext); // can't cache them, obviously, if we want to support resorting
 			var index = -1, lastIndex = -1, i;
 			for (i = 0; i < cbs.length; i++) {
-				if (cbs[i] === cb) {
-					index = i; if (lastIndex > -1) {
+				if (cbs[i] === thisCb) {
+					index = i;
+					if (lastIndex > -1) {
 						break;
 					}
 				}
 				if (cbs[i] === lastCheckbox) {
-					lastIndex = i; if (index > -1) {
+					lastIndex = i;
+					if (index > -1) {
 						break;
 					}
 				}
 			}
+
 			if (index > -1 && lastIndex > -1) {
 				// inspired by wikibits
-				var endState = cb.checked;
+				var endState = thisCb.checked;
 				var start, finish;
 				if (index < lastIndex) {
 					start = index + 1;
@@ -3841,12 +3938,13 @@ Morebits.checkboxShiftClickSupport = function (jQuerySelector, jQueryContext) {
 					start = lastIndex;
 					finish = index - 1;
 				}
+
 				for (i = start; i <= finish; i++) {
 					cbs[i].checked = endState;
 				}
 			}
 		}
-		lastCheckbox = cb;
+		lastCheckbox = thisCb;
 		return true;
 	}
 
@@ -4290,6 +4388,5 @@ if (typeof arguments === 'undefined') {  // typeof is here for a reason...
 	window.Status = Morebits.status;
 	window.QueryString = Morebits.queryString;
 }
-
 
 // </nowiki>
