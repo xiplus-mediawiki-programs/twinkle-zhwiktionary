@@ -429,7 +429,10 @@ Twinkle.tag.updateSortOrder = function(e) {
 	$workarea.find('h5:not(:first-child)').css({ 'margin-top': '1em' });
 	$workarea.find('div').filter(':has(span.quickformDescription)').css({ 'margin-top': '0.4em' });
 
-	Morebits.quickForm.getElements(form, 'articleTags').forEach(generateLinks);
+	var articleTags = Morebits.quickForm.getElements(form, 'articleTags');
+	if (articleTags) {
+		articleTags.forEach(generateLinks);
+	}
 	var alreadyPresentTags = Morebits.quickForm.getElements(form, 'alreadyPresentArticleTags');
 	if (alreadyPresentTags) {
 		alreadyPresentTags.forEach(generateLinks);
