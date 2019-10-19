@@ -1040,7 +1040,7 @@ Twinkle.tag.callback.evaluate = function friendlytagCallbackEvaluate(e) {
 	switch (Twinkle.tag.mode) {
 		case '詞條':
 		case '词条':
-			params.tags = form.getChecked('articleTags');
+			params.tags = form.getChecked('articleTags') || [];
 			params.tagsToRemove = form.getUnchecked('alreadyPresentArticleTags') || [];
 			params.tagsToRemain = form.getChecked('alreadyPresentArticleTags') || [];
 
@@ -1052,11 +1052,11 @@ Twinkle.tag.callback.evaluate = function friendlytagCallbackEvaluate(e) {
 			}
 			break;
 		case '重定向':
-			params.tags = form.getChecked('redirectTags');
+			params.tags = form.getChecked('redirectTags') || [];
 			break;
 		case '文件':
 		case '檔案':
-			params.tags = form.getChecked('imageTags');
+			params.tags = form.getChecked('imageTags') || [];
 			break;
 		default:
 			alert('Twinkle.tag：未知模式 ' + Twinkle.tag.mode);
