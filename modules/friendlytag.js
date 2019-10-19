@@ -16,14 +16,17 @@
 Twinkle.tag = function friendlytag() {
 	// redirect tagging
 	if (Morebits.wiki.isPageRedirect()) {
+		// Twinkle.tag.modeOriginal = 'redirect';
 		// Twinkle.tag.mode = '重定向';
 		// Twinkle.addPortletLink(Twinkle.tag.callback, wgULS('标记', '標記'), 'friendly-tag', wgULS('标记重定向', '標記重定向'));
 	// file tagging
 	} else if (mw.config.get('wgNamespaceNumber') === 6 && !document.getElementById('mw-sharedupload') && document.getElementById('mw-imagepage-section-filehistory')) {
+		// Twinkle.tag.modeOriginal = 'file';
 		// Twinkle.tag.mode = wgULS('文件', '檔案');
 		// Twinkle.addPortletLink(Twinkle.tag.callback, wgULS('标记', '標記'), 'friendly-tag', wgULS('标记文件', '標記檔案'));
 	// article/draft tagging
 	} else if ((mw.config.get('wgNamespaceNumber') === 0 && mw.config.get('wgCurRevisionId')) || (Morebits.pageNameNorm === Twinkle.getPref('sandboxPage'))) {
+		Twinkle.tag.modeOriginal = 'article';
 		Twinkle.tag.mode = wgULS('词条', '詞條');
 		// Can't remove tags when not viewing current version
 		Twinkle.tag.canRemove = (mw.config.get('wgCurRevisionId') === mw.config.get('wgRevisionId')) &&
@@ -1033,7 +1036,7 @@ Twinkle.tag.callback.evaluate = function friendlytagCallbackEvaluate(e) {
 	// fields within subgroups of elements with name 'articleTags' (say) have their
 	// name attribute as 'articleTags.' + name of the subgroup element
 
-	var name_prefix = Twinkle.tag.mode + 'Tags.';
+	var name_prefix = Twinkle.tag.modeOriginal + 'Tags.';
 	$(form).find("[name^='" + name_prefix + "']:not(div)").each(function(idx, el) {
 		// el are the HTMLInputElements, el.name gives the name attribute
 		params[el.name.slice(name_prefix.length)] =
