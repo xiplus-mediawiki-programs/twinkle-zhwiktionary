@@ -804,13 +804,7 @@ Twinkle.tag.callbacks = {
 			tagRe = new RegExp('\\{\\{' + tag + '(\\||\\}\\})', 'im');
 			// regex check for preexistence of tag can be skipped if in canRemove mode
 			if (Twinkle.tag.canRemove || !tagRe.exec(pageText)) {
-				// condition Twinkle.tag.article.tags[tag] to ensure that its not a custom tag
-				// Custom tags are assumed non-groupable, since we don't know whether MI template supports them
-				if (Twinkle.tag.article.tags[tag] && Twinkle.tag.multipleIssuesExceptions.indexOf(tag) === -1) {
-					groupableTags.push(tag);
-				} else {
-					tags.push(tag);
-				}
+				tags.push(tag);
 			} else {
 				if (tag === 'History merge') {
 					tags.push(tag);
