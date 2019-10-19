@@ -15,7 +15,7 @@
  */
 
 Twinkle.arv = function twinklearv() {
-	var username = Morebits.wiki.flow.relevantUserName();
+	var username = Morebits.wiki.flow.relevantUserName(true);
 	if (!username) {
 		return;
 	}
