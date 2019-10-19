@@ -165,7 +165,6 @@ if (mw.config.get('skin') === 'vector') {
 
 Twinkle.defaultConfig.friendly = {
 	// Tag
-	groupByDefault: true,
 	watchTaggedPages: false,
 	watchMergeDiscussions: false,
 	markTaggedPagesAsMinor: false,
