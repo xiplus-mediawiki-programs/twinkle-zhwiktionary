@@ -347,6 +347,11 @@ Twinkle.speedy.callback.modeChanged = function twinklespeedyCallbackModeChanged(
 	// }
 
 	switch (namespace) {
+		case 0:  // main
+			work_area.append({ type: 'header', label: wgULS('词条', '詞條') });
+			work_area.append({ type: radioOrCheckbox, name: 'csd', list: Twinkle.speedy.generateCsdList(Twinkle.speedy.articleList, mode) });
+			break;
+
 		case 2:  // user
 			work_area.append({ type: 'header', label: wgULS('用户页', '使用者頁面') });
 			work_area.append({ type: radioOrCheckbox, name: 'csd', list: Twinkle.speedy.generateCsdList(Twinkle.speedy.userList, mode) });
@@ -512,7 +517,13 @@ Twinkle.speedy.customRationale = [
 
 Twinkle.speedy.fileList = [];
 
-Twinkle.speedy.articleList = [];
+Twinkle.speedy.articleList = [
+	{
+		label: wgULS('A1: 标题拼写错误', 'A1: 標題拼寫錯誤'),
+		value: 'a1',
+		tooltip: wgULS('如果正确的标题尚不存在，应移动到正确的标题。如果页面包含有用的内容，应使用{{History merge}}请求合并历史到正确的标题页面。不适用于常见的拼写错误，如有疑虑应提交Wiktionary:删除请求。', '如果正確的標題尚不存在，應移動到正確的標題。如果頁面包含有用的內容，應使用{{History merge}}請求合併歷史到正確的標題頁面。不適用於常見的拼寫錯誤，如有疑慮應提交Wiktionary:刪除請求。')
+	}
+];
 
 Twinkle.speedy.categoryList = [
 	{
@@ -633,6 +644,7 @@ Twinkle.speedy.normalizeHash = {
 	'g11': 'g11',
 	'g13': 'g13',
 	'g15': 'g15',
+	'a1': 'a1',
 	'r2': 'r2',
 	'r3': 'r3',
 	'o1': 'o1',
@@ -656,6 +668,7 @@ Twinkle.speedy.reasonHash = wgULS({
 	'g13': '明显的、拙劣的机器翻译',
 	'g15': '孤立页面',
 	// Articles
+	'a1': '标题拼写错误',
 	// Redirects
 	'r2': '跨名字空间重定向',
 	'r3': '名称错误的重定向',
@@ -682,6 +695,7 @@ Twinkle.speedy.reasonHash = wgULS({
 	'g13': '明顯的、拙劣的機器翻譯',
 	'g15': '孤立頁面',
 	// Articles
+	'a1': '標題拼寫錯誤',
 	// Redirects
 	'r2': '跨名字空間重定向',
 	'r3': '名稱錯誤的重定向',

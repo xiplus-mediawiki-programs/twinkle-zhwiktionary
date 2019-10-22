@@ -35,12 +35,14 @@ Twinkle.config.commonSets = {
 	csdCriteria: {
 		db: wgULS('自定义理由', '自訂理由'),
 		g1: 'G1', g2: 'G2', g3: 'G3', g5: 'G5', g7: 'G7', g9: 'G9', g10: 'G10', g11: 'G11', g13: 'G13', g15: 'G15',
+		a1: 'a1',
 		o1: 'O1', o3: 'O3', o4: 'O4',
 		r2: 'R2', r3: 'R3'
 	},
 	csdCriteriaDisplayOrder: [
 		'db',
 		'g1', 'g2', 'g3', 'g5', 'g7', 'g9', 'g10', 'g11', 'g13', 'g15',
+		'a1',
 		'o1', 'o3', 'o4',
 		'r2', 'r3'
 	],
@@ -53,6 +55,7 @@ Twinkle.config.commonSets = {
 	csdCriteriaNotificationDisplayOrder: [
 		'db',
 		'g1', 'g2', 'g3', 'g5', 'g7', 'g9', 'g10', 'g11', 'g13', 'g15',
+		'a1',
 		'o1', 'o3', 'o4',
 		'r2', 'r3'
 	],
@@ -65,6 +68,7 @@ Twinkle.config.commonSets = {
 	csdAndDICriteriaDisplayOrder: [
 		'db',
 		'g1', 'g2', 'g3', 'g5', 'g7', 'g9', 'g10', 'g11', 'g13', 'g15',
+		'a1',
 		'o1', 'o3', 'o4',
 		'r2', 'r3'
 	],
