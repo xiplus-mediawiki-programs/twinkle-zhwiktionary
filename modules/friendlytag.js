@@ -429,13 +429,14 @@ Twinkle.tag.updateSortOrder = function(e) {
 	$workarea.find('h5:not(:first-child)').css({ 'margin-top': '1em' });
 	$workarea.find('div').filter(':has(span.quickformDescription)').css({ 'margin-top': '0.4em' });
 
-	var articleTags = Morebits.quickForm.getElements(form, 'articleTags');
-	if (articleTags) {
-		articleTags.forEach(generateLinks);
-	}
 	var alreadyPresentTags = Morebits.quickForm.getElements(form, 'alreadyPresentArticleTags');
 	if (alreadyPresentTags) {
 		alreadyPresentTags.forEach(generateLinks);
+	}
+	// in the unlikely case that *every* tag is already on the page
+	var notPresentTags = Morebits.quickForm.getElements(form, 'articleTags');
+	if (notPresentTags) {
+		notPresentTags.forEach(generateLinks);
 	}
 
 	// tally tags added/removed, update statusNode text
@@ -1043,6 +1044,7 @@ Twinkle.tag.callback.evaluate = function friendlytagCallbackEvaluate(e) {
 	switch (Twinkle.tag.mode) {
 		case '詞條':
 		case '词条':
+			// Don't return null if there aren't any available tags
 			params.tags = form.getChecked('articleTags') || [];
 			params.tagsToRemove = form.getUnchecked('alreadyPresentArticleTags') || [];
 			params.tagsToRemain = form.getChecked('alreadyPresentArticleTags') || [];
@@ -1055,10 +1057,12 @@ Twinkle.tag.callback.evaluate = function friendlytagCallbackEvaluate(e) {
 			}
 			break;
 		case '重定向':
+			// Don't return null if there aren't any available tags
 			params.tags = form.getChecked('redirectTags') || [];
 			break;
 		case '文件':
 		case '檔案':
+			// Don't return null if there aren't any available tags
 			params.tags = form.getChecked('imageTags') || [];
 			break;
 		default:
