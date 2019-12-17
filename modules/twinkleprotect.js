@@ -1323,7 +1323,7 @@ Twinkle.protect.callbacks = {
 		} else {
 			if (params.noinclude) {
 				text = '<noinclude>{{' + tag + '}}</noinclude>' + text;
-			} else if (Morebits.wiki.isPageRedirect()) {
+			} else if (/^\s*#(redirect|重定向|重新導向)/i.test(text)) { // redirect page
 				text = text + '\n{{' + tag + '}}';
 			} else {
 				text = '{{' + tag + '}}\n' + text;
