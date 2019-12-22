@@ -10,8 +10,8 @@
  *** twinklewarn.js: Warn module
  ****************************************
  * Mode of invocation:     Tab ("Warn")
- * Active on:              User talk pages
- * Config directives in:   TwinkleConfig
+ * Active on:              Any page with relevant user name (userspace, contribs,
+ *                         etc.), as well as diffs and the rollback success page
  */
 
 
