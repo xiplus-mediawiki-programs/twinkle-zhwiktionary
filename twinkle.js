@@ -473,7 +473,7 @@ Twinkle.load = function () {
 	// Twinkle.talkback();
 	// Deletion
 	Twinkle.speedy();
-	// Twinkle.copyvio();
+	Twinkle.copyvio();
 	Twinkle.xfd();
 	// Twinkle.image();
 	// Maintenance
