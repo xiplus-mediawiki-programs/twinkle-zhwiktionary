@@ -100,7 +100,7 @@ Twinkle.copyvio.callbacks = {
 				flowpage.newTopic();
 			}, function () {
 				var usertalkpage = new Morebits.wiki.page('User talk:' + initialContrib, wgULS('通知页面创建者（' + initialContrib + '）', '通知頁面建立者（' + initialContrib + '）'));
-				var notifytext = '\n{{subst:AFDNote|' + mw.config.get('wgPageName') + '}}';
+				var notifytext = '\n{{subst:AFDNote|' + mw.config.get('wgPageName') + '}}--~~~~';
 				usertalkpage.setAppendText(notifytext);
 				usertalkpage.setEditSummary(wgULS('通知：页面[[', '通知：頁面[[') + mw.config.get('wgPageName') + wgULS(']]疑似侵犯版权', ']]疑似侵犯版權') + Twinkle.getPref('summaryAd'));
 				usertalkpage.setTags(Twinkle.getPref('revisionTags'));
