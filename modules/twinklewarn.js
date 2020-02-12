@@ -11,7 +11,7 @@
  ****************************************
  * Mode of invocation:     Tab ("Warn")
  * Active on:              Any page with relevant user name (userspace, contribs,
- *                         etc.), as well as diffs and the rollback success page
+ *                         etc.), as well as the rollback success page
  */
 
 
@@ -29,6 +29,15 @@ Twinkle.warn = function twinklewarn() {
 			$vandalTalkLink.css('font-weight', 'bold');
 		}
 	}
+
+	if (mw.config.get('wgCanonicalSpecialPageName') === 'AbuseLog' && mw.config.get('wgAbuseFilterVariables') !== null) {
+		var afTalkLink = $('.mw-usertoollinks-talk').first();
+		if (afTalkLink.length) {
+			Twinkle.warn.makeVandalTalkLink(afTalkLink, mw.config.get('wgAbuseFilterVariables').page_prefixedtitle);
+			afTalkLink.css('font-weight', 'bold');
+		}
+	}
+
 	// Override the mw.notify function to allow us to inject a link into the
 	// rollback success popup. Only users with the 'rollback' right need this,
 	// but we have no nice way of knowing who has that right (what with global
