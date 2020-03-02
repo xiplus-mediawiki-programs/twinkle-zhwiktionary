@@ -237,11 +237,12 @@ Twinkle.arv.callback.evaluate = function(e) {
 
 			aivPage.load(function() {
 				var text = aivPage.getPageText();
+				var $aivLink = '<a target="_blank" href="/wiki/WT:BP">WT:BP</a>';
 
 				// check if user has already been reported
 				if (new RegExp('==\\s*\\{\\{\\s*(?:[Vv]andal)\\s*\\|\\s*(?:1=)?\\s*' + RegExp.escape(uid, true) + '\\s*\\}\\}\\s*==').test(text)) {
 					aivPage.getStatusElement().error(wgULS('报告已存在，将不会加入新的', '報告已存在，將不會加入新的'));
-					Morebits.status.printUserText(reason, wgULS('您键入的评论已在下方提供，您可以将其加入到VIP已存在的小节中：', '您鍵入的評論已在下方提供，您可以將其加入到VIP已存在的小節中：'));
+					Morebits.status.printUserText(reason, wgULS('您键入的评论已在下方提供，您可以将其加入到' + $aivLink + '已存在的小节中：', '您鍵入的評論已在下方提供，您可以將其加入到' + $aivLink + '已存在的小節中：'));
 					return;
 				}
 				aivPage.getStatusElement().status(wgULS('添加新报告…', '加入新報告…'));
