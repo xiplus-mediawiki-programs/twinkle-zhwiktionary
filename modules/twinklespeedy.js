@@ -256,7 +256,7 @@ Twinkle.speedy.initDialog = function twinklespeedyInitDialog(callbackfunc) {
 	});
 
 	if (Twinkle.getPref('speedySelectionStyle') !== 'radioClick') {
-		form.append({ type: 'submit' });
+		form.append({ type: 'submit', className: 'tw-speedy-submit' }); // Renamed in modeChanged
 	}
 
 	var result = form.render();
@@ -310,9 +310,11 @@ Twinkle.speedy.callback.modeChanged = function twinklespeedyCallbackModeChanged(
 	if (Twinkle.speedy.mode.isSysop(mode)) {
 		$('[name=delete_options]').show();
 		$('[name=tag_options]').hide();
+		$('button.tw-speedy-submit').text(wgULS('删除页面', '刪除頁面'));
 	} else {
 		$('[name=delete_options]').hide();
 		$('[name=tag_options]').show();
+		$('button.tw-speedy-submit').text(wgULS('标记页面', '標記頁面'));
 	}
 
 	var work_area = new Morebits.quickForm.element({
