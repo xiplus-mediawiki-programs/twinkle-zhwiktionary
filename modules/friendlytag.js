@@ -538,7 +538,6 @@ Twinkle.tag.callbacks = {
 
 		// Remove tags that become superfluous with this action
 		var pageText = pageobj.getPageText().replace(/\{\{\s*([Nn]ew unreviewed article|[Uu]nreviewed|[Uu]serspace draft)\s*(\|(?:\{\{[^{}]*\}\}|[^{}])*)?\}\}\s*/g, '');
-		var summaryText;
 		var params = pageobj.getCallbackParameters();
 
 		/**
@@ -546,18 +545,40 @@ Twinkle.tag.callbacks = {
 		 * Called from removeTags()
 		 */
 		var postRemoval = function() {
+			// Build edit summary
+			var makeSentence = function(array) {
+				if (array.length < 3) {
+					return array.join('和');
+				}
+				var last = array.pop();
+				return array.join('、') + '和' + last;
+			};
+			var makeTemplateLink = function(tag) {
+				var text = '{{[[';
+				// if it is a custom tag with a parameter
+				if (tag.indexOf('|') !== -1) {
+					tag = tag.slice(0, tag.indexOf('|'));
+				}
+				text += tag.indexOf(':') !== -1 ? tag : 'Template:' + tag + '|' + tag;
+				return text + ']]}}';
+			};
 
-			if (params.tagsToRemove.length) {
-				// Finish summary text
-				summaryText += wgULS('标记', '標記');
+			var summaryText;
+			var addedTags = params.tags.map(makeTemplateLink);
+			var removedTags = params.tagsToRemove.map(makeTemplateLink);
+			if (addedTags.length) {
+				summaryText = wgULS('添加', '加入') + makeSentence(addedTags);
+				summaryText += removedTags.length ? '並移除' + makeSentence(removedTags) : '';
+			} else {
+				summaryText = '移除' + makeSentence(removedTags);
 			}
-
+			summaryText += wgULS('标记', '標記');
 			if (params.reason) {
 				summaryText += '：' + params.reason;
 			}
 
 			// avoid truncated summaries
-			if (summaryText.length > (254 - Twinkle.getPref('summaryAd').length)) {
+			if (summaryText.length > (499 - Twinkle.getPref('summaryAd').length)) {
 				summaryText = summaryText.replace(/\[\[[^|]+\|([^\]]+)\]\]/g, '$1');
 			}
 
@@ -637,28 +658,18 @@ Twinkle.tag.callbacks = {
 		var removeTags = function removeTags() {
 
 			if (params.tagsToRemove.length === 0) {
-				// finish summary text from adding of tags, in this case where there are
-				// no tags to be removed
-				summaryText += wgULS('标记到词条', '標記到詞條');
-
 				postRemoval();
 				return;
 			}
 
 			Morebits.status.info(wgULS('信息', '資訊'), wgULS('移除取消选择的已存在标记', '移除取消選擇的已存在標記'));
 
-			if (params.tags.length > 0) {
-				summaryText += (tags.length ? wgULS('标记', '標記') : '') + '並移除';
-			} else {
-				summaryText = wgULS('已從词条移除', '已從詞條移除');
-			}
-
 			var getRedirectsFor = [];
 
 			// Remove the tags from the page text, if found in its proper name,
 			// otherwise moves it to `getRedirectsFor` array earmarking it for
 			// later removal
-			params.tagsToRemove.forEach(function removeTag(tag, tagIndex) {
+			params.tagsToRemove.forEach(function removeTag(tag) {
 				var tag_re = new RegExp('\\{\\{' + Morebits.pageNameRegex(tag) + '\\s*(\\|[^}]+)?\\}\\}\\n?');
 
 				if (tag_re.test(pageText)) {
@@ -666,16 +677,6 @@ Twinkle.tag.callbacks = {
 				} else {
 					getRedirectsFor.push('Template:' + tag);
 				}
-
-				// Producing summary text for current tag removal
-				if (tagIndex > 0) {
-					if (tagIndex === (params.tagsToRemove.length - 1)) {
-						summaryText += '和';
-					} else if (tagIndex < (params.tagsToRemove.length - 1)) {
-						summaryText += '、';
-					}
-				}
-				summaryText += '{{[[Template:' + tag + '|' + tag + ']]}}';
 			});
 
 			if (!getRedirectsFor.length) {
@@ -725,9 +726,8 @@ Twinkle.tag.callbacks = {
 			return;
 		}
 
+		var tagRe, tagText = '', tags = [], groupableTags = [], groupableExistingTags = [];
 		// Executes first: addition of selected tags
-		summaryText = wgULS('添加', '加入');
-		var tagRe, tagText = '', tags = [], groupableTags = [], totalTags;
 
 		/**
 		 * Updates `tagText` with the syntax of `tagName` template with its parameters
@@ -758,23 +758,6 @@ Twinkle.tag.callbacks = {
 				currentTag += '|time={{subst:#time:c}}}}\n';
 				tagText += currentTag;
 			}
-
-			if (tagIndex > 0) {
-				if (tagIndex === (totalTags - 1)) {
-					summaryText += '和';
-				} else if (tagIndex < (totalTags - 1)) {
-					summaryText += '、';
-				}
-			}
-
-			summaryText += '{{[[';
-			// if it is a custom tag with a parameter
-			if (tagName.indexOf('|') !== -1) {
-				tagName = tagName.slice(0, tagName.indexOf('|'));
-			}
-			summaryText += tagName.indexOf(':') !== -1 ? tagName : 'Template:' + tagName + '|' + tagName;
-			summaryText += ']]}}';
-
 		};
 
 		/**
@@ -783,7 +766,6 @@ Twinkle.tag.callbacks = {
 		 * {{multiple issues}} is not being added to the page at all
 		 */
 		var addUngroupedTags = function() {
-			totalTags = tags.length;
 			$.each(tags, addTag);
 
 			// Smartly insert the new tags after any hatnotes or
@@ -819,7 +801,6 @@ Twinkle.tag.callbacks = {
 
 		tags = tags.concat(groupableTags);
 		addUngroupedTags();
-
 	},
 
 	redirect: function redirect(pageobj) {
@@ -887,7 +868,7 @@ Twinkle.tag.callbacks = {
 		summaryText += (tags.length > 0 ? wgULS('标记', '標記') : '') + '到重定向';
 
 		// avoid truncated summaries
-		if (summaryText.length > (254 - Twinkle.getPref('summaryAd').length)) {
+		if (summaryText.length > (499 - Twinkle.getPref('summaryAd').length)) {
 			summaryText = summaryText.replace(/\[\[[^|]+\|([^\]]+)\]\]/g, '$1');
 		}
 
