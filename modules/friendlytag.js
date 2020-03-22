@@ -97,11 +97,12 @@ Twinkle.tag.callback = function friendlytagCallback() {
 			});
 
 			form.append({
-				type: 'textarea',
-				name: 'tagReason',
-				label: wgULS('维护标记理由（编辑摘要）：', '維護標記理由（編輯摘要）：'),
-				tooltip: wgULS('说明加入这些维护模板的原因，指出词条内容的哪些部分有问题，如果理由很长则应该发表在讨论页。',
-					'說明加入這些維護模板的原因，指出詞條內容的哪些部分有問題，如果理由很長則應該發表在討論頁。')
+				type: 'input',
+				label: wgULS('理由：', '理由：'),
+				name: 'reason',
+				tooltip: wgULS('附加于编辑摘要的可选理由，例如指出条目内容的哪些部分有问题或移除模板的理由，但如果理由很长则应该发表在讨论页。',
+					'附加於編輯摘要的可選理由，例如指出條目內容的哪些部分有問題或移除模板的理由，但如果理由很長則應該發表在討論頁。'),
+				size: '80px'
 			});
 
 			break;
@@ -333,8 +334,6 @@ Twinkle.tag.updateSortOrder = function(e) {
 					value: tag,
 					label: '{{' + tag + '}}' + (description ? ': ' + description : ''),
 					checked: unCheckedTags.indexOf(tag) === -1
-					// , subgroup: { type: 'input', name: 'removeReason', label: 'Reason', tooltip: 'Enter reason for removing this tag' }
-					// TODO: add option for providing reason for removal
 				};
 
 			checkboxes.push(checkbox);
@@ -553,13 +552,8 @@ Twinkle.tag.callbacks = {
 				summaryText += wgULS('标记', '標記');
 			}
 
-			var tagReason = params.tagReason || '';
-			tagReason = tagReason.trim();
-			if (tagReason !== '') {
-				if (tagReason.search(/[.?!;，。？！；]$/) === -1) {
-					tagReason += '。';
-				}
-				summaryText = tagReason + summaryText;
+			if (params.reason) {
+				summaryText += '：' + params.reason;
 			}
 
 			// avoid truncated summaries
@@ -1047,8 +1041,7 @@ Twinkle.tag.callback.evaluate = function friendlytagCallbackEvaluate(e) {
 			params.tags = form.getChecked('articleTags') || [];
 			params.tagsToRemove = form.getUnchecked('alreadyPresentArticleTags') || [];
 			params.tagsToRemain = form.getChecked('alreadyPresentArticleTags') || [];
-
-			params.tagReason = form.tagReason.value;
+			params.reason = form.reason.value.trim();
 
 			if (params.tags.indexOf('History merge') !== -1 && params.histmergeOriginalPage.trim() === '') {
 				alert(wgULS('您必须指定{{History merge}}的来源页面名称', '您必須指定{{History merge}}的來源頁面名稱'));
