@@ -726,7 +726,7 @@ Twinkle.tag.callbacks = {
 			return;
 		}
 
-		var tagRe, tagText = '', tags = [], groupableTags = [], groupableExistingTags = [];
+		var tagRe, tagText = '', tags = [], groupableTags = [];
 		// Executes first: addition of selected tags
 
 		/**
