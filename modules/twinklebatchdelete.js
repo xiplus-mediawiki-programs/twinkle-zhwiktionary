@@ -1,5 +1,4 @@
 // <nowiki>
-// vim: set noet sts=0 sw=8:
 
 
 (function($) {
@@ -32,7 +31,7 @@ var subpagesLoaded;
 Twinkle.batchdelete.callback = function twinklebatchdeleteCallback() {
 	subpagesLoaded = false;
 	var Window = new Morebits.simpleWindow(600, 400);
-	Window.setTitle(wgULS('批量删除', '批量刪除'));
+	Window.setTitle(wgULS('批量删除', '批次刪除'));
 	Window.setScriptName('Twinkle');
 	Window.addFooterLink(wgULS('Twinkle帮助', 'Twinkle說明'), 'w:Help:Twinkle#管理员专用模块');
 
@@ -49,13 +48,13 @@ Twinkle.batchdelete.callback = function twinklebatchdeleteCallback() {
 					type: 'checkbox',
 					list: [
 						{
-							label: wgULS('删除关联的讨论页（用户对话页除外）', '刪除關聯的討論頁（用戶對話頁除外）'),
+							label: wgULS('删除关联的讨论页（用户讨论页除外）', '刪除關聯的討論頁（使用者討論頁除外）'),
 							name: 'delete_talk',
 							value: 'delete_talk',
 							checked: true
 						},
 						{
-							label: wgULS('删除到已删页面的重定向页', '刪除到已刪頁面的重新導向頁'),
+							label: wgULS('删除到已删页面的重定向页', '刪除到已刪頁面的重新導向頁面'),
 							name: 'delete_redirects',
 							value: 'delete_redirects',
 							checked: true
@@ -75,12 +74,12 @@ Twinkle.batchdelete.callback = function twinklebatchdeleteCallback() {
 										value: 'delete_subpage_talks'
 									},
 									{
-										label: wgULS('删除到已删子页面的重定向页', '刪除到已刪子頁面的重新導向頁'),
+										label: wgULS('删除到已删子页面的重定向页', '刪除到已刪子頁面的重新導向頁面'),
 										name: 'delete_subpage_redirects',
 										value: 'delete_subpage_redirects'
 									},
 									{
-										label: wgULS('取消所有已删页面的链入（仅处理条目及Portal命名空间）', '取消所有已刪頁面的連入（僅處理條目及Portal名字空間）'),
+										label: wgULS('取消所有已删页面的链入（仅处理条目及Portal名字空间）', '取消所有已刪頁面的連入（僅處理條目及Portal命名空間）'),
 										name: 'unlink_subpages',
 										value: 'unlink_subpages'
 									}
@@ -91,13 +90,13 @@ Twinkle.batchdelete.callback = function twinklebatchdeleteCallback() {
 				}
 			},
 			{
-				label: wgULS('取消链入（仅处理条目及Portal命名空间）', '取消連入（僅處理條目及Portal名字空間）'),
+				label: wgULS('取消链入（仅处理条目及Portal名字空间）', '取消連入（僅處理條目及Portal命名空間）'),
 				name: 'unlink_page',
 				value: 'unlink',
 				checked: false
 			},
 			{
-				label: wgULS('移除文件使用（所有命名空间）', '移除檔案使用（所有名字空間）'),
+				label: wgULS('移除文件使用（所有名字空间）', '移除檔案使用（所有命名空間）'),
 				name: 'unlink_file',
 				value: 'unlink_file',
 				checked: true
@@ -105,12 +104,19 @@ Twinkle.batchdelete.callback = function twinklebatchdeleteCallback() {
 		]
 	});
 	form.append({
-		type: 'input',
-		name: 'reason',
-		label: '理由：',
-		size: 60
+		type: 'select',
+		name: 'common_reason',
+		label: '常用理由：',
+		style: 'width: 85%;',
+		list: Twinkle.batchdelete.deletereasonlist,
+		event: Twinkle.batchdelete.callback.change_common_reason
 	});
-
+	form.append({
+		name: 'reason',
+		type: 'input',
+		label: '理由：',
+		size: 75
+	});
 	var query = {
 		'action': 'query',
 		'prop': 'revisions|info|imageinfo',
@@ -134,7 +140,7 @@ Twinkle.batchdelete.callback = function twinklebatchdeleteCallback() {
 			query.gapprefix = mw.util.getParamValue('prefix');
 		} else {
 			var pathSplit = decodeURIComponent(location.pathname).split('/');
-			if (pathSplit.length < 3 || pathSplit[2] !== 'Special:PrefixIndex') {
+			if (pathSplit.length < 3 || pathSplit[2] !== 'Special:前缀索引') {
 				return;
 			}
 			var titleSplit = pathSplit[3].split(':');
@@ -164,7 +170,7 @@ Twinkle.batchdelete.callback = function twinklebatchdeleteCallback() {
 
 	Twinkle.batchdelete.pages = {};
 
-	var statelem = new Morebits.status(wgULS('抓取页面列表', '擷取頁面列表'));
+	var statelem = new Morebits.status(wgULS('抓取页面列表', '抓取頁面列表'));
 	var wikipedia_api = new Morebits.wiki.api(wgULS('加载中…', '載入中…'), query, function(apiobj) {
 		var xml = apiobj.responseXML;
 		var $pages = $(xml).find('page').filter(':not([missing])');  // :not([imagerepository="shared"])
@@ -273,6 +279,29 @@ Twinkle.batchdelete.generateNewPageList = function(form) {
 			return e;
 		})
 	}).render();
+};
+
+Twinkle.batchdelete.deletereasonlist = [
+	{
+		label: wgULS('请选择', '請選擇'),
+		value: ''
+	},
+	{
+		label: wgULS('G1: 无实际内容或非词典', 'G1: 無實際內容或非詞典'),
+		value: wgULS('[[Wiktionary:CSD|G1]]: 无实际内容或非词典', '[[Wiktionary:CSD|G1]]: 無實際內容或非詞典')
+	},
+	{
+		label: wgULS('A1: 标题拼写错误', 'A1: 標題拼寫錯誤'),
+		value: wgULS('[[Wiktionary:CSD|A1]]: 标题拼写错误', '[[Wiktionary:CSD|A1]]: 標題拼寫錯誤')
+	}
+];
+
+Twinkle.batchdelete.callback.change_common_reason = function twinklebatchdeleteCallbackChangeCustomReason(e) {
+	if (e.target.form.reason.value !== '') {
+		e.target.form.reason.value = Morebits.string.appendPunctuation(e.target.form.reason.value);
+	}
+	e.target.form.reason.value += e.target.value;
+	e.target.value = '';
 };
 
 Twinkle.batchdelete.callback.toggleSubpages = function twDbatchToggleSubpages(e) {
@@ -435,7 +464,7 @@ Twinkle.batchdelete.callback.toggleSubpages = function twDbatchToggleSubpages(e)
 };
 
 Twinkle.batchdelete.callback.evaluate = function twinklebatchdeleteCallbackEvaluate(event) {
-	Morebits.wiki.actionCompleted.notice = wgULS('批量删除已完成', '批量刪除已完成');
+	Morebits.wiki.actionCompleted.notice = wgULS('批量删除已完成', '批次刪除已完成');
 
 	var form = event.target;
 
@@ -496,6 +525,7 @@ Twinkle.batchdelete.callback.evaluate = function twinklebatchdeleteCallbackEvalu
 		wikipedia_page.setCallbackParameters(params);
 		if (delete_page) {
 			wikipedia_page.setEditSummary(reason + Twinkle.getPref('deletionSummaryAd'));
+			wikipedia_page.setTags(Twinkle.getPref('revisionTags'));
 			wikipedia_page.suppressProtectWarning();
 			wikipedia_page.deletePage(Twinkle.batchdelete.callbacks.doExtras, pageDeleter.workerFailure);
 		} else {
@@ -522,6 +552,7 @@ Twinkle.batchdelete.callback.evaluate = function twinklebatchdeleteCallbackEvalu
 				var wikipedia_page = new Morebits.wiki.page(pageName, wgULS('正在删除子页面 ', '正在刪除子頁面 ') + pageName);
 				wikipedia_page.setCallbackParameters(params);
 				wikipedia_page.setEditSummary(reason + Twinkle.getPref('deletionSummaryAd'));
+				wikipedia_page.setTags(Twinkle.getPref('revisionTags'));
 				wikipedia_page.suppressProtectWarning();
 				wikipedia_page.deletePage(Twinkle.batchdelete.callbacks.doExtras, pageDeleter.workerFailure);
 			});
@@ -611,6 +642,7 @@ Twinkle.batchdelete.callbacks = {
 		redirectDeleter.run(function(pageName) {
 			var wikipedia_page = new Morebits.wiki.page(pageName, wgULS('正在删除 ', '正在刪除 ') + pageName);
 			wikipedia_page.setEditSummary('[[Wiktionary:CSD#G15|G15]]: ' + wgULS('指向已删页面“', '指向已刪頁面「') + apiobj.params.page + wgULS('”的重定向', '」的重新導向') + Twinkle.getPref('deletionSummaryAd'));
+			wikipedia_page.setTags(Twinkle.getPref('revisionTags'));
 			wikipedia_page.deletePage(redirectDeleter.workerSuccess, redirectDeleter.workerFailure);
 		});
 	},
@@ -625,6 +657,7 @@ Twinkle.batchdelete.callbacks = {
 
 		var page = new Morebits.wiki.page(apiobj.params.talkPage, wgULS('正在删除页面 ', '正在刪除頁面 ') + apiobj.params.page + wgULS(' 的讨论页', ' 的討論頁'));
 		page.setEditSummary('[[Wiktionary:CSD#G15|G15]]: ' + wgULS('已删页面“', '已刪頁面「 ') + apiobj.params.page + wgULS('”的[[w:Wikipedia:讨论页|讨论页]]', '」的[[w:Wikipedia:讨论页|討論頁]]') + Twinkle.getPref('deletionSummaryAd'));
+		page.setTags(Twinkle.getPref('revisionTags'));
 		page.deletePage();
 	},
 	unlinkBacklinksMain: function(apiobj) {
@@ -636,11 +669,11 @@ Twinkle.batchdelete.callbacks = {
 			return;
 		}
 
-		var unlinker = new Morebits.batchOperation(wgULS('正在取消到 ', '正在取消到 ') + apiobj.params.page + wgULS(' 的链入', ' 的連入'));
 		unlinker.setOption('chunkSize', Twinkle.getPref('batchdeleteChunks'));
+		var unlinker = new Morebits.batchOperation('正在取消到 ' + apiobj.params.page + wgULS(' 的链入', ' 的連入'));
 		unlinker.setPageList(pages);
 		unlinker.run(function(pageName) {
-			var wikipedia_page = new Morebits.wiki.page(pageName, wgULS('正在取消 ', '正在取消 ') + pageName + wgULS(' 上的链入', ' 上的連入'));
+			var wikipedia_page = new Morebits.wiki.page(pageName, '正在取消 ' + pageName + wgULS(' 上的链入', ' 上的連入'));
 			var params = $.extend({}, apiobj.params);
 			params.title = pageName;
 			params.unlinker = unlinker;
@@ -674,6 +707,7 @@ Twinkle.batchdelete.callbacks = {
 			return;
 		}
 		pageobj.setEditSummary(wgULS('取消到已删页面', '取消到已刪頁面') + params.page + wgULS('的链入', '的連入') + Twinkle.getPref('deletionSummaryAd'));
+		pageobj.setTags(Twinkle.getPref('revisionTags'));
 		pageobj.setPageText(text);
 		pageobj.setCreateOption('nocreate');
 		pageobj.setMaxConflictRetries(10);
@@ -722,11 +756,12 @@ Twinkle.batchdelete.callbacks = {
 		text = wikiPage.getText();
 		Twinkle.batchdelete.unlinkCache[params.title] = text;
 		if (text === old_text) {
-			pageobj.getStatusElement().error(wgULS('在 ', '在 ') + pageobj.getPageName() + wgULS(' 上取消文件 ', ' 上取消檔案 ') + image + wgULS(' 链接失败', ' 連結失敗'));
+			pageobj.getStatusElement().error('在 ' + pageobj.getPageName() + ' 上取消 ' + image + wgULS(' 的文件使用失败', ' 的檔案使用失敗'));
 			params.unlinker.workerFailure(pageobj);
 			return;
 		}
-		pageobj.setEditSummary(wgULS('移除已被删除文件', '移除已被刪除檔案') + image + wgULS('使用，因为：', '使用因，因為：') + params.reason + Twinkle.getPref('deletionSummaryAd'));
+		pageobj.setEditSummary(wgULS('取消使用已被删除文件', '取消使用已被刪除檔案') + image + wgULS('使用，因为：', '使用，因為：') + params.reason);
+		pageobj.setTags(Twinkle.getPref('revisionTags'));
 		pageobj.setPageText(text);
 		pageobj.setCreateOption('nocreate');
 		pageobj.setMaxConflictRetries(10);
