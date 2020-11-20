@@ -291,8 +291,16 @@ Twinkle.batchdelete.deletereasonlist = [
 		value: wgULS('[[Wiktionary:CSD|G1]]: 无实际内容或非词典', '[[Wiktionary:CSD|G1]]: 無實際內容或非詞典')
 	},
 	{
+		label: wgULS('G10: 作者请求或原作者清空页面', 'G10: 作者請求或原作者清空頁面'),
+		value: wgULS('[[Wiktionary:CSD|G10]]: 作者请求或原作者清空页面', '[[Wiktionary:CSD|G10]]: 作者請求或原作者清空頁面')
+	},
+	{
 		label: wgULS('A1: 标题拼写错误', 'A1: 標題拼寫錯誤'),
 		value: wgULS('[[Wiktionary:CSD|A1]]: 标题拼写错误', '[[Wiktionary:CSD|A1]]: 標題拼寫錯誤')
+	},
+	{
+		label: wgULS('O4: 空的类型', 'O4: 空的類別'),
+		value: wgULS('[[Wiktionary:CSD|O4]]: 空的类型', '[[Wiktionary:CSD|O4]]: 空的類別')
 	}
 ];
 
@@ -656,7 +664,7 @@ Twinkle.batchdelete.callbacks = {
 		}
 
 		var page = new Morebits.wiki.page(apiobj.params.talkPage, wgULS('正在删除页面 ', '正在刪除頁面 ') + apiobj.params.page + wgULS(' 的讨论页', ' 的討論頁'));
-		page.setEditSummary('[[Wiktionary:CSD#G15|G15]]: ' + wgULS('已删页面“', '已刪頁面「 ') + apiobj.params.page + wgULS('”的[[w:Wikipedia:讨论页|讨论页]]', '」的[[w:Wikipedia:讨论页|討論頁]]') + Twinkle.getPref('deletionSummaryAd'));
+		page.setEditSummary('[[Wiktionary:CSD#G15|G15]]: ' + wgULS('已删页面“', '已刪頁面「') + apiobj.params.page + wgULS('”的[[w:Wikipedia:讨论页|讨论页]]', '」的[[w:Wikipedia:讨论页|討論頁]]') + Twinkle.getPref('deletionSummaryAd'));
 		page.setTags(Twinkle.getPref('revisionTags'));
 		page.deletePage();
 	},
@@ -722,7 +730,7 @@ Twinkle.batchdelete.callbacks = {
 			return;
 		}
 
-		var unlinker = new Morebits.batchOperation(wgULS('正在取消到 ', '正在取消到 ') + apiobj.params.page + wgULS(' 的链入', ' 的連入'));
+		var unlinker = new Morebits.batchOperation('正在取消到 ' + apiobj.params.page + wgULS(' 的链入', ' 的連入'));
 		unlinker.setOption('chunkSize', Twinkle.getPref('batchdeleteChunks'));
 		unlinker.setPageList(pages);
 		unlinker.run(function(pageName) {
