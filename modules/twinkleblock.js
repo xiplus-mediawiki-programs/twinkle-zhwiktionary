@@ -55,7 +55,7 @@ Twinkle.block.callback = function twinkleblockCallback() {
 				checked: true
 			},
 			{
-				label: wgULS('添加封禁模板到用户对话页', '加入封鎖模板到用戶對話頁'),
+				label: wgULS('加入封禁模板到用户对话页', '加入封鎖模板到用戶對話頁'),
 				value: 'template',
 				tooltip: wgULS('如果执行封禁的管理员忘记发出封禁模板，或你封禁了用户而没有给其发出模板，则你可以用此来发出合适的模板。', '如果執行封鎖的管理員忘記發出封鎖模板，或你封鎖了用戶而沒有給其發出模板，則你可以用此來發出合適的模板。'),
 				checked: false,
@@ -81,11 +81,11 @@ Twinkle.block.callback = function twinkleblockCallback() {
 		]
 	});
 
-	form.append({ type: 'field', label: wgULS('预设', '預設'), name: 'field_preset' });
-	form.append({ type: 'field', label: wgULS('模板选项', '模板設定'), name: 'field_template_options' });
-	form.append({ type: 'field', label: wgULS('封禁选项', '封鎖設定'), name: 'field_block_options' });
+	form.append({ type: 'field', label: wgULS('默认', '預設'), name: 'field_preset' });
+	form.append({ type: 'field', label: wgULS('模板设置', '模板設定'), name: 'field_template_options' });
+	form.append({ type: 'field', label: wgULS('封禁设置', '封鎖設定'), name: 'field_block_options' });
 	form.append({ type: 'field', label: wgULS('标记用户页', '標記用戶頁'), name: 'field_tag_options' });
-	form.append({ type: 'field', label: wgULS('解除封禁选项', '解除封鎖設定'), name: 'field_unblock_options' });
+	form.append({ type: 'field', label: wgULS('解除封禁设置', '解除封鎖設定'), name: 'field_unblock_options' });
 
 	form.append({ type: 'submit', label: '提交' });
 
@@ -150,7 +150,7 @@ Twinkle.block.fetchUserInfo = function twinkleblockFetchUserInfo(fn) {
 			}
 		}, function(msg) {
 			Morebits.status.init($('div[name="currentblock"] span').last()[0]);
-			Morebits.status.warn(wgULS('抓取用户信息出错', '擷取用戶資訊出錯'), msg);
+			Morebits.status.warn(wgULS('抓取用户信息出错', '抓取用戶資訊出錯'), msg);
 		});
 };
 
@@ -183,16 +183,16 @@ Twinkle.block.callback.change_action = function twinkleblockCallbackChangeAction
 	Twinkle.block.callback.saveFieldset($('[name=field_unblock_options]'));
 
 	if ($form.find('[name=actiontype][value=block]').is(':checked')) {
-		field_preset = new Morebits.quickForm.element({ type: 'field', label: wgULS('预设', '預設'), name: 'field_preset' });
+		field_preset = new Morebits.quickForm.element({ type: 'field', label: wgULS('默认', '預設'), name: 'field_preset' });
 		field_preset.append({
 			type: 'select',
 			name: 'preset',
-			label: wgULS('选择预设：', '選擇預設：'),
+			label: wgULS('选择默认：', '選擇預設：'),
 			event: Twinkle.block.callback.change_preset,
 			list: Twinkle.block.callback.filtered_block_groups()
 		});
 
-		field_block_options = new Morebits.quickForm.element({ type: 'field', label: wgULS('封禁选项', '封鎖設定'), name: 'field_block_options' });
+		field_block_options = new Morebits.quickForm.element({ type: 'field', label: wgULS('封禁设置', '封鎖設定'), name: 'field_block_options' });
 		field_block_options.append({ type: 'div', name: 'hasblocklog', label: ' ' });
 		field_block_options.append({ type: 'div', name: 'currentblock', label: ' ' });
 		field_block_options.append({
@@ -231,7 +231,7 @@ Twinkle.block.callback.change_action = function twinkleblockCallbackChangeAction
 		var blockoptions = [
 			{
 				checked: Twinkle.block.field_block_options.nocreate,
-				label: wgULS('禁止创建帐户', '禁止建立帳戶'),
+				label: wgULS('禁止创建账户', '禁止建立帳戶'),
 				name: 'nocreate',
 				value: '1'
 			},
@@ -349,7 +349,7 @@ Twinkle.block.callback.change_action = function twinkleblockCallbackChangeAction
 	}
 
 	if ($form.find('[name=actiontype][value=template]').is(':checked')) {
-		field_template_options = new Morebits.quickForm.element({ type: 'field', label: wgULS('模板选项', '模板設定'), name: 'field_template_options' });
+		field_template_options = new Morebits.quickForm.element({ type: 'field', label: wgULS('模板设置', '模板設定'), name: 'field_template_options' });
 		field_template_options.append({
 			type: 'select',
 			name: 'template',
@@ -438,14 +438,14 @@ Twinkle.block.callback.change_action = function twinkleblockCallbackChangeAction
 		field_tag_options.append({
 			type: 'input',
 			name: 'username',
-			label: wgULS('主账号用户名：', '主帳號用戶名：'),
+			label: wgULS('主账户用户名：', '主帳號用戶名：'),
 			display: 'none'
 		});
 
 	}
 
 	if ($form.find('[name=actiontype][value=unblock]').is(':checked')) {
-		field_unblock_options = new Morebits.quickForm.element({ type: 'field', label: wgULS('解除封禁选项', '解除封鎖設定'), name: 'field_unblock_options' });
+		field_unblock_options = new Morebits.quickForm.element({ type: 'field', label: wgULS('解除封禁设置', '解除封鎖設定'), name: 'field_unblock_options' });
 
 		field_unblock_options.append({
 			type: 'textarea',
@@ -498,9 +498,9 @@ Twinkle.block.callback.change_action = function twinkleblockCallbackChangeAction
 	if (Twinkle.block.currentBlockInfo) {
 		Morebits.status.init($('div[name="currentblock"] span').last()[0]);
 		if (Twinkle.block.currentBlockInfo.partial === '') { // Partial block
-			Morebits.status.warn(relevantUserName + wgULS('已被部分封禁', '已被部分封鎖'), wgULS('提交请求来用给定的选项转为全站封禁', '提交請求來用給定的設定轉為全站封鎖'));
+			Morebits.status.warn(relevantUserName + wgULS('已被部分封禁', '已被部分封鎖'), wgULS('提交请求来用给定的设置转为全站封禁', '提交請求來用給定的設定轉為全站封鎖'));
 		} else if (Twinkle.block.currentBlockInfo.partial === undefined) { // Sitewide block
-			Morebits.status.warn(relevantUserName + wgULS('已被封禁', '已被封鎖'), wgULS('提交请求来用给定的选项重新封禁', '提交請求來用給定的設定重新封鎖'));
+			Morebits.status.warn(relevantUserName + wgULS('已被封禁', '已被封鎖'), wgULS('提交请求来用给定的设置重新封禁', '提交請求來用給定的設定重新封鎖'));
 		}
 		Twinkle.block.callback.update_form(e, Twinkle.block.currentBlockInfo);
 	} else if ($form.find('[name=actiontype][value=template]').is(':checked')) {
@@ -681,16 +681,16 @@ Twinkle.block.blockGroups = [
 			{ label: wgULS('无礼的行为、攻击别人', '無禮的行為、攻擊別人'), value: 'uw-block1' },
 			{ label: wgULS('骚扰用户', '騷擾用戶'), value: 'uw-block1' },
 			{ label: wgULS('扰乱', '擾亂'), value: 'uw-block1' },
-			{ label: wgULS('确认为傀儡或真人傀儡', '確認為傀儡'), value: 'uw-block3' },
+			{ label: wgULS('确认为傀儡', '確認為傀儡'), value: 'uw-block3' },
 			{ label: wgULS('屡次增加不实资料', '屢次增加不實資料'), value: 'uw-block1' },
 			{ label: wgULS('在条目中增加无意义文字', '在條目中增加無意義文字'), value: 'uw-block1' },
 			{ label: wgULS('无故删除条目内容', '無故刪除條目內容'), value: 'uw-dblock' },
-			{ label: wgULS('多次加入侵犯版权的内容', '多次加入侵犯版權的內容'), value: 'uw-block1' }
+			{ label: wgULS('多次加入侵犯著作权的内容', '多次加入侵犯版權的內容'), value: 'uw-block1' }
 		]
 	},
 	{
 		custom: true,
-		label: wgULS('自订的封禁理由', '自訂的封鎖理由')
+		label: wgULS('自定义的封禁理由', '自訂的封鎖理由')
 	},
 	{
 		label: wgULS('用户名封禁', '用戶名封鎖'),
@@ -962,7 +962,7 @@ Twinkle.block.callback.evaluate = function twinkleblockCallbackEvaluate(e) {
 			});
 			mbApi.post();
 		}, function() {
-			statusElement.error(wgULS('未能抓取封禁令牌', '未能擷取封鎖權杖'));
+			statusElement.error(wgULS('未能抓取封禁令牌', '未能抓取封鎖權杖'));
 		});
 	}
 	if (toWarn) {
@@ -970,7 +970,7 @@ Twinkle.block.callback.evaluate = function twinkleblockCallbackEvaluate(e) {
 		Morebits.status.init(e.target);
 
 		if (Morebits.isIPRange(Morebits.wiki.flow.relevantUserName(true))) {
-			new Morebits.status(wgULS('信息', '資訊'), wgULS('由于封禁目标为IP段，加入封鎖模板已略过', '由於封禁目標為IP段，加入封鎖模板已略過'), 'warn');
+			new Morebits.status(wgULS('信息', '資訊'), wgULS('由于封禁目标为IP段，加入封禁模板已略过', '由於封禁目標為IP段，加入封鎖模板已略過'), 'warn');
 		} else {
 			Twinkle.block.callback.issue_template(templateoptions);
 		}
@@ -1004,7 +1004,7 @@ Twinkle.block.callback.evaluate = function twinkleblockCallbackEvaluate(e) {
 			});
 			mbApi.post();
 		}, function() {
-			unblockStatusElement.error(wgULS('未能抓取封禁令牌', '未能擷取封鎖權杖'));
+			unblockStatusElement.error(wgULS('未能抓取封禁令牌', '未能抓取封鎖權杖'));
 		});
 	}
 	if (!toBlock && !toWarn && !toTag && !toProtect && !toUnblock) {
@@ -1024,7 +1024,7 @@ Twinkle.block.callback.taguserpage = function twinkleblockCallbackTagUserpage(pa
 			case 'spp':
 				var username = params.username.trim();
 				if (!username) {
-					return alert(wgULS('请给主账号用户名！', '請給主帳號用戶名！'));
+					return alert(wgULS('请给主账户用户名！', '請給主帳號用戶名！'));
 				}
 				pagetext = '{{spp|' + username + '}}';
 				break;

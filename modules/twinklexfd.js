@@ -147,7 +147,7 @@ Twinkle.xfd.callback.change_category = function twinklexfdCallbackChangeCategory
 			var afd_category = work_area.append({
 				type: 'select',
 				name: 'xfdcat',
-				label: wgULS('选择提删类别：', '選擇提刪類別：'),
+				label: wgULS('选择提删类型：', '選擇提刪類別：'),
 				event: Twinkle.xfd.callback.change_afd_category
 			});
 
@@ -254,7 +254,7 @@ Twinkle.xfd.callbacks = {
 			var params = pageobj.getCallbackParameters();
 
 			// Adding discussion
-			var wikipedia_page = new Morebits.wiki.page(params.logpage, wgULS('添加讨论到当日列表', '加入討論到當日清單'));
+			var wikipedia_page = new Morebits.wiki.page(params.logpage, wgULS('加入讨论到当日清单', '加入討論到當日清單'));
 			wikipedia_page.setFollowRedirect(true);
 			wikipedia_page.setCallbackParameters(params);
 			wikipedia_page.load(Twinkle.xfd.callbacks.afd.todaysList);
@@ -438,7 +438,7 @@ Twinkle.xfd.callbacks = {
 					break;
 			}
 
-			pageobj.setEditSummary(wgULS('添加[[', '加入[[') + Morebits.pageNameNorm + ']]' + Twinkle.getPref('summaryAd'));
+			pageobj.setEditSummary('加入[[' + Morebits.pageNameNorm + ']]' + Twinkle.getPref('summaryAd'));
 			pageobj.setTags(Twinkle.getPref('revisionTags'));
 			switch (Twinkle.getPref('xfdWatchDiscussion')) {
 				case 'yes':
@@ -477,7 +477,7 @@ Twinkle.xfd.callbacks = {
 
 			var copyvio = /(?:\{\{\s*(copyvio)[^{}]*?\}\})/i.exec(text);
 			if (copyvio) {
-				statelem.error(wgULS('页面中已有版权验证模板。', '頁面中已有版權驗證模板。'));
+				statelem.error(wgULS('页面中已有著作权验证模板。', '頁面中已有版權驗證模板。'));
 				return;
 			}
 
@@ -499,7 +499,7 @@ Twinkle.xfd.callbacks = {
 			params.uploader = initialContrib;
 
 			// Adding discussion
-			var wikipedia_page = new Morebits.wiki.page(params.logpage, wgULS('添加讨论到当日列表', '加入討論到當日清單'));
+			var wikipedia_page = new Morebits.wiki.page(params.logpage, wgULS('加入讨论到当日清单', '加入討論到當日清單'));
 			wikipedia_page.setFollowRedirect(true);
 			wikipedia_page.setCallbackParameters(params);
 			wikipedia_page.load(Twinkle.xfd.callbacks.ffd.todaysList);
@@ -567,7 +567,7 @@ Twinkle.xfd.callbacks = {
 			var params = pageobj.getCallbackParameters();
 
 			pageobj.setAppendText('\n{{subst:IfdItem|Filename=' + mw.config.get('wgTitle') + '|Uploader=' + params.uploader + '|Reason=' + Morebits.string.formatReasonText(params.reason) + '}}--~~~~');
-			pageobj.setEditSummary(wgULS('添加[[', '加入[[') + Morebits.pageNameNorm + ']]' + Twinkle.getPref('summaryAd'));
+			pageobj.setEditSummary('加入[[' + Morebits.pageNameNorm + ']]' + Twinkle.getPref('summaryAd'));
 			pageobj.setTags(Twinkle.getPref('revisionTags'));
 			switch (Twinkle.getPref('xfdWatchDiscussion')) {
 				case 'yes':
@@ -650,7 +650,7 @@ Twinkle.xfd.callback.evaluate = function(e) {
 
 			// Tagging page
 			var isScribunto = mw.config.get('wgPageContentModel') === 'Scribunto';
-			wikipedia_page = isScribunto ? new Morebits.wiki.page(mw.config.get('wgPageName') + '/doc', wgULS('添加存废讨论模板到模块文档页', '加入存廢討論模板到模組文件頁')) : new Morebits.wiki.page(mw.config.get('wgPageName'), wgULS('添加存废讨论模板到页面', '加入存廢討論模板到頁面'));
+			wikipedia_page = isScribunto ? new Morebits.wiki.page(mw.config.get('wgPageName') + '/doc', wgULS('加入存废讨论模板到模块文件页', '加入存廢討論模板到模組文件頁')) : new Morebits.wiki.page(mw.config.get('wgPageName'), wgULS('加入存废讨论模板到页面', '加入存廢討論模板到頁面'));
 			wikipedia_page.setFollowRedirect(false);
 			wikipedia_page.setCallbackParameters(params);
 			wikipedia_page.load(Twinkle.xfd.callbacks.afd.tryTagging);
@@ -668,7 +668,7 @@ Twinkle.xfd.callback.evaluate = function(e) {
 			Morebits.wiki.actionCompleted.notice = wgULS('提名完成，重定向到讨论页', '提名完成，重定向到討論頁');
 
 			// Tagging file
-			wikipedia_page = new Morebits.wiki.page(mw.config.get('wgPageName'), wgULS('添加存废讨论模板到文件描述页', '加入存廢討論模板到檔案描述頁'));
+			wikipedia_page = new Morebits.wiki.page(mw.config.get('wgPageName'), wgULS('加入存废讨论模板到文件描述页', '加入存廢討論模板到檔案描述頁'));
 			wikipedia_page.setFollowRedirect(false);
 			wikipedia_page.setCallbackParameters(params);
 			wikipedia_page.load(Twinkle.xfd.callbacks.ffd.tryTagging);

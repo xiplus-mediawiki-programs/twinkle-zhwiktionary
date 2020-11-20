@@ -72,7 +72,7 @@ Twinkle.tag.callback = function friendlytagCallback() {
 				tooltip: wgULS('您可以在Twinkle参数设置（WP:TWPREFS）中更改此项。', '您可以在Twinkle偏好設定（WP:TWPREFS）中更改此項。'),
 				event: Twinkle.tag.updateSortOrder,
 				list: [
-					{ type: 'option', value: 'cat', label: wgULS('按类别', '按類別'), selected: Twinkle.getPref('tagArticleSortOrder') === 'cat' },
+					{ type: 'option', value: 'cat', label: wgULS('按类型', '按類別'), selected: Twinkle.getPref('tagArticleSortOrder') === 'cat' },
 					{ type: 'option', value: 'alpha', label: '按字母', selected: Twinkle.getPref('tagArticleSortOrder') === 'alpha' }
 				]
 			});
@@ -98,7 +98,7 @@ Twinkle.tag.callback = function friendlytagCallback() {
 
 			form.append({
 				type: 'input',
-				label: wgULS('理由：', '理由：'),
+				label: '理由：',
 				name: 'reason',
 				tooltip: wgULS('附加于编辑摘要的可选理由，例如指出条目内容的哪些部分有问题或移除模板的理由，但如果理由很长则应该发表在讨论页。',
 					'附加於編輯摘要的可選理由，例如指出條目內容的哪些部分有問題或移除模板的理由，但如果理由很長則應該發表在討論頁。'),
@@ -130,7 +130,7 @@ Twinkle.tag.callback = function friendlytagCallback() {
 
 			// TODO: perhaps add custom tags TO list of checkboxes
 
-			form.append({ type: 'header', label: wgULS('版权和来源问题标签', '版權和來源問題標籤') });
+			form.append({ type: 'header', label: wgULS('著作权和来源问题标签', '版權和來源問題標籤') });
 			form.append({ type: 'checkbox', name: 'imageTags', list: Twinkle.tag.file.licenseList });
 
 			form.append({ type: 'header', label: wgULS('维基共享资源相关标签', '維基共享資源相關標籤') });
@@ -139,7 +139,7 @@ Twinkle.tag.callback = function friendlytagCallback() {
 			form.append({ type: 'header', label: wgULS('清理标签', '清理標籤') });
 			form.append({ type: 'checkbox', name: 'imageTags', list: Twinkle.tag.file.cleanupList });
 
-			form.append({ type: 'header', label: wgULS('档案取代标签', '檔案取代標籤') });
+			form.append({ type: 'header', label: wgULS('文件取代标签', '檔案取代標籤') });
 			form.append({ type: 'checkbox', name: 'imageTags', list: Twinkle.tag.file.replacementList });
 			break;
 
@@ -312,7 +312,7 @@ Twinkle.tag.updateSortOrder = function(e) {
 					{
 						name: 'histmergeSysopDetails',
 						type: 'input',
-						label: wgULS('附加讯息：', '附加訊息：')
+						label: wgULS('附加消息：', '附加訊息：')
 					}
 				];
 				break;
@@ -567,7 +567,7 @@ Twinkle.tag.callbacks = {
 			var addedTags = params.tags.map(makeTemplateLink);
 			var removedTags = params.tagsToRemove.map(makeTemplateLink);
 			if (addedTags.length) {
-				summaryText = wgULS('添加', '加入') + makeSentence(addedTags);
+				summaryText = '加入' + makeSentence(addedTags);
 				summaryText += removedTags.length ? '並移除' + makeSentence(removedTags) : '';
 			} else {
 				summaryText = '移除' + makeSentence(removedTags);
@@ -806,7 +806,7 @@ Twinkle.tag.callbacks = {
 	redirect: function redirect(pageobj) {
 		var params = pageobj.getCallbackParameters(),
 			pageText = pageobj.getPageText(),
-			tagRe, tagText = '', summaryText = wgULS('添加', '加入'),
+			tagRe, tagText = '', summaryText = '加入',
 			tags = [], i;
 
 		for (i = 0; i < params.tags.length; i++) {
@@ -889,7 +889,7 @@ Twinkle.tag.callbacks = {
 	file: function friendlytagCallbacksFile(pageobj) {
 		var text = pageobj.getPageText();
 		var params = pageobj.getCallbackParameters();
-		var summary = wgULS('添加', '加入');
+		var summary = '加入';
 
 
 

@@ -389,7 +389,7 @@ Twinkle.close.callback = function twinklecloseCallback(title, section, noop) {
 		type: 'input',
 		name: 'sdreason',
 		label: wgULS('速删理由：', '速刪理由：'),
-		tooltip: wgULS('用于删除日誌，使用{{delete}}的参数格式，例如 A1 或 A1|G1', '用於刪除日誌，使用{{delete}}的參數格式，例如 A1 或 A1|G1'),
+		tooltip: wgULS('用于删除日志，使用{{delete}}的参数格式，例如 A1 或 A1|G1', '用於刪除日誌，使用{{delete}}的參數格式，例如 A1 或 A1|G1'),
 		hidden: true
 	});
 

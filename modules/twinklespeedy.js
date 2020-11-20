@@ -137,7 +137,7 @@ Twinkle.speedy.initDialog = function twinklespeedyInitDialog(callbackfunc) {
 		});
 		deleteOptions.append({
 			type: 'header',
-			label: wgULS('删除相关选项', '刪除相關設定')
+			label: wgULS('删除相关设置', '刪除相關設定')
 		});
 		if (mw.config.get('wgNamespaceNumber') % 2 === 0 && (mw.config.get('wgNamespaceNumber') !== 2 || (/\//).test(mw.config.get('wgTitle')))) {  // hide option for user pages, to avoid accidentally deleting user talk page
 			deleteOptions.append({
@@ -360,7 +360,7 @@ Twinkle.speedy.callback.modeChanged = function twinklespeedyCallbackModeChanged(
 
 		case 3:  // user talk
 			if (mw.util.isIPAddress(mw.config.get('wgRelevantUserName'))) {
-				work_area.append({ type: 'header', label: wgULS('用户讨论页', '使用者討論') });
+				work_area.append({ type: 'header', label: wgULS('用户讨论', '使用者討論') });
 				work_area.append({ type: radioOrCheckbox, name: 'csd', list: Twinkle.speedy.generateCsdList(Twinkle.speedy.usertalkList, mode) });
 			}
 			break;
@@ -528,7 +528,7 @@ Twinkle.speedy.articleList = [
 
 Twinkle.speedy.categoryList = [
 	{
-		label: wgULS('O4: 空的类别', 'O4: 空的類別'),
+		label: wgULS('O4: 空的分类', 'O4: 空的分類'),
 		value: 'o4'
 	}
 ];
@@ -561,7 +561,7 @@ Twinkle.speedy.generalList = [
 	{
 		label: wgULS('G3: 破坏', 'G3: 破壞'),
 		value: 'g3',
-		tooltip: wgULS('包括过度扩充或重复内容、无聊或恶搞、重定向破坏。', '包括過度擴充或重複內容、無聊或惡搞、重定向破壞。')
+		tooltip: wgULS('包括过度扩展或重复内容、无聊或恶搞、重定向破坏。', '包括過度擴充或重複內容、無聊或惡搞、重定向破壞。')
 	},
 	{
 		label: wgULS('G5: 曾经被删除的重建内容', 'G5: 曾經被刪除的重建內容'),
@@ -705,7 +705,7 @@ Twinkle.speedy.reasonHash = wgULS({
 	'o1': '用戶請求刪除自己的用戶頁',
 	'o3': '匿名用戶的討論頁',
 	// Categories
-	'o4': '空的類別'
+	'o4': '空的分類'
 // Templates
 // Portals
 });
@@ -808,7 +808,7 @@ Twinkle.speedy.callbacks = {
 					});
 					mbApi.post();
 				}, function() {
-					statusElement.error(wgULS('未能抓取操作令牌', '未能擷取操作權杖'));
+					statusElement.error(wgULS('未能抓取操作令牌', '未能抓取操作權杖'));
 				});
 			} else {
 				if (reason === null) {
@@ -867,7 +867,7 @@ Twinkle.speedy.callbacks = {
 					'prop': 'redirects',
 					'rdlimit': 5000  // 500 is max for normal users, 5000 for bots and sysops
 				};
-				var wikipedia_api = new Morebits.wiki.api(wgULS('获取重定向列表…', '取得重定向清單…'), query, Twinkle.speedy.callbacks.sysop.deleteRedirectsMain,
+				var wikipedia_api = new Morebits.wiki.api(wgULS('获取重定向清单…', '取得重定向清單…'), query, Twinkle.speedy.callbacks.sysop.deleteRedirectsMain,
 					new Morebits.status(wgULS('删除重定向', '刪除重定向')));
 				wikipedia_api.params = params;
 				wikipedia_api.post();
@@ -946,7 +946,7 @@ Twinkle.speedy.callbacks = {
 				var $link, $bigtext;
 				$link = $('<a/>', {
 					'href': mw.util.wikiScript('index') + '?' + $.param(query),
-					'text': wgULS('点此打开User talk:', '點此開啟User talk:') + user,
+					'text': wgULS('点此开启User talk:', '點此開啟User talk:') + user,
 					'target': '_blank',
 					'css': { 'fontSize': '130%', 'fontWeight': 'bold' }
 				});
@@ -957,7 +957,7 @@ Twinkle.speedy.callbacks = {
 				Morebits.status.info($bigtext[0], $link[0]);
 			} else {
 				// open the initial contributor's talk page
-				var statusIndicator = new Morebits.status(wgULS('打开用户' + user + '对话页编辑表单', '開啟用戶' + user + '對話頁編輯表單'), wgULS('打开中…', '開啟中…'));
+				var statusIndicator = new Morebits.status(wgULS('开启用户' + user + '对话页编辑窗体', '開啟用戶' + user + '對話頁編輯表單'), wgULS('开启中…', '開啟中…'));
 
 				switch (Twinkle.getPref('userTalkPageMode')) {
 					case 'tab':
@@ -1038,13 +1038,13 @@ Twinkle.speedy.callbacks = {
 			text = textNoSd;
 
 			var copyvio = /(?:\{\{\s*(copyvio|侵权|侵權)[^{}]*?\}\})/i.exec(text);
-			if (copyvio && !confirm(wgULS('版权验证模板已被置于页面中，您是否仍想添加一个快速删除模板？', '版權驗證模板已被置於頁面中，您是否仍想加入一個快速刪除模板？'))) {
-				statelem.error(wgULS('页面中已有版权验证模板。', '頁面中已有版權驗證模板。'));
+			if (copyvio && !confirm(wgULS('著作权验证模板已被置于页面中，您是否仍想加入一个快速删除模板？', '版權驗證模板已被置於頁面中，您是否仍想加入一個快速刪除模板？'))) {
+				statelem.error(wgULS('页面中已有著作权验证模板。', '頁面中已有版權驗證模板。'));
 				return;
 			}
 
 			var xfd = /(?:\{\{([rsaiftcmv]fd|md1|proposed deletion)[^{}]*?\}\})/i.exec(text);
-			if (xfd && !confirm(wgULS('删除相关模板{{' + xfd[1] + '}}已被置于页面中，您是否仍想添加一个快速删除模板？', '刪除相關模板{{' + xfd[1] + '}}已被置於頁面中，您是否仍想加入一個快速刪除模板？'))) {
+			if (xfd && !confirm(wgULS('删除相关模板{{' + xfd[1] + '}}已被置于页面中，您是否仍想加入一个快速删除模板？', '刪除相關模板{{' + xfd[1] + '}}已被置於頁面中，您是否仍想加入一個快速刪除模板？'))) {
 				statelem.error(wgULS('页面已被提交至存废讨论。', '頁面已被提交至存廢討論。'));
 				return;
 			}
@@ -1104,7 +1104,7 @@ Twinkle.speedy.callbacks = {
 						titles: mw.config.get('wgPageName'),
 						token: mw.user.tokens.get('watchToken')
 					};
-					new Morebits.wiki.api(wgULS('将模块加入到监视清单', '將模組加入到監視清單'), watch_query).post();
+					new Morebits.wiki.api(wgULS('将模块加入到监视列表', '將模組加入到監視清單'), watch_query).post();
 				}
 			}
 			pageobj.save(Twinkle.speedy.callbacks.user.tagComplete);
@@ -1175,7 +1175,7 @@ Twinkle.speedy.callbacks = {
 		//   for CSD: params.values, params.normalizeds  (note: normalizeds is an array)
 		//   for DI: params.fromDI = true, params.templatename, params.normalized  (note: normalized is a string)
 		addToLog: function(params, initialContrib) {
-			var wikipedia_page = new Morebits.wiki.page('User:' + mw.config.get('wgUserName') + '/' + Twinkle.getPref('speedyLogPageName'), wgULS('添加项目到用户日志', '加入項目到用戶日誌'));
+			var wikipedia_page = new Morebits.wiki.page('User:' + mw.config.get('wgUserName') + '/' + Twinkle.getPref('speedyLogPageName'), wgULS('加入项目到用户日志', '加入項目到用戶日誌'));
 			params.logInitialContrib = initialContrib;
 			wikipedia_page.setCallbackParameters(params);
 			wikipedia_page.load(Twinkle.speedy.callbacks.user.saveLog);
@@ -1349,7 +1349,7 @@ Twinkle.speedy.getParameters = function twinklespeedyGetParameters(form, values)
 				if (form['csd.r3_type']) {
 					var redirtype = form['csd.r3_type'].value;
 					if (!redirtype) {
-						alert(wgULS('CSD R3：请选择适用类别。', 'CSD R3：請選擇適用類別。'));
+						alert(wgULS('CSD R3：请选择适用类型。', 'CSD R3：請選擇適用類別。'));
 						parameters = null;
 						return false;
 					}
@@ -1519,7 +1519,7 @@ Twinkle.speedy.callback.evaluateUser = function twinklespeedyCallbackEvaluateUse
 
 	// Modules can't be tagged, follow standard at TfD and place on /doc subpage
 	params.scribunto = mw.config.get('wgPageContentModel') === 'Scribunto';
-	var wikipedia_page = params.scribunto ? new Morebits.wiki.page(mw.config.get('wgPageName') + '/doc', wgULS('标记模块文档页', '標記模組文件頁')) : new Morebits.wiki.page(mw.config.get('wgPageName'), wgULS('标记页面', '標記頁面'));
+	var wikipedia_page = params.scribunto ? new Morebits.wiki.page(mw.config.get('wgPageName') + '/doc', wgULS('标记模块文件页', '標記模組文件頁')) : new Morebits.wiki.page(mw.config.get('wgPageName'), wgULS('标记页面', '標記頁面'));
 	wikipedia_page.setCallbackParameters(params);
 	wikipedia_page.load(Twinkle.speedy.callbacks.user.main);
 };

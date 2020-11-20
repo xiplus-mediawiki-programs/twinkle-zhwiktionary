@@ -245,7 +245,7 @@ Twinkle.arv.callback.evaluate = function(e) {
 					Morebits.status.printUserText(reason, wgULS('您键入的评论已在下方提供，您可以将其加入到' + $aivLink + '已存在的小节中：', '您鍵入的評論已在下方提供，您可以將其加入到' + $aivLink + '已存在的小節中：'));
 					return;
 				}
-				aivPage.getStatusElement().status(wgULS('添加新报告…', '加入新報告…'));
+				aivPage.getStatusElement().status(wgULS('加入新报告…', '加入新報告…'));
 				aivPage.setEditSummary(wgULS('报告', '報告') + '[[Special:Contributions/' + uid + '|' + uid + ']]。' + Twinkle.getPref('summaryAd'));
 				aivPage.setTags(Twinkle.getPref('revisionTags'));
 				aivPage.setAppendText('\n== {{vandal|' + (/=/.test(uid) ? '1=' : '') + uid + '}} ==\n' + reason);

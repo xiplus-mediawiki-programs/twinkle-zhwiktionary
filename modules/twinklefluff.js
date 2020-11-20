@@ -172,7 +172,7 @@ Twinkle.fluff.addLinks = {
 			var vandNode = document.createElement('strong');
 			var normNode = document.createElement('strong');
 
-			var agfLink = Twinkle.fluff.buildLink('DarkOliveGreen', wgULS('回退（AGF）', '回退（AGF）'));
+			var agfLink = Twinkle.fluff.buildLink('DarkOliveGreen', '回退（AGF）');
 			var vandLink = Twinkle.fluff.buildLink('Red', wgULS('破坏', '破壞'));
 			var normLink = Twinkle.fluff.buildLink('SteelBlue', '回退');
 
@@ -249,7 +249,7 @@ Twinkle.fluff.addLinks = {
 			var vandNode = document.createElement('strong');
 			var normNode = document.createElement('strong');
 
-			var agfLink = Twinkle.fluff.buildLink('DarkOliveGreen', wgULS('回退（AGF）', '回退（AGF）'));
+			var agfLink = Twinkle.fluff.buildLink('DarkOliveGreen', '回退（AGF）');
 			var vandLink = Twinkle.fluff.buildLink('Red', wgULS('回退（破坏）', '回退（破壞）'));
 			var normLink = Twinkle.fluff.buildLink('SteelBlue', '回退');
 
@@ -326,7 +326,7 @@ Twinkle.fluff.revert = function revertPage(type, vandal, autoRevert, rev, page) 
 		'rvprop': [ 'ids', 'timestamp', 'user', 'comment' ],
 		'intoken': 'edit'
 	};
-	var wikipedia_api = new Morebits.wiki.api(wgULS('抓取较早修订版本信息', '擷取較早修訂版本資訊'), query, Twinkle.fluff.callbacks.main);
+	var wikipedia_api = new Morebits.wiki.api(wgULS('抓取较早修订版本信息', '抓取較早修訂版本資訊'), query, Twinkle.fluff.callbacks.main);
 	wikipedia_api.statelem.status(wgULS('正在准备回退……', '正在準備回退……'));
 	wikipedia_api.params = params;
 	wikipedia_api.post();
@@ -359,7 +359,7 @@ Twinkle.fluff.revertToRevision = function revertToRevision(oldrev) {
 		'intoken': 'edit',
 		'format': 'xml'
 	};
-	var wikipedia_api = new Morebits.wiki.api(wgULS('抓取较早修订版本信息', '擷取較早修訂版本資訊'), query, Twinkle.fluff.callbacks.toRevision.main);
+	var wikipedia_api = new Morebits.wiki.api(wgULS('抓取较早修订版本信息', '抓取較早修訂版本資訊'), query, Twinkle.fluff.callbacks.toRevision.main);
 	wikipedia_api.statelem.status(wgULS('正在准备回退……', '正在準備回退……'));
 	wikipedia_api.params = { rev: oldrev, summary: summary };
 	wikipedia_api.post();
@@ -382,7 +382,7 @@ Twinkle.fluff.callbacks = {
 			var revertToUser = $(xmlDoc).find('rev').attr('user');
 
 			if (revertToRevID !== self.params.rev) {
-				self.statelem.error(wgULS('抓取到的修订版本与请求的修订版本不符，取消。', '擷取到的修訂版本與請求的修訂版本不符，取消。'));
+				self.statelem.error(wgULS('抓取到的修订版本与请求的修订版本不符，取消。', '抓取到的修訂版本與請求的修訂版本不符，取消。'));
 				return;
 			}
 
@@ -436,7 +436,7 @@ Twinkle.fluff.callbacks = {
 		}
 		var top = revs[0];
 		if (lastrevid < self.params.revid) {
-			Morebits.status.error(wgULS('错误', '錯誤'), wgULS([ '从服务器获取的最新修订版本ID ', Morebits.htmlNode('strong', lastrevid), ' 小于目前所显示的修订版本ID。这可能意味着当前修订版本已被删除、服务器延迟、或抓取到了坏掉的信息。取消。' ], [ '從伺服器取得的最新修訂版本ID ', Morebits.htmlNode('strong', lastrevid), ' 小於目前所顯示的修訂版本ID。這可能意味著當前修訂版本已被刪除、伺服器延遲、或擷取到了壞掉的資訊。取消。' ]));
+			Morebits.status.error(wgULS('错误', '錯誤'), wgULS([ '从服务器获取的最新修订版本ID ', Morebits.htmlNode('strong', lastrevid), ' 小于目前所显示的修订版本ID。这可能意味着当前修订版本已被删除、服务器延迟、或抓取到了坏掉的信息。取消。' ], [ '從伺服器取得的最新修訂版本ID ', Morebits.htmlNode('strong', lastrevid), ' 小於目前所顯示的修訂版本ID。這可能意味著當前修訂版本已被刪除、伺服器延遲、或抓取到了壞掉的資訊。取消。' ]));
 			return;
 		}
 		var index = 1;

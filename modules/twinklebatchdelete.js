@@ -299,8 +299,8 @@ Twinkle.batchdelete.deletereasonlist = [
 		value: wgULS('[[Wiktionary:CSD|A1]]: 标题拼写错误', '[[Wiktionary:CSD|A1]]: 標題拼寫錯誤')
 	},
 	{
-		label: wgULS('O4: 空的类型', 'O4: 空的類別'),
-		value: wgULS('[[Wiktionary:CSD|O4]]: 空的类型', '[[Wiktionary:CSD|O4]]: 空的類別')
+		label: wgULS('O4: 空的分类', 'O4: 空的分類'),
+		value: wgULS('[[Wiktionary:CSD|O4]]: 空的分类', '[[Wiktionary:CSD|O4]]: 空的分類')
 	}
 ];
 

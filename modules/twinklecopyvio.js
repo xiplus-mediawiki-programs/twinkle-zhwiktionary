@@ -84,7 +84,7 @@ Twinkle.copyvio.callbacks = {
 		var initialContrib = pageobj.getCreator();
 
 		// Adding discussion
-		var wikipedia_page = new Morebits.wiki.page(params.logpage, wgULS('添加侵权记录项', '加入侵權記錄項'));
+		var wikipedia_page = new Morebits.wiki.page(params.logpage, wgULS('加入侵权记录项', '加入侵權記錄項'));
 		wikipedia_page.setFollowRedirect(true);
 		wikipedia_page.setCallbackParameters(params);
 		wikipedia_page.load(Twinkle.copyvio.callbacks.copyvioList);
@@ -102,7 +102,7 @@ Twinkle.copyvio.callbacks = {
 				var usertalkpage = new Morebits.wiki.page('User talk:' + initialContrib, wgULS('通知页面创建者（' + initialContrib + '）', '通知頁面建立者（' + initialContrib + '）'));
 				var notifytext = '\n{{subst:AFDNote|' + mw.config.get('wgPageName') + '}}--~~~~';
 				usertalkpage.setAppendText(notifytext);
-				usertalkpage.setEditSummary(wgULS('通知：页面[[', '通知：頁面[[') + mw.config.get('wgPageName') + wgULS(']]疑似侵犯版权', ']]疑似侵犯版權') + Twinkle.getPref('summaryAd'));
+				usertalkpage.setEditSummary(wgULS('通知：页面[[', '通知：頁面[[') + mw.config.get('wgPageName') + wgULS(']]疑似侵犯著作权', ']]疑似侵犯版權') + Twinkle.getPref('summaryAd'));
 				usertalkpage.setTags(Twinkle.getPref('revisionTags'));
 				usertalkpage.setCreateOption('recreate');
 				switch (Twinkle.getPref('copyvioWatchUser')) {
@@ -126,12 +126,12 @@ Twinkle.copyvio.callbacks = {
 		var tag = '{{subst:Copyvio/auto|url=' + params.source.replace(/http/g, '&#104;ttp').replace(/\n+/g, '\n').replace(/^\s*([^*])/gm, '* $1').replace(/^\* $/m, '') + '|OldRevision=' + mw.config.get('wgRevisionId') + '}}';
 		var text = pageobj.getPageText();
 		var oldcsd = text.match(/\{\{\s*(Delete|Deletebecause|D|Db|Speedydelete)\s*(\|(?:\{\{[^{}]*\}\}|[^{}])*)?\}\}/i);
-		if (oldcsd && confirm(wgULS('在页面上找到快速删除模板，要保留吗？\n\n当页面同时侵犯版权又符合快速删除标准时，应该优先走快速删除程序。\n点击“确认”以保留快速删除模板，若您认为快速删除理由不合，点击“取消”以移除快速删除模板。', '在頁面上找到快速刪除模板，要保留嗎？\n\n當頁面同時侵犯版權又符合快速刪除標準時，應該優先走快速刪除程序。\n點擊「確認」以保留快速刪除模板，若您認為快速刪除理由不合，點擊「取消」以移除快速刪除模板。'))) {
+		if (oldcsd && confirm(wgULS('在页面上找到快速删除模板，要保留吗？\n\n当页面同时侵犯著作权又符合快速删除标准时，应该优先走快速删除程序。\n单击“确认”以保留快速删除模板，若您认为快速删除理由不合，单击“取消”以移除快速删除模板。', '在頁面上找到快速刪除模板，要保留嗎？\n\n當頁面同時侵犯版權又符合快速刪除標準時，應該優先走快速刪除程序。\n點擊「確認」以保留快速刪除模板，若您認為快速刪除理由不合，點擊「取消」以移除快速刪除模板。'))) {
 			tag = oldcsd[0] + '\n' + tag;
 		}
 
 		pageobj.setPageText(tag);
-		pageobj.setEditSummary(wgULS('本页面疑似侵犯版权', '本頁面疑似侵犯版權') + Twinkle.getPref('summaryAd'));
+		pageobj.setEditSummary(wgULS('本页面疑似侵犯著作权', '本頁面疑似侵犯版權') + Twinkle.getPref('summaryAd'));
 		pageobj.setTags(Twinkle.getPref('revisionTags'));
 		switch (Twinkle.getPref('copyvioWatchPage')) {
 			case 'yes':
@@ -156,7 +156,7 @@ Twinkle.copyvio.callbacks = {
 
 		pageobj.setAppendText('\n{{subst:DRItem|DRarticles=' + Morebits.pageNameNorm + '|Reason=' + Morebits.string.formatReasonText(reason) + '}}--~~~~');
 
-		pageobj.setEditSummary(wgULS('添加[[', '加入[[') + Morebits.pageNameNorm + ']]' + Twinkle.getPref('summaryAd'));
+		pageobj.setEditSummary('加入[[' + Morebits.pageNameNorm + ']]' + Twinkle.getPref('summaryAd'));
 		pageobj.setTags(Twinkle.getPref('revisionTags'));
 		switch (Twinkle.getPref('xfdWatchDiscussion')) {
 			case 'yes':
@@ -198,7 +198,7 @@ Twinkle.copyvio.callback.evaluate = function(e) {
 	Morebits.wiki.actionCompleted.notice = wgULS('提报完成，将在几秒内刷新', '提報完成，將在幾秒內重新整理');
 
 	// Tagging file
-	wikipedia_page = new Morebits.wiki.page(mw.config.get('wgPageName'), wgULS('添加侵权模板到页面', '加入侵權模板到頁面'));
+	wikipedia_page = new Morebits.wiki.page(mw.config.get('wgPageName'), wgULS('加入侵权模板到页面', '加入侵權模板到頁面'));
 	wikipedia_page.setCallbackParameters(params);
 	wikipedia_page.load(Twinkle.copyvio.callbacks.tryTagging);
 
