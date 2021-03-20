@@ -1,0 +1,2 @@
+* Twinkle[ResourceLoader|dependencies=mediawiki.api,jquery.ui,jquery.tipsy,moment|rights=autoconfirmed|type=general|peers=Twinkle-pagestyles]|morebits.js|morebits.css|Twinkle.js|friendlytag.js|twinklearv.js|twinklebatchdelete.js|twinkleblock.js|twinkleclose.js|twinkleconfig.js|twinklecopyvio.js|twinklediff.js|twinklefluff.js|twinklespeedy.js|twinklexfd.js|Twinkle.css
+* Twinkle-pagestyles[hidden|skins=vector]|Twinkle-pagestyles.css
