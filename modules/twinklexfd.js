@@ -24,11 +24,6 @@ Twinkle.xfd = function twinklexfd() {
 		return;
 	}
 	Twinkle.addPortletLink(Twinkle.xfd.callback, wgULS('提删', '提刪'), 'tw-xfd', wgULS('提交删除讨论', '提交刪除討論'));
-
-	var date = new Date();
-	if (date.getUTCMonth() === 3 && date.getUTCDate() === 1) {
-		Twinkle.addPortletLink(Twinkle.xfd.aprilfool, wgULS('愚人节提删', '愚人節提刪'), 'tw-xfd-april-fool', wgULS('愚人节提删', '愚人節提刪'));
-	}
 };
 
 Twinkle.xfd.currentRationale = null;
