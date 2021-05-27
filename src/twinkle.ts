@@ -1,25 +1,31 @@
 import { Twinkle, init, loadAdditionalMediaWikiMessages, SiteConfig } from './core';
-import messages from './messages.json';
+import messagesZhHans from './messages-zh-hans.json';
+import messagesZhHant from './messages-zh-hant.json';
 import mwMessageList from './mw-messages';
 
 // import modules
 import { Fluff } from './fluff';
+import { BatchDelete } from './batchdelete';
 
 // no customisation; import directly from core
 import { DiffCore as Diff } from './core';
 
 // Check if account is experienced enough to use Twinkle
 if (!Morebits.userIsInGroup('autoconfirmed') && !Morebits.userIsInGroup('confirmed')) {
-	throw new Error('Twinkle: forbidden!');
+	// throw new Error('Twinkle: forbidden!');
 }
 
 Twinkle.userAgent = `Twinkle (${mw.config.get('wgWikiID')})`;
 
 Twinkle.summaryAd = ' ([[Project:TW|TW]])';
 
-Twinkle.changeTags = '';
+Twinkle.changeTags = 'Twinkle';
 
-Twinkle.messageOverrides = messages;
+Twinkle.messageOverrides = ['zh-hant', 'zh-tw', 'zh-hk', 'zh-mo'].includes(
+	mw.config.get('wgUserLanguage')
+)
+	? messagesZhHant
+	: messagesZhHans;
 
 Twinkle.preModuleInitHooks = [
 	() => {
@@ -28,7 +34,7 @@ Twinkle.preModuleInitHooks = [
 ];
 
 // List of module classes enabled
-Twinkle.registeredModules = [Fluff, Diff];
+Twinkle.registeredModules = [Diff, Fluff, BatchDelete];
 
 /**
  * Adjust the following configurations if necessary
