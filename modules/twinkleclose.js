@@ -1,5 +1,4 @@
 // <nowiki>
-// vim: set noet sts=0 sw=8:
 
 
 (function($) {
@@ -19,6 +18,14 @@ Twinkle.close = function twinkleclose() {
 		return;
 	}
 
+	mw.hook('wikipage.content').add(function(item) {
+		if (item.attr('id') === 'mw-content-text') {
+			Twinkle.close.addLinks();
+		}
+	});
+};
+
+Twinkle.close.addLinks = function twinklecloseAddLinks() {
 	var spanTag = function(color, content) {
 		var span = document.createElement('span');
 		span.style.color = color;
@@ -30,7 +37,7 @@ Twinkle.close = function twinkleclose() {
 		current.setAttribute('data-section', index + 1);
 	});
 
-	var selector = ':has(.mw-headline a:only-of-type):not(:has(+ div.xfd-closed))';
+	var selector = ':has(.mw-headline a:first):not(:has(+ div.xfd-closed))';
 	var titles = $('#bodyContent').find('h3' + selector + ':not(:has(+ p + h4)), h4' + selector); // really needs to work on
 
 	var delNode = document.createElement('strong');
@@ -42,6 +49,9 @@ Twinkle.close = function twinkleclose() {
 
 	titles.each(function(key, current) {
 		var headlinehref = $(current).find('.mw-headline a').attr('href');
+		if (headlinehref === undefined) {
+			return;
+		}
 		var title = null;
 		if (headlinehref.indexOf('redlink=1') !== -1) {
 			title = headlinehref.slice(19, -22);
@@ -55,6 +65,7 @@ Twinkle.close = function twinkleclose() {
 			return;
 		}
 		title = decodeURIComponent(title);
+		title = title.replace(/_/g, ' '); // Normalize for using in interface and summary
 		var pagenotexist = $(current).find('.mw-headline a').hasClass('new');
 		var section = current.getAttribute('data-section');
 		var node = current.getElementsByClassName('mw-headline')[0];
@@ -70,308 +81,308 @@ Twinkle.close = function twinkleclose() {
 };
 
 // Keep this synchronized with {{delh}}
+/* eslint-disable quote-props */
 Twinkle.close.codes = wgULS({
 	'请求无效': {
-		'ir': {
+		ir: {
 			label: '请求无效',
 			action: 'keep'
 		},
-		'rep': {
+		rep: {
 			label: '重复提出，无效',
 			action: 'keep'
 		},
-		'commons': {
+		commons: {
 			label: '应在维基共享资源提请',
 			action: 'keep'
 		},
-		'ne': {
+		ne: {
 			label: '目标页面或档案不存在，无效',
 			action: 'keep'
 		},
-		'nq': {
+		nq: {
 			label: '提删者未取得提删资格，无效',
 			action: 'keep'
 		}
 	},
 	'保留': {
-		'k': {
+		k: {
 			label: '保留',
 			action: 'keep',
 			adminonly: true
 		},
-		'sk': {
+		sk: {
 			label: '快速保留',
 			action: 'keep'
 		},
-		'rr': {
+		rr: {
 			label: '请求理由消失',
 			action: 'keep',
 			selected: Twinkle.getPref('XfdClose') === 'nonadminonly'
 		},
-		'dan': {
+		dan: {
 			label: '删后重建',
 			action: 'keep',
 			adminonly: true
 		}
 	},
 	'删除': {
-		'd': {
+		d: {
 			label: '删除',
 			action: 'del',
 			adminonly: true,
 			selected: Twinkle.getPref('XfdClose') === 'all'
 		},
-		'ic': {
+		ic: {
 			label: '图像因侵权被删',
 			action: 'del',
 			adminonly: true
 		}
 	},
 	'快速删除': {
-		'sd': {
+		sd: {
 			label: '快速删除',
 			action: 'del'
 		},
-		'lssd': {
+		lssd: {
 			label: '无来源或版权资讯，快速删除',
 			action: 'del'
 		},
-		'svg': {
+		svg: {
 			label: '已改用SVG图形，快速删除',
 			action: 'del'
 		},
-		'nowcommons': {
+		nowcommons: {
 			label: '维基共享资源已提供，快速删除',
 			action: 'del'
 		},
-		'drep': {
+		drep: {
 			label: '多次被删除，条目锁定',
 			action: 'del',
 			adminonly: true
 		}
 	},
 	'转移至其他维基计划': {
-		'twc': {
+		twc: {
 			label: '转移至维基共享资源',
 			action: 'noop',
 			adminonly: true
 		},
-		'twn': {
+		twn: {
 			label: '转移至维基新闻',
 			action: 'noop',
 			adminonly: true
 		},
-		'tws': {
+		tws: {
 			label: '转移至维基文库',
 			action: 'noop',
 			adminonly: true
 		},
-		'twb': {
+		twb: {
 			label: '转移至维基教科书',
 			action: 'noop',
 			adminonly: true
 		},
-		'twq': {
+		twq: {
 			label: '转移至维基语录',
 			action: 'noop',
 			adminonly: true
 		},
-		'tww': {
+		tww: {
 			label: '转移至维基百科',
 			action: 'noop',
 			adminonly: true
 		},
-		'twvoy': {
+		twvoy: {
 			label: '转移至维基导游',
 			action: 'noop',
 			adminonly: true
 		},
-		'two': {
+		two: {
 			label: '转移至其他维基计划',
 			action: 'noop',
 			adminonly: true
 		}
 	},
 	'其他处理方法': {
-		'r': {
+		r: {
 			label: '重定向',
 			action: 'keep',
 			adminonly: true
 		},
-		'cr': {
+		cr: {
 			label: '分类重定向',
 			action: 'keep',
 			adminonly: true
 		},
-		'm': {
+		m: {
 			label: '移动',
 			action: 'keep',
 			adminonly: true
 		},
-		'merge': {
+		merge: {
 			label: '并入',
 			action: 'keep',
 			adminonly: true
 		},
-		'nc': {
+		nc: {
 			label: '无共识',
-			action: 'keep',
-			adminonly: true
+			action: 'keep'
 		}
 	}
 }, {
 	'請求無效': {
-		'ir': {
+		ir: {
 			label: '請求無效',
 			action: 'keep'
 		},
-		'rep': {
+		rep: {
 			label: '重複提出，無效',
 			action: 'keep'
 		},
-		'commons': {
+		commons: {
 			label: '應在維基共享資源提請',
 			action: 'keep'
 		},
-		'ne': {
+		ne: {
 			label: '目標頁面或檔案不存在，無效',
 			action: 'keep'
 		},
-		'nq': {
+		nq: {
 			label: '提刪者未取得提刪資格，無效',
 			action: 'keep'
 		}
 	},
 	'保留': {
-		'k': {
+		k: {
 			label: '保留',
 			action: 'keep',
 			adminonly: true
 		},
-		'sk': {
+		sk: {
 			label: '快速保留',
 			action: 'keep'
 		},
-		'rr': {
+		rr: {
 			label: '請求理由消失',
 			action: 'keep',
 			selected: Twinkle.getPref('XfdClose') === 'nonadminonly'
 		},
-		'dan': {
+		dan: {
 			label: '刪後重建',
 			action: 'keep',
 			adminonly: true
 		}
 	},
 	'刪除': {
-		'd': {
+		d: {
 			label: '刪除',
 			action: 'del',
 			adminonly: true,
 			selected: Twinkle.getPref('XfdClose') === 'all'
 		},
-		'ic': {
+		ic: {
 			label: '圖像因侵權被刪',
 			action: 'del',
 			adminonly: true
 		}
 	},
 	'快速刪除': {
-		'sd': {
+		sd: {
 			label: '快速刪除',
 			action: 'del'
 		},
-		'lssd': {
+		lssd: {
 			label: '無來源或版權資訊，快速刪除',
 			action: 'del'
 		},
-		'svg': {
+		svg: {
 			label: '已改用SVG圖形，快速刪除',
 			action: 'del'
 		},
-		'nowcommons': {
+		nowcommons: {
 			label: '維基共享資源已提供，快速刪除',
 			action: 'del'
 		},
-		'drep': {
+		drep: {
 			label: '多次被刪除，條目鎖定',
 			action: 'del',
 			adminonly: true
 		}
 	},
 	'轉移至其他維基計劃': {
-		'twc': {
+		twc: {
 			label: '轉移至維基共享資源',
 			action: 'noop',
 			adminonly: true
 		},
-		'twn': {
+		twn: {
 			label: '轉移至維基新聞',
 			action: 'noop',
 			adminonly: true
 		},
-		'tws': {
+		tws: {
 			label: '轉移至維基文庫',
 			action: 'noop',
 			adminonly: true
 		},
-		'twb': {
+		twb: {
 			label: '轉移至維基教科書',
 			action: 'noop',
 			adminonly: true
 		},
-		'twq': {
+		twq: {
 			label: '轉移至維基語錄',
 			action: 'noop',
 			adminonly: true
 		},
-		'tww': {
+		tww: {
 			label: '轉移至維基百科',
 			action: 'noop',
 			adminonly: true
 		},
-		'twvoy': {
+		twvoy: {
 			label: '轉移至維基導遊',
 			action: 'noop',
 			adminonly: true
 		},
-		'two': {
+		two: {
 			label: '轉移至其他維基計劃',
 			action: 'noop',
 			adminonly: true
 		}
 	},
 	'其他處理方法': {
-		'r': {
+		r: {
 			label: '重定向',
 			action: 'keep',
 			adminonly: true
 		},
-		'cr': {
+		cr: {
 			label: '分類重定向',
 			action: 'keep',
 			adminonly: true
 		},
-		'm': {
+		m: {
 			label: '移動',
 			action: 'keep',
 			adminonly: true
 		},
-		'merge': {
+		merge: {
 			label: '併入',
 			action: 'keep',
 			adminonly: true
 		},
-		'nc': {
+		nc: {
 			label: '無共識',
-			action: 'keep',
-			adminonly: true
+			action: 'keep'
 		}
 	}
 });
+/* eslint-enable quote-props */
 
 Twinkle.close.callback = function twinklecloseCallback(title, section, noop) {
-	var Window = new Morebits.simpleWindow(400, 150);
+	var Window = new Morebits.simpleWindow(400, 200);
 	Window.setTitle(wgULS('关闭删除请求', '關閉刪除請求') + ' \u00B7 ' + title);
 	Window.setScriptName('Twinkle');
 	Window.addFooterLink(wgULS('Twinkle帮助', 'Twinkle說明'), 'WP:TW/DOC#close');
@@ -406,7 +417,41 @@ Twinkle.close.callback = function twinklecloseCallback(title, section, noop) {
 				label: wgULS('只关闭讨论，不进行其他操作', '只關閉討論，不進行其他操作'),
 				value: 'noop',
 				name: 'noop',
+				event: Twinkle.close.callback.change_operation,
 				checked: noop
+			}
+		]
+	});
+
+	if (new mw.Title(title).namespace % 2 === 0 && new mw.Title(title).namespace !== 2) {  // hide option for user pages, to avoid accidentally deleting user talk page
+		form.append({
+			type: 'checkbox',
+			list: [
+				{
+					label: wgULS('删除关联的讨论页', '刪除關聯的討論頁'),
+					value: 'talkpage',
+					name: 'talkpage',
+					tooltip: wgULS('删除时附带删除此页面的讨论页。', '刪除時附帶刪除此頁面的討論頁。'),
+					checked: true,
+					event: function(event) {
+						event.stopPropagation();
+					}
+				}
+			]
+		});
+	}
+	form.append({
+		type: 'checkbox',
+		list: [
+			{
+				label: wgULS('删除重定向页', '刪除重新導向頁面'),
+				value: 'redirects',
+				name: 'redirects',
+				tooltip: wgULS('删除到此页的重定向。', '刪除到此頁的重新導向。'),
+				checked: true,
+				event: function(event) {
+					event.stopPropagation();
+				}
 			}
 		]
 	});
@@ -458,22 +503,69 @@ Twinkle.close.callback = function twinklecloseCallback(title, section, noop) {
 	result.sub_group.dispatchEvent(evt);
 };
 
+Twinkle.close.callback.change_operation = function twinklecloseCallbackChangeOperation(e) {
+	var noop = e.target.checked;
+	var code = e.target.form.sub_group.value;
+	var messageData = $(e.target.form.sub_group).find('option[value="' + code + '"]').data('messageData');
+	var talkpage = e.target.form.talkpage;
+	var redirects = e.target.form.redirects;
+	if (noop || messageData.action === 'keep') {
+		if (talkpage) {
+			talkpage.checked = false;
+			talkpage.disabled = true;
+		}
+		redirects.checked = false;
+		redirects.disabled = true;
+	} else {
+		if (talkpage) {
+			talkpage.checked = true;
+			talkpage.disabled = false;
+		}
+		redirects.checked = true;
+		redirects.disabled = false;
+	}
+};
+
 Twinkle.close.callback.change_code = function twinklecloseCallbackChangeCode(e) {
 	var resultData = $(e.target.form).data('resultData');
 	var messageData = $(e.target).find('option[value="' + e.target.value + '"]').data('messageData');
 	var noop = e.target.form.noop;
+	var talkpage = e.target.form.talkpage;
+	var redirects = e.target.form.redirects;
 	if (resultData.noop || messageData.action === 'noop') {
 		noop.checked = true;
 		noop.disabled = true;
+		if (talkpage) {
+			talkpage.checked = false;
+			talkpage.disabled = true;
+		}
+		redirects.checked = false;
+		redirects.disabled = true;
 	} else {
 		noop.checked = false;
 		noop.disabled = false;
+		if (messageData.action === 'keep') {
+			if (talkpage) {
+				talkpage.checked = false;
+				talkpage.disabled = true;
+			}
+			redirects.checked = false;
+			redirects.disabled = true;
+		} else {
+			if (talkpage) {
+				talkpage.checked = true;
+				talkpage.disabled = false;
+			}
+			redirects.checked = true;
+			redirects.disabled = false;
+		}
 		if (e.target.value === 'sd') {
 			e.target.form.sdreason.parentElement.removeAttribute('hidden');
 		} else {
 			e.target.form.sdreason.parentElement.setAttribute('hidden', '');
 		}
 	}
+
 };
 
 Twinkle.close.callback.evaluate = function twinklecloseCallbackEvaluate(e) {
@@ -481,13 +573,17 @@ Twinkle.close.callback.evaluate = function twinklecloseCallbackEvaluate(e) {
 	var resultData = $(e.target).data('resultData');
 	var messageData = $(e.target.sub_group).find('option[value="' + code + '"]').data('messageData');
 	var noop = e.target.noop.checked;
+	var talkpage = e.target.talkpage && e.target.talkpage.checked;
+	var redirects = e.target.redirects.checked;
 	var params = {
 		title: resultData.title,
 		code: code,
 		remark: e.target.remark.value,
 		sdreason: e.target.sdreason.value,
 		section: resultData.section,
-		messageData: messageData
+		messageData: messageData,
+		talkpage: talkpage,
+		redirects: redirects
 	};
 
 	Morebits.simpleWindow.setButtonsEnabled(false);
@@ -516,6 +612,7 @@ Twinkle.close.callback.evaluate = function twinklecloseCallbackEvaluate(e) {
 
 Twinkle.close.callbacks = {
 	del: function (params) {
+		var query, wikipedia_api;
 		Morebits.wiki.addCheckpoint();
 
 		var page = new Morebits.wiki.page(params.title, wgULS('删除页面', '刪除頁面'));
@@ -543,8 +640,66 @@ Twinkle.close.callbacks = {
 				Twinkle.close.callbacks.talkend(params);
 			});
 		}
+		if (params.redirects) {
+			query = {
+				action: 'query',
+				titles: params.title,
+				prop: 'redirects',
+				rdlimit: 'max' // 500 is max for normal users, 5000 for bots and sysops
+			};
+			wikipedia_api = new Morebits.wiki.api(wgULS('正在获取重定向', '正在取得重新導向'), query, Twinkle.close.callbacks.deleteRedirectsMain);
+			wikipedia_api.params = params;
+			wikipedia_api.post();
+		}
+		if (params.talkpage) {
+			var pageTitle = mw.Title.newFromText(params.title);
+			if (pageTitle && pageTitle.namespace % 2 === 0 && pageTitle.namespace !== 2) {
+				pageTitle.namespace++;  // now pageTitle is the talk page title!
+				query = {
+					action: 'query',
+					titles: pageTitle.toText()
+				};
+				wikipedia_api = new Morebits.wiki.api(wgULS('正在检查讨论页面是否存在', '正在檢查討論頁面是否存在'), query, Twinkle.close.callbacks.deleteTalk);
+				wikipedia_api.params = params;
+				wikipedia_api.params.talkPage = pageTitle.toText();
+				wikipedia_api.post();
+			}
+		}
 
 		Morebits.wiki.removeCheckpoint();
+	},
+	deleteRedirectsMain: function(apiobj) {
+		var xml = apiobj.responseXML;
+		var pages = $(xml).find('rd').map(function() {
+			return $(this).attr('title');
+		}).get();
+		if (!pages.length) {
+			return;
+		}
+
+		var redirectDeleter = new Morebits.batchOperation(wgULS('正在删除到 ', '正在刪除到 ') + apiobj.params.title + wgULS(' 的重定向', ' 的重新導向'));
+		redirectDeleter.setOption('chunkSize', Twinkle.getPref('batchdeleteChunks'));
+		redirectDeleter.setPageList(pages);
+		redirectDeleter.run(function(pageName) {
+			var wikipedia_page = new Morebits.wiki.page(pageName, wgULS('正在删除 ', '正在刪除 ') + pageName);
+			wikipedia_page.setEditSummary('[[WT:CSD|G15]]: ' + wgULS('指向已删页面“', '指向已刪頁面「') + apiobj.params.title + wgULS('”的重定向', '」的重新導向'));
+			wikipedia_page.setTags(Twinkle.getPref('revisionTags'));
+			wikipedia_page.deletePage(redirectDeleter.workerSuccess, redirectDeleter.workerFailure);
+		});
+	},
+	deleteTalk: function(apiobj) {
+		var xml = apiobj.responseXML;
+		var exists = $(xml).find('page:not([missing])').length > 0;
+
+		if (!exists) {
+			// no talk page; forget about it
+			return;
+		}
+
+		var page = new Morebits.wiki.page(apiobj.params.talkPage, wgULS('正在删除页面 ', '正在刪除頁面 ') + apiobj.params.title + wgULS(' 的讨论页', ' 的討論頁'));
+		page.setEditSummary('[[WT:CSD|G15]]: ' + wgULS('已删页面“', '已刪頁面「') + apiobj.params.title + wgULS('”的讨论页', '」的討論頁'));
+		page.setTags(Twinkle.getPref('revisionTags'));
+		page.deletePage();
 	},
 	keep: function (pageobj) {
 		var statelem = pageobj.getStatusElement();
@@ -557,8 +712,8 @@ Twinkle.close.callbacks = {
 		var text = pageobj.getPageText();
 		var params = pageobj.getCallbackParameters();
 
-		var newtext = text.replace(/<noinclude>\s*\{\{([rsaiftcmv]fd)(\|[^{}]*?)?\}\}\s*<\/noinclude>\s*/gi, '');
-		newtext = newtext.replace(/\{\{([rsaiftcmv]fd)(\|[^{}]*?)?\}\}\s*/gi, '');
+		var newtext = text.replace(/<noinclude>\s*\{\{([rsaiftcmv]fd)(\|(?:\{\{[^{}]*\}\}|[^{}])*)?\}\}\s*<\/noinclude>\s*/gi, '');
+		newtext = newtext.replace(/\{\{([rsaiftcmv]fd)(\|(?:\{\{[^{}]*\}\}|[^{}])*)?\}\}\s*/gi, '');
 		if (newtext === text) {
 			statelem.warn(wgULS('未找到删除请求模板，可能已被移除', '未找到刪除請求模板，可能已被移除'));
 			Twinkle.close.callbacks.talkend(params);
