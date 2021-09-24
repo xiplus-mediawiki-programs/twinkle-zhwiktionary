@@ -426,7 +426,6 @@ USAGE
 __DATA__
 twinkle.js
   twinkle.css
-  twinkle-pagestyles.css
   morebits.js
   morebits.css
   lib/select2.min.js
