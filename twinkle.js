@@ -226,17 +226,17 @@ Twinkle.getPref = function twinkleGetPref(name) {
  *
  * Available navigation areas depend on the skin used.
  * Vector:
- *  For each option, the outer div class contains "vector-menu", the inner div class is "vector-menu-content", and the ul is "vector-menu-content-list"
- *  "mw-panel", outer div class contains "vector-menu-portal". Existing portlets/elements: "p-logo", "p-navigation", "p-interaction", "p-tb", "p-coll-print_export"
- *  "left-navigation", outer div class contains "vector-menu-tabs" or "vector-menu-dropdown". Existing portlets: "p-namespaces", "p-variants" (menu)
- *  "right-navigation", outer div class contains "vector-menu-tabs" or "vector-menu-dropdown". Existing portlets: "p-views", "p-cactions" (menu), "p-search"
+ *  For each option, the outer nav class contains "vector-menu", the inner div class is "vector-menu-content", and the ul is "vector-menu-content-list"
+ *  "mw-panel", outer nav class contains "vector-menu-portal". Existing portlets/elements: "p-logo", "p-navigation", "p-interaction", "p-tb", "p-coll-print_export"
+ *  "left-navigation", outer nav class contains "vector-menu-tabs" or "vector-menu-dropdown". Existing portlets: "p-namespaces", "p-variants" (menu)
+ *  "right-navigation", outer nav class contains "vector-menu-tabs" or "vector-menu-dropdown". Existing portlets: "p-views", "p-cactions" (menu), "p-search"
  *  Special layout of p-personal portlet (part of "head") through specialized styles.
  * Monobook:
- *  "column-one", outer div class "portlet", inner div class "pBody". Existing portlets: "p-cactions", "p-personal", "p-logo", "p-navigation", "p-search", "p-interaction", "p-tb", "p-coll-print_export"
+ *  "column-one", outer nav class "portlet", inner div class "pBody". Existing portlets: "p-cactions", "p-personal", "p-logo", "p-navigation", "p-search", "p-interaction", "p-tb", "p-coll-print_export"
  *  Special layout of p-cactions and p-personal through specialized styles.
  * Modern:
- *  "mw_contentwrapper" (top nav), outer div class "portlet", inner div class "pBody". Existing portlets or elements: "p-cactions", "mw_content"
- *  "mw_portlets" (sidebar), outer div class "portlet", inner div class "pBody". Existing portlets: "p-navigation", "p-search", "p-interaction", "p-tb", "p-coll-print_export"
+ *  "mw_contentwrapper" (top nav), outer nav class "portlet", inner div class "pBody". Existing portlets or elements: "p-cactions", "mw_content"
+ *  "mw_portlets" (sidebar), outer nav class "portlet", inner div class "pBody". Existing portlets: "p-navigation", "p-search", "p-interaction", "p-tb", "p-coll-print_export"
  *
  * @param String navigation -- id of the target navigation area (skin dependant, on vector either of "left-navigation", "right-navigation", or "mw-panel")
  * @param String id -- id of the portlet menu to create, preferably start with "p-".
@@ -300,6 +300,7 @@ Twinkle.addPortlet = function(navigation, id, text, type, nextnodeid) {
 	// Build the DOM elements.
 	var outerNav = document.createElement('nav');
 	outerNav.setAttribute('aria-labelledby', id + '-label');
+	// Vector getting vector-menu-empty FIXME TODO
 	outerNav.className = outerNavClass + ' emptyPortlet';
 	outerNav.id = id;
 	if (nextnode && nextnode.parentNode === root) {
@@ -371,8 +372,9 @@ Twinkle.addPortletLink = function(task, text, id, tooltip) {
 		Twinkle.addPortlet(Twinkle.getPref('portletArea'), Twinkle.getPref('portletId'), Twinkle.getPref('portletName'), Twinkle.getPref('portletType'), Twinkle.getPref('portletNext'));
 	}
 	var link = mw.util.addPortletLink(Twinkle.getPref('portletId'), typeof task === 'string' ? task : '#', text, id, tooltip);
-	if ($.isFunction(task)) {
-		$(link).click(function (ev) {
+	$('.client-js .skin-vector #p-cactions').css('margin-right', 'initial');
+	if (typeof task === 'function') {
+		$(link).find('a').on('click', function (ev) {
 			task();
 			ev.preventDefault();
 		});
