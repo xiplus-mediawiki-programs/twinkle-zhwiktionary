@@ -1,4 +1,4 @@
-import { Twinkle, init, loadAdditionalMediaWikiMessages, SiteConfig } from './core';
+import { Twinkle, init, SiteConfig, urlParamValue } from './core';
 import messagesZhHans from './messages-zh-hans.json';
 import messagesZhHant from './messages-zh-hant.json';
 import mwMessageList from './mw-messages';
@@ -21,17 +21,13 @@ Twinkle.summaryAd = ' ([[Project:TW|TW]])';
 
 Twinkle.changeTags = 'Twinkle';
 
-Twinkle.messageOverrides = ['zh-hant', 'zh-tw', 'zh-hk', 'zh-mo'].includes(
-	mw.config.get('wgUserLanguage')
-)
+Twinkle.language = urlParamValue('uselang') || mw.config.get('wgUserLanguage');
+
+Twinkle.messageOverrides = ['zh-hant', 'zh-tw', 'zh-hk', 'zh-mo'].includes(Twinkle.language)
 	? messagesZhHant
 	: messagesZhHans;
 
-Twinkle.preModuleInitHooks = [
-	() => {
-		loadAdditionalMediaWikiMessages(mwMessageList);
-	},
-];
+Twinkle.extraMwMessages = mwMessageList;
 
 // List of module classes enabled
 Twinkle.registeredModules = [Diff, Fluff, BatchDelete];

@@ -4,14 +4,9 @@
  */
 
 export default [
-
-	// Put "restriction-level-" messages for all protection groups here
-	// Check using /w/api.php?action=query&meta=siteinfo&formatversion=2&siprop=restrictions
-	// (except sysop and autoconfirmed which are already added by core)
-
-
-	// if there are user groups for which FlaggedRevs (pending changes) can be configured,
-	// put the "group-" messages for them here, eg. "group-reviewer"
-
-
+	'nbytes',
+	'parentheses',
+	'restriction-level-sysop',
+	'protect-expiry-indefinite',
+	'protect-expiring',
 ];

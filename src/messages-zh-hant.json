@@ -3,5 +3,8 @@
   "twinkle-help": "Twinkle說明",
   "batch-delete-portlet-name": "批刪",
   "batch-delete-window-title": "批量刪除",
-  "batch-delete-portlet-tooltip": "刪除此分類或頁面中的所有連結"
+  "batch-delete-portlet-tooltip": "刪除此分類或頁面中的所有連結",
+  "redirect": "重新導向",
+  "uploader": "上傳者：$1",
+  "last-editor": "最後編輯：$1"
 }

@@ -3,5 +3,8 @@
   "twinkle-help": "Twinkle帮助",
   "batch-delete-portlet-name": "批删",
   "batch-delete-window-title": "批量删除",
-  "batch-delete-portlet-tooltip": "删除此分类或页面中的所有链接"
+  "batch-delete-portlet-tooltip": "删除此分类或页面中的所有链接",
+  "redirect": "重定向",
+  "uploader": "上传者：$1",
+  "last-editor": "最后编辑：$1"
 }
