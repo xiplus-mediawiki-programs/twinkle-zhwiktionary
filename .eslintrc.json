@@ -7,10 +7,11 @@
 		"jquery": true
 	},
 	"globals": {
-		"mw": true,
-		"moment": true,
-		"wgULS": true
+		"mw": "readonly",
+		"wgULS": "readonly",
+		"Map": "readonly"
 	},
+	"ignorePatterns": ["scripts/", "tests/", "lib/"],
 	"rules": {
 		"no-console": "error",
 		"no-extra-parens": ["error", "all", { "nestedBinaryExpressions": false }],
@@ -36,7 +37,7 @@
 		"func-call-spacing": ["error", "never"],
 		"indent": ["error", "tab", { "outerIIFEBody": 0, "SwitchCase": 1 }],
 		"key-spacing": ["error", {"singleLine": {"beforeColon": false, "afterColon": true}}],
-		"keyword-spacing": ["error", { "after": true , "before": true}],
+		"keyword-spacing": ["error", { "after": true, "before": true}],
 		"linebreak-style": ["error", "unix"],
 		"no-array-constructor": "error",
 		"no-bitwise": "error",
@@ -53,7 +54,8 @@
 		"space-infix-ops": "error",
 		"space-unary-ops": "error",
 		"spaced-comment": ["error", "always", { "line": { "exceptions": ["-"] }, "block": { "balanced": true } }],
-		"switch-colon-spacing": "error"
+		"switch-colon-spacing": "error",
+		"eol-last": ["error", "always"]
 	},
 	"reportUnusedDisableDirectives": true
 }

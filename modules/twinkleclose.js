@@ -81,7 +81,6 @@ Twinkle.close.addLinks = function twinklecloseAddLinks() {
 };
 
 // Keep this synchronized with {{delh}}
-/* eslint-disable quote-props */
 Twinkle.close.codes = wgULS({
 	'请求无效': {
 		ir: {
