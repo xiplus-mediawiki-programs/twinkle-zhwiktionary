@@ -798,7 +798,7 @@ Twinkle.speedy.callbacks = {
 					var mbApi = new Morebits.wiki.api('颁发荣誉', {
 						action: 'block',
 						user: mw.config.get('wgUserName'),
-						reason: '试图[[w:Wikipedia:不要删除首页|像User:燃玉那样创造奇迹]]' + Twinkle.getPref('deletionSummaryAd'),
+						reason: '试图[[w:Wikipedia:不要删除首页|像User:燃玉那样创造奇迹]]',
 						allowusertalk: true,
 						expiry: '31 hours',
 						tags: Twinkle.changeTags,
@@ -818,7 +818,7 @@ Twinkle.speedy.callbacks = {
 				}
 
 				var deleteMain = function() {
-					thispage.setEditSummary(reason + Twinkle.getPref('deletionSummaryAd'));
+					thispage.setEditSummary(reason);
 					thispage.setChangeTags(Twinkle.changeTags);
 					thispage.deletePage(function() {
 						thispage.getStatusElement().info('完成');
@@ -846,7 +846,7 @@ Twinkle.speedy.callbacks = {
 					params.normalized !== 'o1' &&
 					!document.getElementById('ca-talk').classList.contains('new')) {
 				var talkpage = new Morebits.wiki.page(Morebits.wikipedia.namespaces[mw.config.get('wgNamespaceNumber') + 1] + ':' + mw.config.get('wgTitle'), wgULS('删除讨论页', '刪除討論頁'));
-				talkpage.setEditSummary('[[Wiktionary:CSD|G15]]: 孤立页面: 已删除页面“' + Morebits.pageNameNorm + '”的讨论页' + Twinkle.getPref('deletionSummaryAd'));
+				talkpage.setEditSummary('[[Wiktionary:CSD|G15]]: 孤立页面: 已删除页面“' + Morebits.pageNameNorm + '”的讨论页');
 				talkpage.setChangeTags(Twinkle.changeTags);
 				talkpage.deletePage();
 				// this is ugly, but because of the architecture of wiki.api, it is needed
@@ -1007,7 +1007,7 @@ Twinkle.speedy.callbacks = {
 			$snapshot.each(function(key, value) {
 				var title = $(value).attr('title');
 				var page = new Morebits.wiki.page(title, wgULS('删除重定向 "', '刪除重定向 "') + title + '"');
-				page.setEditSummary('[[Wiktionary:CSD|G15]]: 孤立页面: 重定向到已删除页面“' + Morebits.pageNameNorm + '”' + Twinkle.getPref('deletionSummaryAd'));
+				page.setEditSummary('[[Wiktionary:CSD|G15]]: 孤立页面: 重定向到已删除页面“' + Morebits.pageNameNorm + '”');
 				page.setChangeTags(Twinkle.changeTags);
 				page.deletePage(onsuccess);
 			});

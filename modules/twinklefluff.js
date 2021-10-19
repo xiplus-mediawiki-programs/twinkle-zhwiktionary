@@ -546,7 +546,7 @@ Twinkle.fluff.callbacks = {
 				summary = '回退[[Special:Contributions/' +
 				self.params.user + '|' + self.params.user + ']] ([[User talk:' + self.params.user + '|讨论]])' +
 				'做出的 ' + self.params.count + wgULS(' 次编辑，到由', ' 次編輯，到由') +
-				self.params.gooduser + wgULS('做出的前一个修订版本 ', '做出的前一個修訂版本 ') + Twinkle.getPref('summaryAd');
+				self.params.gooduser + wgULS('做出的前一个修订版本 ', '做出的前一個修訂版本 ');
 				break;
 
 			case 'norm':
@@ -654,7 +654,6 @@ Twinkle.fluff.formatSummary = function(builtInString, userName, userString) {
 	if (userString) {
 		result += '：' + Morebits.string.toUpperCaseFirstChar(userString);
 	}
-	result += Twinkle.getPref('summaryAd');
 
 	// find number of UTF-8 bytes the resulting string takes up, and possibly add
 	// a contributions or contributions+talk link if it doesn't push the edit summary

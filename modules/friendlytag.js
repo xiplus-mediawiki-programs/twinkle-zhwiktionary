@@ -578,7 +578,7 @@ Twinkle.tag.callbacks = {
 			}
 
 			// avoid truncated summaries
-			if (summaryText.length > (499 - Twinkle.getPref('summaryAd').length)) {
+			if (summaryText.length > 499) {
 				summaryText = summaryText.replace(/\[\[[^|]+\|([^\]]+)\]\]/g, '$1');
 			}
 
@@ -599,8 +599,7 @@ Twinkle.tag.callbacks = {
 					talkpage.setAppendText(talkpageText);
 					talkpage.setEditSummary(wgULS('请求将[[' + params.nonDiscussArticle + ']]' +
 						'与' + '[[' + params.discussArticle + ']]合并', '請求將[[' + params.nonDiscussArticle + ']]' +
-						'與' + '[[' + params.discussArticle + ']]合併') +
-						Twinkle.getPref('summaryAd'));
+						'與' + '[[' + params.discussArticle + ']]合併'));
 					talkpage.setChangeTags(Twinkle.changeTags);
 					talkpage.setWatchlist(Twinkle.getPref('watchMergeDiscussions'));
 					talkpage.setCreateOption('recreate');
@@ -638,8 +637,7 @@ Twinkle.tag.callbacks = {
 
 					var moveTalkpage = new Morebits.wiki.page('Talk:' + params.discussArticle, wgULS('将理由贴进讨论页', '將理由貼進討論頁'));
 					moveTalkpage.setAppendText(moveTalkpageText);
-					moveTalkpage.setEditSummary(wgULS('请求移动' + (params.moveTarget ? '至[[' + params.moveTarget + ']]' : ''), '請求移動' + (params.moveTarget ? '至[[' + params.moveTarget + ']]' : '')) +
-						Twinkle.getPref('summaryAd'));
+					moveTalkpage.setEditSummary(wgULS('请求移动' + (params.moveTarget ? '至[[' + params.moveTarget + ']]' : ''), '請求移動' + (params.moveTarget ? '至[[' + params.moveTarget + ']]' : '')));
 					moveTalkpage.setChangeTags(Twinkle.changeTags);
 					moveTalkpage.setCreateOption('recreate');
 					moveTalkpage.append();
@@ -868,7 +866,7 @@ Twinkle.tag.callbacks = {
 		summaryText += (tags.length > 0 ? wgULS('标记', '標記') : '') + '到重定向';
 
 		// avoid truncated summaries
-		if (summaryText.length > (499 - Twinkle.getPref('summaryAd').length)) {
+		if (summaryText.length > 499) {
 			summaryText = summaryText.replace(/\[\[[^|]+\|([^\]]+)\]\]/g, '$1');
 		}
 

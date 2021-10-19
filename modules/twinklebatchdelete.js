@@ -532,7 +532,7 @@ Twinkle.batchdelete.callback.evaluate = function twinklebatchdeleteCallbackEvalu
 		var wikipedia_page = new Morebits.wiki.page(pageName, wgULS('正在删除页面 ', '正在刪除頁面 ') + pageName);
 		wikipedia_page.setCallbackParameters(params);
 		if (delete_page) {
-			wikipedia_page.setEditSummary(reason + Twinkle.getPref('deletionSummaryAd'));
+			wikipedia_page.setEditSummary(reason);
 			wikipedia_page.setChangeTags(Twinkle.changeTags);
 			wikipedia_page.suppressProtectWarning();
 			wikipedia_page.deletePage(Twinkle.batchdelete.callbacks.doExtras, pageDeleter.workerFailure);
@@ -559,7 +559,7 @@ Twinkle.batchdelete.callback.evaluate = function twinklebatchdeleteCallbackEvalu
 
 				var wikipedia_page = new Morebits.wiki.page(pageName, wgULS('正在删除子页面 ', '正在刪除子頁面 ') + pageName);
 				wikipedia_page.setCallbackParameters(params);
-				wikipedia_page.setEditSummary(reason + Twinkle.getPref('deletionSummaryAd'));
+				wikipedia_page.setEditSummary(reason);
 				wikipedia_page.setChangeTags(Twinkle.changeTags);
 				wikipedia_page.suppressProtectWarning();
 				wikipedia_page.deletePage(Twinkle.batchdelete.callbacks.doExtras, pageDeleter.workerFailure);
@@ -649,7 +649,7 @@ Twinkle.batchdelete.callbacks = {
 		redirectDeleter.setPageList(pages);
 		redirectDeleter.run(function(pageName) {
 			var wikipedia_page = new Morebits.wiki.page(pageName, wgULS('正在删除 ', '正在刪除 ') + pageName);
-			wikipedia_page.setEditSummary('[[Wiktionary:CSD#G15|G15]]: ' + wgULS('指向已删页面“', '指向已刪頁面「') + apiobj.params.page + wgULS('”的重定向', '」的重新導向') + Twinkle.getPref('deletionSummaryAd'));
+			wikipedia_page.setEditSummary('[[Wiktionary:CSD#G15|G15]]: ' + wgULS('指向已删页面“', '指向已刪頁面「') + apiobj.params.page + wgULS('”的重定向', '」的重新導向'));
 			wikipedia_page.setChangeTags(Twinkle.changeTags);
 			wikipedia_page.deletePage(redirectDeleter.workerSuccess, redirectDeleter.workerFailure);
 		});
@@ -664,7 +664,7 @@ Twinkle.batchdelete.callbacks = {
 		}
 
 		var page = new Morebits.wiki.page(apiobj.params.talkPage, wgULS('正在删除页面 ', '正在刪除頁面 ') + apiobj.params.page + wgULS(' 的讨论页', ' 的討論頁'));
-		page.setEditSummary('[[Wiktionary:CSD#G15|G15]]: ' + wgULS('已删页面“', '已刪頁面「') + apiobj.params.page + wgULS('”的[[w:Wikipedia:讨论页|讨论页]]', '」的[[w:Wikipedia:讨论页|討論頁]]') + Twinkle.getPref('deletionSummaryAd'));
+		page.setEditSummary('[[Wiktionary:CSD#G15|G15]]: ' + wgULS('已删页面“', '已刪頁面「') + apiobj.params.page + wgULS('”的[[w:Wikipedia:讨论页|讨论页]]', '」的[[w:Wikipedia:讨论页|討論頁]]'));
 		page.setChangeTags(Twinkle.changeTags);
 		page.deletePage();
 	},
@@ -714,7 +714,7 @@ Twinkle.batchdelete.callbacks = {
 			params.unlinker.workerSuccess(pageobj);
 			return;
 		}
-		pageobj.setEditSummary(wgULS('取消到已删页面', '取消到已刪頁面') + params.page + wgULS('的链入', '的連入') + Twinkle.getPref('deletionSummaryAd'));
+		pageobj.setEditSummary(wgULS('取消到已删页面', '取消到已刪頁面') + params.page + wgULS('的链入', '的連入'));
 		pageobj.setChangeTags(Twinkle.changeTags);
 		pageobj.setPageText(text);
 		pageobj.setCreateOption('nocreate');

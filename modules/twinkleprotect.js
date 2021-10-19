@@ -1117,7 +1117,7 @@ Twinkle.protect.callback.evaluate = function twinkleprotectCallbackEvaluate(e) {
 				}
 
 				if (form.protectReason.value) {
-					thispage.setEditSummary(form.protectReason.value + Twinkle.getPref('protectionSummaryAd'));
+					thispage.setEditSummary(form.protectReason.value);
 					thispage.setChangeTags(Twinkle.changeTags);
 				} else {
 					alert(wgULS('您必须输入保护理由，这将被记录在保护日志中。', '您必須輸入保護理由，這將被記錄在保護日誌中。'));
@@ -1318,7 +1318,7 @@ Twinkle.protect.callbacks = {
 		}
 
 		if (params.tag === 'none') {
-			summary = wgULS('移除保护模板', '移除保護模板') + Twinkle.getPref('summaryAd');
+			summary = wgULS('移除保护模板', '移除保護模板');
 		} else {
 			if (params.noinclude) {
 				text = '<noinclude>{{' + tag + '}}</noinclude>' + text;
@@ -1327,7 +1327,7 @@ Twinkle.protect.callbacks = {
 			} else {
 				text = '{{' + tag + '}}\n' + text;
 			}
-			summary = '加入{{' + params.tag + '}}' + Twinkle.getPref('summaryAd');
+			summary = '加入{{' + params.tag + '}}';
 		}
 
 		return {

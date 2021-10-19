@@ -179,7 +179,7 @@ Twinkle.warn.callback = function twinklewarnCallback() {
 // This is all the messages that might be dispatched by the code
 // Each of the individual templates require the following information:
 //   label (required): A short description displayed in the dialog
-//   summary (required): The edit summary used. If an article name is entered, the summary is postfixed with "on [[article]]", and it is always postfixed with ". $summaryAd"
+//   summary (required): The edit summary used. If an article name is entered, the summary is postfixed with "on [[article]]"
 //   suppressArticleInSummary (optional): Set to true to suppress showing the article name in the edit summary. Useful if the warning relates to attack pages, or some such.
 // 警告：警告消息有简体和繁体两个版本，请注意同时维护！
 Twinkle.warn.messages = wgULS({
@@ -2097,7 +2097,6 @@ Twinkle.warn.callbacks = {
 				}
 			}
 		}
-		summary += Twinkle.getPref('summaryAd');
 
 		pageobj.setPageText(text);
 		pageobj.setEditSummary(summary);

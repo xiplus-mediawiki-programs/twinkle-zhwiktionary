@@ -284,7 +284,7 @@ var callback_evaluate = function(e) {
 			text += '\n~~~~';
 		}
 
-		editSummary = wgULS('通知：有新邮件', '通知：有新郵件') + Twinkle.getPref('summaryAd');
+		editSummary = wgULS('通知：有新邮件', '通知：有新郵件');
 	} else {  // tbtarget one of mytalk, usertalk, other
 		// clean talkback heading: strip section header markers that were erroneously suggested in the documentation
 		title = Twinkle.getPref('talkbackHeading').replace(/^\s*=+\s*(.*?)\s*=+$\s*/, '$1');
@@ -309,7 +309,6 @@ var callback_evaluate = function(e) {
 			editSummary += 'User talk:';
 		}
 		editSummary += tbPageName + (section ? '#' + section : '') + ']]）';
-		editSummary += Twinkle.getPref('summaryAd');
 	}
 
 	Morebits.wiki.flow.check(fullUserTalkPageName, function () {

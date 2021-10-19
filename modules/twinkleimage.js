@@ -212,7 +212,7 @@ Twinkle.image.callbacks = {
 		} else {
 			editSummary += '[[WP:CSD#' + params.normalized.toUpperCase() + '|CSD ' + params.normalized.toUpperCase() + ']]';
 		}
-		editSummary += '）：' + params.type + Twinkle.getPref('summaryAd');
+		editSummary += '）：' + params.type;
 		pageobj.setEditSummary(editSummary);
 		pageobj.setChangeTags(Twinkle.changeTags);
 

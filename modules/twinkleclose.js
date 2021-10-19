@@ -624,7 +624,7 @@ Twinkle.close.callbacks = {
 					page.getStatusElement().warn(wgULS('没有执行删除', '沒有執行刪除'));
 					Twinkle.close.callbacks.talkend(params);
 				} else {
-					page.setEditSummary(reason + Twinkle.getPref('deletionSummaryAd'));
+					page.setEditSummary(reason);
 					page.setChangeTags(Twinkle.changeTags);
 					page.deletePage(function() {
 						page.getStatusElement().info('完成');
@@ -633,7 +633,7 @@ Twinkle.close.callbacks = {
 				}
 			});
 		} else {
-			page.setEditSummary('[[Special:PermaLink/' + mw.config.get('wgCurRevisionId') + '|' + wgULS('删除请求通过', '刪除請求通過') + ']]' + Twinkle.getPref('deletionSummaryAd'));
+			page.setEditSummary('[[Special:PermaLink/' + mw.config.get('wgCurRevisionId') + '|' + wgULS('删除请求通过', '刪除請求通過') + ']]');
 			page.setChangeTags(Twinkle.changeTags);
 			page.deletePage(function() {
 				page.getStatusElement().info('完成');

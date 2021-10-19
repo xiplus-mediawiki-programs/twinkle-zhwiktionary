@@ -79,10 +79,6 @@ Twinkle.defaultConfig = {};
  */
 Twinkle.defaultConfig = {
 	// General
-	summaryAd: '',
-	deletionSummaryAd: '',
-	protectionSummaryAd: '',
-	blockSummaryAd: '',
 	userTalkPageMode: 'tab',
 	dialogLargeFont: false,
 	disabledModules: [],
@@ -153,6 +149,12 @@ Twinkle.defaultConfig = {
 	projectNamespaceName: mw.config.get('wgFormattedNamespaces')[4],
 	sandboxPage: 'Wiktionary:沙盒',
 
+	// Deprecated options, as a fallback for add-on scripts/modules
+	summaryAd: '',
+	deletionSummaryAd: '',
+	protectionSummaryAd: '',
+	blockSummaryAd: '',
+
 	// Formerly defaultConfig.friendly:
 
 	// Tag
@@ -197,11 +199,6 @@ switch (mw.config.get('skin')) {
 
 
 Twinkle.getPref = function twinkleGetPref(name) {
-	// Temporarily disable summaryAd
-	if ($.inArray(name, ['summaryAd', 'deletionSummaryAd', 'protectionSummaryAd', 'blockSummaryAd']) !== -1) {
-		return '';
-	}
-
 	// Old preferences format
 	if (typeof Twinkle.prefs === 'object' && typeof Twinkle.prefs.twinkle === 'object' && Twinkle.prefs.twinkle[name]) {
 		return Twinkle.prefs.twinkle[name];
