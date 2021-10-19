@@ -246,8 +246,8 @@ Twinkle.arv.callback.evaluate = function(e) {
 					return;
 				}
 				aivPage.getStatusElement().status(wgULS('加入新报告…', '加入新報告…'));
-				aivPage.setEditSummary(wgULS('报告', '報告') + '[[Special:Contributions/' + uid + '|' + uid + ']]。' + Twinkle.getPref('summaryAd'));
-				aivPage.setTags(Twinkle.getPref('revisionTags'));
+				aivPage.setEditSummary(wgULS('报告', '報告') + '[[Special:Contributions/' + uid + '|' + uid + ']]。');
+				aivPage.setChangeTags(Twinkle.changeTags);
 				aivPage.setAppendText('\n== {{vandal|' + (/=/.test(uid) ? '1=' : '') + uid + '}} ==\n' + reason);
 				aivPage.append();
 			});

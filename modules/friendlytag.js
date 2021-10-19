@@ -583,8 +583,8 @@ Twinkle.tag.callbacks = {
 			}
 
 			pageobj.setPageText(pageText);
-			pageobj.setEditSummary(summaryText + Twinkle.getPref('summaryAd'));
-			pageobj.setTags(Twinkle.getPref('revisionTags'));
+			pageobj.setEditSummary(summaryText);
+			pageobj.setChangeTags(Twinkle.changeTags);
 			pageobj.setWatchlist(Twinkle.getPref('watchTaggedPages'));
 			pageobj.setMinorEdit(Twinkle.getPref('markTaggedPagesAsMinor'));
 			pageobj.setCreateOption('nocreate');
@@ -601,7 +601,7 @@ Twinkle.tag.callbacks = {
 						'与' + '[[' + params.discussArticle + ']]合并', '請求將[[' + params.nonDiscussArticle + ']]' +
 						'與' + '[[' + params.discussArticle + ']]合併') +
 						Twinkle.getPref('summaryAd'));
-					talkpage.setTags(Twinkle.getPref('revisionTags'));
+					talkpage.setChangeTags(Twinkle.changeTags);
 					talkpage.setWatchlist(Twinkle.getPref('watchMergeDiscussions'));
 					talkpage.setCreateOption('recreate');
 					talkpage.append();
@@ -640,7 +640,7 @@ Twinkle.tag.callbacks = {
 					moveTalkpage.setAppendText(moveTalkpageText);
 					moveTalkpage.setEditSummary(wgULS('请求移动' + (params.moveTarget ? '至[[' + params.moveTarget + ']]' : ''), '請求移動' + (params.moveTarget ? '至[[' + params.moveTarget + ']]' : '')) +
 						Twinkle.getPref('summaryAd'));
-					moveTalkpage.setTags(Twinkle.getPref('revisionTags'));
+					moveTalkpage.setChangeTags(Twinkle.changeTags);
 					moveTalkpage.setCreateOption('recreate');
 					moveTalkpage.append();
 				}
@@ -873,8 +873,8 @@ Twinkle.tag.callbacks = {
 		}
 
 		pageobj.setPageText(pageText);
-		pageobj.setEditSummary(summaryText + Twinkle.getPref('summaryAd'));
-		pageobj.setTags(Twinkle.getPref('revisionTags'));
+		pageobj.setEditSummary(summaryText);
+		pageobj.setChangeTags(Twinkle.changeTags);
 		pageobj.setWatchlist(Twinkle.getPref('watchTaggedPages'));
 		pageobj.setMinorEdit(Twinkle.getPref('markTaggedPagesAsMinor'));
 		pageobj.setCreateOption('nocreate');
@@ -984,8 +984,8 @@ Twinkle.tag.callbacks = {
 		}
 
 		pageobj.setPageText(text);
-		pageobj.setEditSummary(summary.substring(0, summary.length - 2) + Twinkle.getPref('summaryAd'));
-		pageobj.setTags(Twinkle.getPref('revisionTags'));
+		pageobj.setEditSummary(summary.substring(0, summary.length - 2));
+		pageobj.setChangeTags(Twinkle.changeTags);
 		pageobj.setWatchlist(Twinkle.getPref('watchTaggedPages'));
 		pageobj.setMinorEdit(Twinkle.getPref('markTaggedPagesAsMinor'));
 		pageobj.setCreateOption('nocreate');

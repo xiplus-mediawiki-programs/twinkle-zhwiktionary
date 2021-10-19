@@ -941,7 +941,7 @@ Twinkle.block.callback.evaluate = function twinkleblockCallbackEvaluate(e) {
 		Morebits.status.init(e.target);
 		var statusElement = new Morebits.status(wgULS('执行封禁', '執行封鎖'));
 		blockoptions.action = 'block';
-		blockoptions.tags = Twinkle.getPref('revisionTags');
+		blockoptions.tags = Twinkle.changeTags;
 		blockoptions.user = Morebits.wiki.flow.relevantUserName(true);
 
 		// boolean-flipped options
@@ -993,7 +993,7 @@ Twinkle.block.callback.evaluate = function twinkleblockCallbackEvaluate(e) {
 		Morebits.status.init(e.target);
 		var unblockStatusElement = new Morebits.status(wgULS('执行解除封禁', '執行解除封鎖'));
 		unblockoptions.action = 'unblock';
-		unblockoptions.tags = Twinkle.getPref('revisionTags');
+		unblockoptions.tags = Twinkle.changeTags;
 		unblockoptions.user = Morebits.wiki.flow.relevantUserName(true);
 
 		api.getToken('block').then(function(token) {
@@ -1035,8 +1035,8 @@ Twinkle.block.callback.taguserpage = function twinkleblockCallbackTagUserpage(pa
 				return alert(wgULS('未知的用户页模板！', '未知的用戶頁模板！'));
 		}
 		pageobj.setPageText(pagetext);
-		pageobj.setEditSummary(wgULS('标记被永久封禁的用户页', '標記被永久封鎖的用戶頁') + Twinkle.getPref('summaryAd'));
-		pageobj.setTags(Twinkle.getPref('revisionTags'));
+		pageobj.setEditSummary(wgULS('标记被永久封禁的用户页', '標記被永久封鎖的用戶頁'));
+		pageobj.setChangeTags(Twinkle.changeTags);
 		pageobj.save(function() {
 			Morebits.status.info(wgULS('标记用户页', '標記用戶頁'), '完成');
 			pageobj.load(Twinkle.block.callback.protectuserpage);
@@ -1057,7 +1057,7 @@ Twinkle.block.callback.protectuserpage = function twinkleblockCallbackProtectUse
 			pageobj.setCreateProtection('sysop', 'indefinite');
 		}
 		pageobj.setEditSummary(wgULS('被永久封禁的用户页', '被永久封鎖的用戶頁') + Twinkle.getPref('protectionSummaryAd'));
-		pageobj.setTags(Twinkle.getPref('revisionTags'));
+		pageobj.setChangeTags(Twinkle.changeTags);
 		pageobj.protect(function() {
 			Morebits.status.info(wgULS('保护用户页', '保護用戶頁'), pageobj.exists() ? wgULS('已全保护', '已全保護') : wgULS('已白纸保护', '已白紙保護'));
 		});
@@ -1205,7 +1205,7 @@ Twinkle.block.callback.main = function twinkleblockcallbackMain(pageobj) {
 
 	pageobj.setPageText(text);
 	pageobj.setEditSummary(summary);
-	pageobj.setTags(Twinkle.getPref('revisionTags'));
+	pageobj.setChangeTags(Twinkle.changeTags);
 	pageobj.setWatchlist(Twinkle.getPref('watchWarnings'));
 	pageobj.save();
 };

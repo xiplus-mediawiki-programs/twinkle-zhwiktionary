@@ -625,7 +625,7 @@ Twinkle.close.callbacks = {
 					Twinkle.close.callbacks.talkend(params);
 				} else {
 					page.setEditSummary(reason + Twinkle.getPref('deletionSummaryAd'));
-					page.setTags(Twinkle.getPref('revisionTags'));
+					page.setChangeTags(Twinkle.changeTags);
 					page.deletePage(function() {
 						page.getStatusElement().info('完成');
 						Twinkle.close.callbacks.talkend(params);
@@ -634,7 +634,7 @@ Twinkle.close.callbacks = {
 			});
 		} else {
 			page.setEditSummary('[[Special:PermaLink/' + mw.config.get('wgCurRevisionId') + '|' + wgULS('删除请求通过', '刪除請求通過') + ']]' + Twinkle.getPref('deletionSummaryAd'));
-			page.setTags(Twinkle.getPref('revisionTags'));
+			page.setChangeTags(Twinkle.changeTags);
 			page.deletePage(function() {
 				page.getStatusElement().info('完成');
 				Twinkle.close.callbacks.talkend(params);
@@ -683,7 +683,7 @@ Twinkle.close.callbacks = {
 		redirectDeleter.run(function(pageName) {
 			var wikipedia_page = new Morebits.wiki.page(pageName, wgULS('正在删除 ', '正在刪除 ') + pageName);
 			wikipedia_page.setEditSummary('[[WT:CSD|G15]]: ' + wgULS('指向已删页面“', '指向已刪頁面「') + apiobj.params.title + wgULS('”的重定向', '」的重新導向'));
-			wikipedia_page.setTags(Twinkle.getPref('revisionTags'));
+			wikipedia_page.setChangeTags(Twinkle.changeTags);
 			wikipedia_page.deletePage(redirectDeleter.workerSuccess, redirectDeleter.workerFailure);
 		});
 	},
@@ -698,7 +698,7 @@ Twinkle.close.callbacks = {
 
 		var page = new Morebits.wiki.page(apiobj.params.talkPage, wgULS('正在删除页面 ', '正在刪除頁面 ') + apiobj.params.title + wgULS(' 的讨论页', ' 的討論頁'));
 		page.setEditSummary('[[WT:CSD|G15]]: ' + wgULS('已删页面“', '已刪頁面「') + apiobj.params.title + wgULS('”的讨论页', '」的討論頁'));
-		page.setTags(Twinkle.getPref('revisionTags'));
+		page.setChangeTags(Twinkle.changeTags);
 		page.deletePage();
 	},
 	keep: function (pageobj) {
@@ -722,8 +722,8 @@ Twinkle.close.callbacks = {
 		var editsummary = '[[Special:PermaLink/' + mw.config.get('wgCurRevisionId') + '|' + wgULS('删除请求关闭', '刪除請求關閉') + ']]';
 
 		pageobj.setPageText(newtext);
-		pageobj.setEditSummary(editsummary + Twinkle.getPref('summaryAd'));
-		pageobj.setTags(Twinkle.getPref('revisionTags'));
+		pageobj.setEditSummary(editsummary);
+		pageobj.setChangeTags(Twinkle.changeTags);
 		pageobj.setCreateOption('nocreate');
 		pageobj.save(Twinkle.close.callbacks.keepComplete);
 	},
@@ -777,8 +777,8 @@ Twinkle.close.callbacks = {
 		}
 
 		pageobj.setPageText(text);
-		pageobj.setEditSummary('/* ' + params.title + ' */ ' + params.messageData.label + Twinkle.getPref('summaryAd'));
-		pageobj.setTags(Twinkle.getPref('revisionTags'));
+		pageobj.setEditSummary('/* ' + params.title + ' */ ' + params.messageData.label);
+		pageobj.setChangeTags(Twinkle.changeTags);
 		pageobj.setCreateOption('nocreate');
 		pageobj.save(Twinkle.close.callbacks.disableLink);
 	},

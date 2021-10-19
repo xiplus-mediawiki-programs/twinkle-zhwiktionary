@@ -52,6 +52,16 @@ window.wgUVS = function (hans, hant, cn, tw, hk, sg, zh, mo, my) {
 var Twinkle = {};
 window.Twinkle = Twinkle;  // allow global access
 
+/**
+ * Twinkle-specific data shared by multiple modules
+ * Likely customized per installation
+ */
+// Custom change tag(s) to be applied to all Twinkle actions, create at Special:Tags
+Twinkle.changeTags = 'Twinkle';
+// Available for actions that don't (yet) support tags
+// currently: FlaggedRevs and PageTriage
+Twinkle.summaryAd = ' ([[WP:TW|TW]])';
+
 // for use by custom modules (normally empty)
 Twinkle.initCallbacks = [];
 Twinkle.addInitCallback = function twinkleAddInitCallback(func) {
@@ -139,7 +149,6 @@ Twinkle.defaultConfig = {
 	batchProtectChunks: 50,
 	batchundeleteChunks: 50,
 	proddeleteChunks: 50,
-	revisionTags: 'Twinkle',
 	configPage: 'Wiktionary:Twinkle/参数设置',
 	projectNamespaceName: mw.config.get('wgFormattedNamespaces')[4],
 	sandboxPage: 'Wiktionary:沙盒',

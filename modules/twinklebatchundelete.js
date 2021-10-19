@@ -119,7 +119,7 @@ Twinkle.batchundelete.callback.evaluate = function(event) {
 			'title': pageName,
 			'action': 'undelete',
 			'reason': reason + Twinkle.getPref('deletionSummaryAd'),
-			'tags': Twinkle.getPref('revisionTags')
+			'tags': Twinkle.changeTags
 		};
 		var wikipedia_api = new Morebits.wiki.api(wgULS('反删除页面', '反刪除頁面') + pageName, query,
 			batchOperation.workerSuccess, null, batchOperation.workerFailure);

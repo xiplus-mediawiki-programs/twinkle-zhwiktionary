@@ -396,7 +396,7 @@ Twinkle.fluff.callbacks = {
 			var query = {
 				'action': 'edit',
 				'title': mw.config.get('wgPageName'),
-				'tags': Twinkle.getPref('revisionTags'),
+				'tags': Twinkle.changeTags,
 				'summary': summary,
 				'token': edittoken,
 				'undo': lastrevid,
@@ -608,7 +608,7 @@ Twinkle.fluff.callbacks = {
 		query = {
 			'action': 'edit',
 			'title': self.params.pagename,
-			'tags': Twinkle.getPref('revisionTags'),
+			'tags': Twinkle.changeTags,
 			'summary': summary,
 			'token': edittoken,
 			'undo': lastrevid,

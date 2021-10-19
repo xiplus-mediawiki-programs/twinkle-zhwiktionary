@@ -2101,7 +2101,7 @@ Twinkle.warn.callbacks = {
 
 		pageobj.setPageText(text);
 		pageobj.setEditSummary(summary);
-		pageobj.setTags(Twinkle.getPref('revisionTags'));
+		pageobj.setChangeTags(Twinkle.changeTags);
 		pageobj.setWatchlist(Twinkle.getPref('watchWarnings'));
 		pageobj.save();
 	},
