@@ -123,7 +123,7 @@ Twinkle.block.fetchUserInfo = function twinkleblockFetchUserInfo(fn) {
 		ususers: userName,
 		letitle: 'User:' + userName
 	};
-	if (Morebits.isIPRange(userName)) {
+	if (Morebits.ip.isRange(userName)) {
 		query.bkip = userName;
 	} else {
 		query.bkusers = userName;
@@ -969,7 +969,7 @@ Twinkle.block.callback.evaluate = function twinkleblockCallbackEvaluate(e) {
 		Morebits.simpleWindow.setButtonsEnabled(false);
 		Morebits.status.init(e.target);
 
-		if (Morebits.isIPRange(Morebits.wiki.flow.relevantUserName(true))) {
+		if (Morebits.ip.isRange(Morebits.wiki.flow.relevantUserName(true))) {
 			new Morebits.status(wgULS('信息', '資訊'), wgULS('由于封禁目标为IP段，加入封禁模板已略过', '由於封禁目標為IP段，加入封鎖模板已略過'), 'warn');
 		} else {
 			Twinkle.block.callback.issue_template(templateoptions);
