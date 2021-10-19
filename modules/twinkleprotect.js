@@ -200,7 +200,7 @@ Twinkle.protect.callback.changeAction = function twinkleprotectCallbackChangeAct
 					Twinkle.protect.protectionTypesCreate
 			});
 
-			field2 = new Morebits.quickForm.element({ type: 'field', label: wgULS('保护选项', '保護設定'), name: 'field2' });
+			field2 = new Morebits.quickForm.element({ type: 'field', label: wgULS('保护设置', '保護設定'), name: 'field2' });
 			field2.append({ type: 'div', name: 'currentprot', label: ' ' });  // holds the current protection level, as filled out by the async callback
 			field2.append({ type: 'div', name: 'hasprotectlog', label: ' ' });
 			// for existing pages
@@ -435,7 +435,7 @@ Twinkle.protect.callback.changeAction = function twinkleprotectCallbackChangeAct
 			}
 			/* falls through */
 		case 'tag':
-			field1 = new Morebits.quickForm.element({ type: 'field', label: wgULS('标记选项', '標記設定'), name: 'field1' });
+			field1 = new Morebits.quickForm.element({ type: 'field', label: wgULS('标记设置', '標記設定'), name: 'field1' });
 			field1.append({ type: 'div', name: 'currentprot', label: ' ' });  // holds the current protection level, as filled out by the async callback
 			field1.append({ type: 'div', name: 'hasprotectlog', label: ' ' });
 			field1.append({
@@ -473,7 +473,7 @@ Twinkle.protect.callback.changeAction = function twinkleprotectCallbackChangeAct
 				list: mw.config.get('wgArticleId') ? Twinkle.protect.protectionTypes : Twinkle.protect.protectionTypesCreate
 			});
 
-			field1 = new Morebits.quickForm.element({ type: 'field', label: wgULS('选项', '設定'), name: 'field1' });
+			field1 = new Morebits.quickForm.element({ type: 'field', label: wgULS('设置', '設定'), name: 'field1' });
 			field1.append({ type: 'div', name: 'currentprot', label: ' ' });  // holds the current protection level, as filled out by the async callback
 			field1.append({ type: 'div', name: 'hasprotectlog', label: ' ' });
 			field1.append({
@@ -493,7 +493,7 @@ Twinkle.protect.callback.changeAction = function twinkleprotectCallbackChangeAct
 			});
 			break;
 		default:
-			alert(wgULS('这玩意儿被逆襲的天邪鬼吃掉了！', '這玩意兒被逆襲的天邪鬼吃掉了！'));
+			alert(wgULS('这玩意儿被逆袭的天邪鬼吃掉了！', '這玩意兒被逆襲的天邪鬼吃掉了！'));
 			break;
 	}
 
@@ -1327,7 +1327,7 @@ Twinkle.protect.callbacks = {
 			} else {
 				text = '{{' + tag + '}}\n' + text;
 			}
-			summary = wgULS('添加{{' + params.tag + '}}', '加入{{' + params.tag + '}}') + Twinkle.getPref('summaryAd');
+			summary = '加入{{' + params.tag + '}}' + Twinkle.getPref('summaryAd');
 		}
 
 		return {
@@ -1415,7 +1415,7 @@ Twinkle.protect.callbacks = {
 			statusElement.error(wgULS([ '无法在WP:RFPP上找到相关位点标记，要修复此问题，请参见', linknode, '。' ], [ '無法在WP:RFPP上找到相關位點標記，要修複此問題，請參見', linknode, '。' ]));
 			return;
 		}
-		statusElement.status(wgULS('添加新提名…', '加入新提名…'));
+		statusElement.status('加入新提名…');
 		rppPage.setEditSummary('请求对[[' + Morebits.pageNameNorm + ']]' + params.typename);
 		rppPage.setChangeTags(Twinkle.changeTags);
 		rppPage.setPageText(text);

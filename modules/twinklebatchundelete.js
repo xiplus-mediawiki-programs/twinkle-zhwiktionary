@@ -51,7 +51,7 @@ Twinkle.batchundelete.callback = function twinklebatchundeleteCallback() {
 		'titles': mw.config.get('wgPageName'),
 		'gpllimit': Twinkle.getPref('batchMax') // the max for sysops
 	};
-	var statelem = new Morebits.status(wgULS('抓取页面列表', '擷取頁面列表'));
+	var statelem = new Morebits.status(wgULS('抓取页面列表', '抓取頁面列表'));
 	var wikipedia_api = new Morebits.wiki.api(wgULS('加载中…', '載入中…'), query, function(apiobj) {
 		var xml = apiobj.responseXML;
 		var $pages = $(xml).find('page[missing]');

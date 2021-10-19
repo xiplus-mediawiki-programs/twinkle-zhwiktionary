@@ -139,7 +139,7 @@ var callback_change_target = function(e) {
 
 	var work_area = new Morebits.quickForm.element({
 		type: 'field',
-		label: wgULS('回复通告信息', '回覆通告訊息'),
+		label: wgULS('回复通告消息', '回覆通告訊息'),
 		name: 'work_area'
 	});
 
@@ -218,7 +218,7 @@ var callback_change_target = function(e) {
 	}
 
 	if (value !== 'notice') {
-		work_area.append({ type: 'textarea', label: wgULS('附加信息（可选）：', '附加訊息（可選）：'), name: 'message', tooltip: wgULS('会在回复通告模板下出现的消息，您的签名会被加在最后。', '會在回覆通告模板下出現的訊息，您的簽名會被加在最後。') });
+		work_area.append({ type: 'textarea', label: wgULS('附加消息（可选）：', '附加訊息（可選）：'), name: 'message', tooltip: wgULS('会在回复通告模板下出现的消息，您的签名会被加在最后。', '會在回覆通告模板下出現的訊息，您的簽名會被加在最後。') });
 	}
 
 	work_area = work_area.render();
@@ -313,12 +313,12 @@ var callback_evaluate = function(e) {
 	}
 
 	Morebits.wiki.flow.check(fullUserTalkPageName, function () {
-		var flowpage = new Morebits.wiki.flow(fullUserTalkPageName, wgULS('添加回复通告', '加入回覆通告'));
+		var flowpage = new Morebits.wiki.flow(fullUserTalkPageName, wgULS('加入回复通告', '加入回覆通告'));
 		flowpage.setTopic(title);
 		flowpage.setContent(content);
 		flowpage.newTopic();
 	}, function () {
-		var talkpage = new Morebits.wiki.page(fullUserTalkPageName, wgULS('添加回复通告', '加入回覆通告'));
+		var talkpage = new Morebits.wiki.page(fullUserTalkPageName, wgULS('加入回复通告', '加入回覆通告'));
 		talkpage.setEditSummary(editSummary);
 		talkpage.setChangeTags(Twinkle.changeTags);
 		talkpage.setAppendText(text);

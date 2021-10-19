@@ -37,7 +37,7 @@ Twinkle.image.callback = function twinkleimageCallback() {
 				label: wgULS('通知上传者', '通知上傳者'),
 				value: 'notify',
 				name: 'notify',
-				tooltip: wgULS('如果您在标记同一用户的很多文件，请取消此复选框以避免使用户对话页过载。CSD F6永远不会通知。', '如果您在標記同一用戶的很多檔案，請取消此複選框以避免使用戶對話頁過載。CSD F6永遠不會通知。'),
+				tooltip: wgULS('如果您在标记同一用户的很多文件，请取消此复选框以避免使用户对话页重载。CSD F6永远不会通知。', '如果您在標記同一用戶的很多檔案，請取消此複選框以避免使用戶對話頁過載。CSD F6永遠不會通知。'),
 				checked: Twinkle.getPref('notifyUserOnDeli')
 			}
 		]
@@ -55,27 +55,27 @@ Twinkle.image.callback = function twinkleimageCallback() {
 				label: wgULS('来源不明（CSD F3）', '來源不明（CSD F3）'),
 				value: 'no source',
 				checked: true,
-				tooltip: wgULS('本档案并未注明原始出处', '本檔案並未注明原始出處')
+				tooltip: wgULS('本文件并未注明原始出处', '本檔案並未注明原始出處')
 			},
 			{
-				label: wgULS('未知版权或版权无法被查证（CSD F4）', '未知版權或版權無法被查證（CSD F4）'),
+				label: wgULS('未知著作权或著作权无法被查证（CSD F4）', '未知版權或版權無法被查證（CSD F4）'),
 				value: 'no license',
-				tooltip: wgULS('本档案缺少版权信息，或声称的版权信息无法予以查证', '本檔案缺少版權資訊，或聲稱的版權資訊無法予以查證')
+				tooltip: wgULS('本文件缺少著作权信息，或声称的著作权信息无法予以查证', '本檔案缺少版權資訊，或聲稱的版權資訊無法予以查證')
 			},
 			{
-				label: wgULS('来源不明（CSD F3）且未知版权或版权无法被查证（CSD F4）', '來源不明（CSD F3）且未知版權或版權無法被查證（CSD F4）'),
+				label: wgULS('来源不明（CSD F3）且未知著作权或著作权无法被查证（CSD F4）', '來源不明（CSD F3）且未知版權或版權無法被查證（CSD F4）'),
 				value: 'no source no license',
-				tooltip: wgULS('本档案并未注明原始出处，且本档案缺少版权信息或声称的版权信息无法予以查证', '本檔案並未注明原始出處，且本檔案缺少版權資訊或聲稱的版權資訊無法予以查證')
+				tooltip: wgULS('本文件并未注明原始出处，且本文件缺少著作权信息或声称的著作权信息无法予以查证', '本檔案並未注明原始出處，且本檔案缺少版權資訊或聲稱的版權資訊無法予以查證')
 			},
 			{
-				label: wgULS('没有被条目使用的非自由版权文件（CSD F6）', '沒有被條目使用的非自由版權檔案（CSD F6）'),
+				label: wgULS('没有被条目使用的非自由著作权文件（CSD F6）', '沒有被條目使用的非自由版權檔案（CSD F6）'),
 				value: 'orphaned fair use',
-				tooltip: wgULS('本文件为非自由版权且没有被条目使用', '本檔案為非自由版權且沒有被條目使用')
+				tooltip: wgULS('本文件为非自由著作权且没有被条目使用', '本檔案為非自由版權且沒有被條目使用')
 			},
 			{
 				label: wgULS('明显侵权之文件（CSD F8）', '明顯侵權之檔案（CSD F8）'),
 				value: 'no permission',
-				tooltip: wgULS('上传者宣称拥有，而在其他来源找到的文件。或从侵权的来源取得的文件。', '上傳者宣稱擁有，而在其他來源找到的檔案。或從侵權的來源取得的檔案。'),
+				tooltip: wgULS('上传者宣称拥有，而在其他来源找到的文件。或从侵权的来源获取的文件。', '上傳者宣稱擁有，而在其他來源找到的檔案。或從侵權的來源取得的檔案。'),
 				subgroup: {
 					name: 'f8_source',
 					type: 'textarea',
@@ -149,7 +149,7 @@ Twinkle.image.callback.evaluate = function twinkleimageCallbackEvaluate(event) {
 	Morebits.wiki.actionCompleted.notice = wgULS('标记完成', '標記完成');
 
 	// Tagging image
-	var wikipedia_page = new Morebits.wiki.page(mw.config.get('wgPageName'), wgULS('添加删除标记', '加入刪除標記'));
+	var wikipedia_page = new Morebits.wiki.page(mw.config.get('wgPageName'), wgULS('加入删除标记', '加入刪除標記'));
 	wikipedia_page.setCallbackParameters(params);
 	wikipedia_page.load(Twinkle.image.callbacks.taggingImage);
 
@@ -180,7 +180,7 @@ Twinkle.image.callbacks = {
 		text = text.replace(/\{\{(mtc|(copy |move )?to ?commons|move to wikimedia commons|copy to wikimedia commons)[^}]*\}\}/gi, '');
 		// Adding discussion
 		if (params.type !== 'orphaned fair use') {
-			var wikipedia_page = new Morebits.wiki.page('Wikipedia:檔案存廢討論/無版權訊息或檔案來源', wgULS('添加快速删除记录项', '加入快速刪除記錄項'));
+			var wikipedia_page = new Morebits.wiki.page('Wikipedia:檔案存廢討論/無版權訊息或檔案來源', wgULS('加入快速删除记录项', '加入快速刪除記錄項'));
 			wikipedia_page.setFollowRedirect(true);
 			wikipedia_page.setCallbackParameters(params);
 			wikipedia_page.load(Twinkle.image.callbacks.imageList);
@@ -240,12 +240,12 @@ Twinkle.image.callbacks = {
 		} else {
 			var talkPageName = 'User talk:' + initialContrib;
 			Morebits.wiki.flow.check(talkPageName, function () {
-				var flowpage = new Morebits.wiki.flow(talkPageName, wgULS('通知上传者(', '通知上傳者(') + initialContrib + ')');
-				flowpage.setTopic(wgULS('请补充文件[[:', '請補充檔案[[:') + Morebits.pageNameNorm + wgULS(']]的版权或来源信息', ']]的版權或來源資訊'));
+				var flowpage = new Morebits.wiki.flow(talkPageName, wgULS('通知上传者(') + initialContrib + ', '通知上傳者(') + initialContrib + ')');
+				flowpage.setTopic(wgULS('请补充文件[[:', '請補充檔案[[:') + Morebits.pageNameNorm + wgULS(']]的著作权或来源信息', ']]的版權或來源資訊'));
 				flowpage.setContent('{{subst:Uploadvionotice|' + Morebits.pageNameNorm + '|flow=yes}}');
 				flowpage.newTopic();
 			}, function () {
-				var usertalkpage = new Morebits.wiki.page(talkPageName, wgULS('通知上传者(', '通知上傳者(') + initialContrib + ')');
+				var usertalkpage = new Morebits.wiki.page(talkPageName, wgULS('通知上传者(') + initialContrib + ', '通知上傳者(') + initialContrib + ')');
 				var notifytext = '\n{{subst:Uploadvionotice|' + Morebits.pageNameNorm + '}}--~~~~';
 				usertalkpage.setAppendText(notifytext);
 				usertalkpage.setEditSummary(wgULS('通知：文件[[', '通知：檔案[[') + Morebits.pageNameNorm + wgULS(']]快速删除提名', ']]快速刪除提名'));
@@ -278,7 +278,7 @@ Twinkle.image.callbacks = {
 		// var params = pageobj.getCallbackParameters();
 
 		pageobj.setPageText(text + '\n* [[:' + Morebits.pageNameNorm + ']]--~~~~');
-		pageobj.setEditSummary(wgULS('添加[[', '加入[[') + Morebits.pageNameNorm + ']]。');
+		pageobj.setEditSummary('加入[[' + Morebits.pageNameNorm + ']]。');
 		pageobj.setChangeTags(Twinkle.changeTags);
 		pageobj.setCreateOption('recreate');
 		pageobj.save();

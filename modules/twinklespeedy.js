@@ -804,7 +804,7 @@ Twinkle.speedy.callbacks = {
 						tags: Twinkle.changeTags,
 						token: token
 					}, function() {
-						statusElement.info(wgULS('请记得阅读[[w:Wikipedia:不要删除首页]]。', '請記得閱讀[[w:Wikipedia:不要刪除首頁]]。'));
+						statusElement.info(wgULS('请记得阅读[[w:Wikipedia:不要删除主页]]。', '請記得閱讀[[w:Wikipedia:不要刪除首頁]]。'));
 					});
 					mbApi.post();
 				}, function() {

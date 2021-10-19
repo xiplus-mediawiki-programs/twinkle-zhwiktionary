@@ -116,7 +116,7 @@ Twinkle.warn.callback = function twinklewarnCallback() {
 	var form = new Morebits.quickForm(Twinkle.warn.callback.evaluate);
 	var main_select = form.append({
 		type: 'field',
-		label: wgULS('选择要发送的警告或通知类别', '選擇要發送的警告或通知類別'),
+		label: wgULS('选择要发送的警告或通知类型', '選擇要發送的警告或通知類別'),
 		tooltip: wgULS('首先选择一组，再选择具体的警告模板。', '首先選擇一組，再選擇具體的警告模板。')
 	});
 
@@ -150,8 +150,8 @@ Twinkle.warn.callback = function twinklewarnCallback() {
 		placeholder: wgULS('仅限一个，勿使用网址、[[ ]]，可使用Special:Diff', '僅限一個，勿使用網址、[[ ]]，可使用Special:Diff')
 	});
 
-	var more = form.append({ type: 'field', name: 'reasonGroup', label: wgULS('警告信息', '警告訊息') });
-	more.append({ type: 'textarea', label: wgULS('可选信息：', '可選訊息：'), name: 'reason', tooltip: wgULS('理由或是附加信息', '理由或是附加訊息') });
+	var more = form.append({ type: 'field', name: 'reasonGroup', label: wgULS('警告消息', '警告訊息') });
+	more.append({ type: 'textarea', label: wgULS('可选消息：', '可選訊息：'), name: 'reason', tooltip: wgULS('理由或是附加消息', '理由或是附加訊息') });
 
 	var previewlink = document.createElement('a');
 	$(previewlink).click(function() {
@@ -2022,7 +2022,7 @@ Twinkle.warn.callbacks = {
 		latest.date.setUTCMinutes(latest.date.getUTCMinutes() + 1); // after long debate, one minute is max
 
 		if (latest.date > date) {
-			if (!confirm(wgULS('近1分钟内一个同样的 ' + latest.type + ' 模板已被发出。\n是否继续？', '近1分鍾內一個同樣的 ' + latest.type + ' 模板已被發出。\n是否繼續？'))) {
+			if (!confirm(wgULS('近1分锺内一个同样的 ' + latest.type + ' 模板已被发出。\n是否继续？', '近1分鍾內一個同樣的 ' + latest.type + ' 模板已被發出。\n是否繼續？'))) {
 				pageobj.statelem.info('用户取消');
 				return;
 			}
@@ -2053,7 +2053,7 @@ Twinkle.warn.callbacks = {
 			params.reason, params.main_group === 'custom') + '--~~~~';
 
 		if (Twinkle.getPref('showSharedIPNotice') && mw.util.isIPAddress(mw.config.get('wgTitle'))) {
-			Morebits.status.info('信息', wgULS('添加共享IP说明', '加入共享IP說明'));
+			Morebits.status.info('信息', wgULS('加入共享IP说明', '加入共享IP說明'));
 			text += '\n{{subst:SharedIPAdvice}}';
 		}
 
