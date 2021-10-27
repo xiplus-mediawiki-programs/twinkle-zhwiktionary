@@ -245,7 +245,7 @@ Twinkle.xfd.callback.change_afd_category = function twinklexfdCallbackChangeAfdC
 Twinkle.xfd.callbacks = {
 	afd: {
 		main: function(pageobj) {
-			// this is coming in from lookupCreator...!
+			// this is coming in from lookupCreation...!
 			var params = pageobj.getCallbackParameters();
 
 			// Adding discussion
@@ -482,13 +482,13 @@ Twinkle.xfd.callbacks = {
 			var wikipedia_page = new Morebits.wiki.page(mw.config.get('wgPageName'));
 			wikipedia_page.setCallbackParameters(pageobj.getCallbackParameters());
 			wikipedia_page.setLookupNonRedirectCreator(true); // Look for author of first non-redirect revision
-			wikipedia_page.lookupCreator(Twinkle.xfd.callbacks.afd.main);
+			wikipedia_page.lookupCreation(Twinkle.xfd.callbacks.afd.main);
 		}
 	},
 
 	ffd: {
 		main: function(pageobj) {
-			// this is coming in from lookupCreator...!
+			// this is coming in from lookupCreation...!
 			var params = pageobj.getCallbackParameters();
 			var initialContrib = pageobj.getCreator();
 			params.uploader = initialContrib;
@@ -601,7 +601,7 @@ Twinkle.xfd.callbacks = {
 			var wikipedia_page = new Morebits.wiki.page(mw.config.get('wgPageName'));
 			wikipedia_page.setCallbackParameters(pageobj.getCallbackParameters());
 			wikipedia_page.setLookupNonRedirectCreator(true); // Look for author of first non-redirect revision
-			wikipedia_page.lookupCreator(Twinkle.xfd.callbacks.ffd.main);
+			wikipedia_page.lookupCreation(Twinkle.xfd.callbacks.ffd.main);
 		}
 	}
 };

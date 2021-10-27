@@ -1163,7 +1163,7 @@ Twinkle.speedy.callbacks = {
 					}
 				};
 				var thispage = new Morebits.wiki.page(Morebits.pageNameNorm);
-				thispage.lookupCreator(callback);
+				thispage.lookupCreation(callback);
 			// or, if not notifying, add this nomination to the user's userspace log without the initial contributor's name
 			} else if (params.lognomination) {
 				Twinkle.speedy.callbacks.user.addToLog(params, null);

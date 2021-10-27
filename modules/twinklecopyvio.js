@@ -73,13 +73,13 @@ Twinkle.copyvio.callbacks = {
 			// Contributor specific edits
 			var wikipedia_page = new Morebits.wiki.page(mw.config.get('wgPageName'));
 			wikipedia_page.setCallbackParameters(pageobj.getCallbackParameters());
-			wikipedia_page.lookupCreator(Twinkle.copyvio.callbacks.main);
+			wikipedia_page.lookupCreation(Twinkle.copyvio.callbacks.main);
 		} else {
 			Morebits.status.error(wgULS('错误', '錯誤'), wgULS('页面已经标记侵权，请人工确认是否已经提报。', '頁面已經標記侵權，請人工確認是否已經提報。'));
 		}
 	},
 	main: function(pageobj) {
-		// this is coming in from lookupCreator...!
+		// this is coming in from lookupCreation...!
 		var params = pageobj.getCallbackParameters();
 		var initialContrib = pageobj.getCreator();
 
