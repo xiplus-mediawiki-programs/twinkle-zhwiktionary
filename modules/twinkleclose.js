@@ -26,29 +26,15 @@ Twinkle.close = function twinkleclose() {
 };
 
 Twinkle.close.addLinks = function twinklecloseAddLinks() {
-	var spanTag = function(color, content) {
-		var span = document.createElement('span');
-		span.style.color = color;
-		span.appendChild(document.createTextNode(content));
-		return span;
-	};
-
-	$('h1:has(.mw-headline),h2:has(.mw-headline),h3:has(.mw-headline),h4:has(.mw-headline),h5:has(.mw-headline),h6:has(.mw-headline)', '#bodyContent').each(function (index, current) {
+	$('.mw-heading.mw-heading1, .mw-heading.mw-heading2, .mw-heading.mw-heading3, .mw-heading.mw-heading4, .mw-heading.mw-heading5, .mw-heading.mw-heading6', '#bodyContent').each(function (index, current) {
 		current.setAttribute('data-section', index + 1);
 	});
 
-	var selector = ':has(.mw-headline a:first):not(:has(+ div.xfd-closed))';
-	var titles = $('#bodyContent').find('h3' + selector + ':not(:has(+ p + h4)), h4' + selector); // really needs to work on
-
-	var delNode = document.createElement('strong');
-	var delLink = document.createElement('a');
-	delLink.appendChild(spanTag('Black', '['));
-	delLink.appendChild(spanTag('Red', wgULS('关闭讨论', '關閉討論')));
-	delLink.appendChild(spanTag('Black', ']'));
-	delNode.appendChild(delLink);
+	var selector = ':has(a:only-of-type):not(:has(+ div.NavFrame))';
+	var titles = $('#bodyContent').find('.mw-heading3' + selector + ':not(:has(+ p + h4)), .mw-heading4' + selector); // really needs to work on
 
 	titles.each(function(key, current) {
-		var headlinehref = $(current).find('.mw-headline a').attr('href');
+		var headlinehref = $(current).find('a').attr('href');
 		if (headlinehref === undefined) {
 			return;
 		}
@@ -66,17 +52,24 @@ Twinkle.close.addLinks = function twinklecloseAddLinks() {
 		}
 		title = decodeURIComponent(title);
 		title = title.replace(/_/g, ' '); // Normalize for using in interface and summary
-		var pagenotexist = $(current).find('.mw-headline a').hasClass('new');
+		console.log('title', title);
+
+		var pagenotexist = $(current).find('a').hasClass('new');
 		var section = current.getAttribute('data-section');
-		var node = current.getElementsByClassName('mw-headline')[0];
-		node.appendChild(document.createTextNode(' '));
-		var tmpNode = delNode.cloneNode(true);
-		tmpNode.firstChild.href = '#' + section;
-		$(tmpNode.firstChild).click(function() {
+		var node = current.getElementsByClassName('mw-editsection')[0];
+		var delDivider = document.createElement('span');
+		delDivider.appendChild(document.createTextNode(' | '));
+		node.insertBefore(delDivider, node.childNodes[1]);
+		var delLink = document.createElement('a');
+		delLink.className = 'twinkle-close-button';
+		delLink.href = '#';
+		delLink.setAttribute('data-section', section);
+		delLink.innerText = wgULS('关闭讨论', '關閉討論');
+		$(delLink).click(function() {
 			Twinkle.close.callback(title, section, pagenotexist);
 			return false;
 		});
-		node.appendChild(tmpNode);
+		node.insertBefore(delLink, node.childNodes[1]);
 	});
 };
 
@@ -387,6 +380,19 @@ Twinkle.close.callback = function twinklecloseCallback(title, section, noop) {
 	Window.addFooterLink(wgULS('Twinkle帮助', 'Twinkle說明'), 'WP:TW/DOC#close');
 
 	var form = new Morebits.quickForm(Twinkle.close.callback.evaluate);
+
+	if ($('.skin-vector-2022').length > 0) {
+		mw.notify(wgULS('关闭存废讨论功能暂不支持 Vector 2022，请改用其他外观。', '關閉存廢討論功能暫不支援 Vector 2022，請改用其他外觀。'), { type: 'error' });
+		form.append({
+			type: 'div',
+			label: wgULS('关闭存废讨论功能暂不支持 Vector 2022，请改用其他外观。', '關閉存廢討論功能暫不支援 Vector 2022，請改用其他外觀。')
+		});
+
+		var result2 = form.render();
+		Window.setContent(result2);
+		Window.display();
+		return;
+	}
 
 	form.append({
 		type: 'select',
