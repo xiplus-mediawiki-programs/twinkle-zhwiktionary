@@ -52,7 +52,6 @@ Twinkle.close.addLinks = function twinklecloseAddLinks() {
 		}
 		title = decodeURIComponent(title);
 		title = title.replace(/_/g, ' '); // Normalize for using in interface and summary
-		console.log('title', title);
 
 		var pagenotexist = $(current).find('a').hasClass('new');
 		var section = current.getAttribute('data-section');
